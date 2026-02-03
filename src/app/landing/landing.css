@@ -1,0 +1,255 @@
+/* ======================
+   RESET & BASE
+====================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f7fa;
+  color: #1f2a63;
+  overflow-x: hidden;
+}
+
+/* ======================
+   NAVBAR
+====================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(31, 42, 99, 0.95);
+  z-index: 1000;
+  animation: slideDown 0.8s ease forwards;
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 18px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Responsive layout */
+.nav-responsive {
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.nav-logo {
+  width: 82px;
+  height: auto;
+  animation: fadeInLeft 1s ease forwards;
+}
+
+/* ======================
+   BOTONES NAVBAR
+====================== */
+.nav-buttons {
+  display: flex;
+  gap: 16px;
+}
+
+.nav-buttons a {
+  text-decoration: none;
+  padding: 14px 30px;        /* 🔥 un poco más grandes */
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* LOGIN */
+.btn-login {
+  color: white;
+  border: 2px solid white;
+  background: transparent;
+}
+
+.btn-login:hover {
+  background: white;
+  color: #1f2a63;
+  transform: translateY(-2px);
+}
+
+/* REGISTER */
+.btn-register {
+  background: #f4c430;
+  color: #1f2a63;
+}
+
+.btn-register:hover {
+  background: #ffd95a;
+  transform: translateY(-2px);
+}
+
+/* ======================
+   HERO
+====================== */
+.hero {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1f2a63, #2f5fd0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  padding: 130px 20px 40px;
+}
+
+.hero-content {
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: heroFade 1.2s ease forwards;
+}
+
+/* LOGO HERO */
+.logo {
+  width: 260px;
+  max-width: 85%;
+  margin-bottom: 30px;
+  animation: zoomIn 1.2s ease forwards;
+}
+
+/* TEXTO HERO */
+.hero h1 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+  animation: fadeInUp 1s ease forwards;
+}
+
+.subtitle {
+  margin: 18px 0;
+  font-size: 1.2rem;
+  max-width: 600px;
+  animation: fadeInUp 1.2s ease forwards;
+}
+
+/* BOTÓN PRINCIPAL */
+.btn-primary {
+  display: inline-block;
+  margin-top: 26px;
+  padding: 18px 42px;        /* 🔥 un poco más grande */
+  background-color: #f4c430;
+  color: #1f2a63;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.05rem;
+  border-radius: 36px;
+  transition: all 0.3s ease;
+  animation: fadeInUp 1.4s ease forwards;
+}
+
+.btn-primary:hover {
+  background-color: #ffd95a;
+  transform: translateY(-4px);
+}
+
+/* ======================
+   RESPONSIVE
+====================== */
+@media (max-width: 768px) {
+  .nav-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-logo {
+    width: 64px;
+  }
+
+  .nav-buttons {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .nav-buttons a {
+    padding: 12px 26px;
+    font-size: 0.95rem;
+  }
+
+  .logo {
+    width: 180px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .btn-primary {
+    padding: 16px 34px;
+    font-size: 1rem;
+  }
+}
+
+/* ======================
+   ANIMACIONES
+====================== */
+@keyframes heroFade {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
