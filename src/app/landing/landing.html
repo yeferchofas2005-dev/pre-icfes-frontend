@@ -1,6 +1,47 @@
-<!-- NAVBAR -->
+<!-- ======================
+     POPUP INICIAL
+====================== -->
+<div class="overlay" *ngIf="showIntroPopup">
+  <div class="popup-slider">
+
+    <!-- CERRAR -->
+    <button class="close-btn" (click)="closeIntroPopup()">×</button>
+
+    <!-- CONTENIDO DINÁMICO -->
+    <div class="popup-content">
+      <img
+        *ngIf="slides[currentSlide].img"
+        [src]="slides[currentSlide].img"
+        alt="Anuncio"
+        class="popup-image"
+      />
+      <h3>{{ slides[currentSlide].title }}</h3>
+      <p>{{ slides[currentSlide].text }}</p>
+    </div>
+
+    <!-- CONTROLES -->
+    <button
+      class="slider-btn left"
+      (click)="prevSlide()"
+    >
+      &lt;
+    </button>
+
+    <button
+      class="slider-btn right"
+      (click)="nextSlide()"
+    >
+      &gt;
+    </button>
+
+  </div>
+</div>
+
+<!-- ======================
+     NAVBAR
+====================== -->
 <nav class="navbar">
-  <div class="nav-container nav-responsive">
+  <div class="nav-container">
     <img
       src="assets/logo.png"
       alt="Preicfes Gratuito"
@@ -9,19 +50,17 @@
 
     <div class="nav-buttons">
       <a class="btn-login">Iniciar sesión</a>
-      <a class="btn-register">Registrarse</a>
+      <a class="btn-inscribete">Inscribete</a>
     </div>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- ======================
+     HERO
+====================== -->
 <header class="hero">
   <div class="hero-content">
-    <img
-      src="assets/logo.png"
-      alt="Preicfes Logo"
-      class="logo"
-    />
+    <img src="assets/logo.png" alt="Preicfes Logo" class="logo" />
 
     <h1>Preicfes gratuito para jóvenes</h1>
 
@@ -38,3 +77,85 @@
     </a>
   </div>
 </header>
+
+<!-- ======================
+     QUIÉNES SOMOS
+====================== -->
+<section class="section">
+  <h2>¿Quiénes somos?</h2>
+  <p class="section-text">
+    Somos una iniciativa social que prepara jóvenes para las pruebas Saber 11,
+    brindando acceso gratuito a educación de calidad.
+  </p>
+</section>
+
+<!-- ======================
+     INSTAGRAM
+====================== -->
+<section class="section alt">
+  <h2>Síguenos en Instagram</h2>
+
+  <a
+    href="https://www.instagram.com/"
+    target="_blank"
+    class="btn-secondary"
+  >
+    Ir a Instagram
+  </a>
+</section>
+
+<!-- ======================
+     MI CAUSA ES
+====================== -->
+<section class="section">
+  <h2>#MiCausaEs</h2>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Educación</h3>
+      <p>La educación transforma vidas.</p>
+    </div>
+
+    <div class="card">
+      <h3>Equidad</h3>
+      <p>Las oportunidades deben ser para todos.</p>
+    </div>
+
+    <div class="card">
+      <h3>Compromiso social</h3>
+      <p>Trabajamos por una mejor Bogotá.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================
+     DIRECTIVOS
+====================== -->
+<section class="section alt">
+  <h2>Nuestros directivos</h2>
+
+  <div class="cards">
+    <div class="card">
+      <div class="img-placeholder">IMG</div>
+      <h3>Nombre</h3>
+      <p>Rol / descripción</p>
+    </div>
+
+    <div class="card">
+      <div class="img-placeholder">IMG</div>
+      <h3>Nombre</h3>
+      <p>Rol / descripción</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================
+     UBICACIÓN
+====================== -->
+<section class="section">
+  <h2>¿Dónde nos ubicamos?</h2>
+
+  <div class="map-placeholder">
+    Mapa de Bogotá (click futuro)
+  </div>
+</section>

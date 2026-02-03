@@ -11,8 +11,58 @@ body {
   font-family: 'Poppins', sans-serif;
   background-color: #f5f7fa;
   color: #1f2a63;
-  overflow-x: hidden;
 }
+
+/* ======================
+   OVERLAY / POPUP
+====================== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.popup-slider {
+  background: white;
+  padding: 42px 32px;
+  border-radius: 18px;
+  width: 90%;
+  max-width: 440px;
+  position: relative;
+  text-align: center;
+  animation: popupFade 0.4s ease;
+}
+
+.close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-size: 26px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #1f2a63;
+}
+
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #1f2a63;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider-btn.left { left: -20px; }
+.slider-btn.right { right: -20px; }
 
 /* ======================
    NAVBAR
@@ -23,7 +73,6 @@ body {
   width: 100%;
   background: rgba(31, 42, 99, 0.95);
   z-index: 1000;
-  animation: slideDown 0.8s ease forwards;
 }
 
 .nav-container {
@@ -35,16 +84,8 @@ body {
   align-items: center;
 }
 
-/* Responsive layout */
-.nav-responsive {
-  flex-wrap: wrap;
-  gap: 14px;
-}
-
 .nav-logo {
-  width: 82px;
-  height: auto;
-  animation: fadeInLeft 1s ease forwards;
+  width: 76px;
 }
 
 /* ======================
@@ -57,7 +98,7 @@ body {
 
 .nav-buttons a {
   text-decoration: none;
-  padding: 14px 30px;        /* 🔥 un poco más grandes */
+  padding: 14px 32px;              /* 🔥 un poco más grandes */
   border-radius: 30px;
   font-weight: 600;
   font-size: 1rem;
@@ -75,16 +116,15 @@ body {
 .btn-login:hover {
   background: white;
   color: #1f2a63;
-  transform: translateY(-2px);
 }
 
 /* REGISTER */
-.btn-register {
+.btn-inscribete {
   background: #f4c430;
   color: #1f2a63;
 }
 
-.btn-register:hover {
+.btn-inscribete:hover {
   background: #ffd95a;
   transform: translateY(-2px);
 }
@@ -94,13 +134,13 @@ body {
 ====================== */
 .hero {
   min-height: 100vh;
+  padding: 130px 20px 50px;
   background: linear-gradient(135deg, #1f2a63, #2f5fd0);
   display: flex;
-  justify-content: center;
   align-items: center;
-  text-align: center;
+  justify-content: center;
   color: white;
-  padding: 130px 20px 40px;
+  text-align: center;
 }
 
 .hero-content {
@@ -108,7 +148,7 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center;        /* 🔥 CENTRADO REAL */
   animation: heroFade 1.2s ease forwards;
 }
 
@@ -116,8 +156,7 @@ body {
 .logo {
   width: 260px;
   max-width: 85%;
-  margin-bottom: 30px;
-  animation: zoomIn 1.2s ease forwards;
+  margin-bottom: 28px;
 }
 
 /* TEXTO HERO */
@@ -125,82 +164,104 @@ body {
   font-size: 2.6rem;
   font-weight: 700;
   line-height: 1.2;
-  animation: fadeInUp 1s ease forwards;
 }
 
 .subtitle {
   margin: 18px 0;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   max-width: 600px;
-  animation: fadeInUp 1.2s ease forwards;
 }
 
 /* BOTÓN PRINCIPAL */
 .btn-primary {
-  display: inline-block;
-  margin-top: 26px;
-  padding: 18px 42px;        /* 🔥 un poco más grande */
-  background-color: #f4c430;
+  padding: 18px 44px;          /* 🔥 más grande pero elegante */
+  background: #f4c430;
   color: #1f2a63;
+  border-radius: 36px;
   text-decoration: none;
   font-weight: 700;
   font-size: 1.05rem;
-  border-radius: 36px;
   transition: all 0.3s ease;
-  animation: fadeInUp 1.4s ease forwards;
 }
 
 .btn-primary:hover {
-  background-color: #ffd95a;
-  transform: translateY(-4px);
+  background: #ffd95a;
+  transform: translateY(-3px);
 }
 
 /* ======================
-   RESPONSIVE
+   SECTIONS
 ====================== */
-@media (max-width: 768px) {
-  .nav-container {
-    flex-direction: column;
-    align-items: center;
-  }
+.section {
+  padding: 90px 10%;
+  text-align: center;
+}
 
-  .nav-logo {
-    width: 64px;
-  }
+.section.alt {
+  background: white;
+}
 
-  .nav-buttons {
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
+.section-text {
+  max-width: 720px;
+  margin: auto;
+  font-size: 1.1rem;
+}
 
-  .nav-buttons a {
-    padding: 12px 26px;
-    font-size: 0.95rem;
-  }
+/* ======================
+   CARDS
+====================== */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 26px;
+  margin-top: 40px;
+}
 
-  .logo {
-    width: 180px;
-    margin-bottom: 24px;
-  }
+.card {
+  background: #f5f7fa;
+  padding: 30px;
+  border-radius: 18px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-  .hero h1 {
-    font-size: 2rem;
-  }
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+}
 
-  .subtitle {
-    font-size: 1.1rem;
-  }
+.img-placeholder {
+  height: 150px;
+  background: #ddd;
+  border-radius: 14px;
+  margin-bottom: 18px;
+}
 
-  .btn-primary {
-    padding: 16px 34px;
-    font-size: 1rem;
-  }
+/* ======================
+   MAP
+====================== */
+.map-placeholder {
+  height: 280px;
+  background: #ddd;
+  border-radius: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* ======================
    ANIMACIONES
 ====================== */
+@keyframes popupFade {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @keyframes heroFade {
   from {
     opacity: 0;
@@ -212,44 +273,33 @@ body {
   }
 }
 
-@keyframes slideDown {
-  from {
-    transform: translateY(-100%);
+/* ======================
+   RESPONSIVE
+====================== */
+@media (max-width: 768px) {
+  .nav-container {
+    flex-direction: column;
+    gap: 12px;
   }
-  to {
-    transform: translateY(0);
-  }
-}
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+  .nav-logo {
+    width: 64px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
+  .nav-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
   }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
 
-@keyframes zoomIn {
-  from {
-    opacity: 0;
-    transform: scale(0.85);
+  .logo {
+    width: 190px;
   }
-  to {
-    opacity: 1;
-    transform: scale(1);
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
   }
 }
