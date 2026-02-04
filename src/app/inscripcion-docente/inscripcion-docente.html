@@ -1,0 +1,296 @@
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a routerLink="/">
+      <img
+        src="assets/logo.png"
+        alt="Preicfes Gratuito"
+        class="nav-logo"
+      />
+    </a>
+    <div class="nav-buttons">
+      <a class="btn-login" routerLink="/">Volver al inicio</a>
+    </div>
+  </div>
+</nav>
+
+<div class="form-container">
+  <div class="progress-indicator">
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="((currentStep + 1) / steps.length) * 100"></div>
+    </div>
+    <p class="progress-text">Paso {{ currentStep + 1 }} de {{ steps.length }}</p>
+  </div>
+
+  <div class="steps-navigation">
+    <div
+      *ngFor="let step of steps; let i = index"
+      class="step-indicator"
+      [class.active]="i === currentStep"
+      [class.completed]="i < currentStep"
+      [class.valid]="isStepValid(i)"
+      (click)="goToStep(i)"
+    >
+      <span class="step-number">{{ i + 1 }}</span>
+      <span class="step-title">{{ step.title }}</span>
+    </div>
+  </div>
+
+  <form [formGroup]="inscripcionDocenteForm" (ngSubmit)="onSubmit()" class="inscripcion-form">
+
+    <div *ngIf="currentStep === 0" class="form-section">
+      <div class="form-header">
+        <h1>PreInscripción Docentes Voluntari@s "PreICFES Gratuito Jóvenes Bogotá", versión 2025</h1>
+        <div class="intro-text">
+          <p>¡Creemos en el Poder Transformador de la Educación!</p>
+          <p>
+            El Pre-ICFES Gratuito para Jóvenes en Bogotá es una iniciativa que nace en 2022, con el propósito de contribuir a la formación y el acceso a la Educación Superior, con enfoque diferencial e integral.
+          </p>
+          <p>
+            Si deseas participar como Docente Voluntario(a), te invitamos a diligenciar el siguiente formulario para iniciar cuanto antes nuestro cronograma de sesiones virtuales y presenciales.
+          </p>
+          <p>* Indica que la pregunta es obligatoria.</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="currentStep === 1" class="form-section">
+      <h2>Información importante</h2>
+      <p class="privacy-text">
+        El Pre-ICFES Jóvenes Bogotá es una iniciativa de carácter social en la cual los beneficiarios no deberán realizar ningún pago o aporte monetario, y la organización no obtendrá beneficios económicos por el trabajo realizado. Por tanto, la participación del docente en este proyecto de voluntariado implica que NO EXISTE NINGÚN TIPO DE VÍNCULO CONTRACTUAL O COMPENSACIÓN ECONÓMICA previa, durante o después de su desarrollo. No obstante, se otorgará una Certificación de Participación y una Constancia de actividades que reflejen el tiempo en el que el docente voluntario ha colaborado en la iniciativa.
+        <br /><br />
+        Al enviar este formulario, se reconoce que se ha leído y comprendido previamente las condiciones mencionadas anteriormente, y se acepta cumplir con las mismas.
+      </p>
+
+      <div class="form-group checkbox-group">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="aceptaCondicionesVoluntariado" />
+          <span>Acepto las condiciones del voluntariado *</span>
+        </label>
+        <span class="error-message" *ngIf="getFieldError('aceptaCondicionesVoluntariado')">
+          {{ getFieldError('aceptaCondicionesVoluntariado') }}
+        </span>
+      </div>
+    </div>
+
+    <div *ngIf="currentStep === 2" class="form-section">
+      <h2>Aviso de Privacidad</h2>
+      <p class="privacy-text">
+        De acuerdo con la Ley 1581 de 2012, por la cual se dictan disposiciones generales para la protección de datos personales, le informamos que los datos personales suministrados en este formulario serán tratados de manera confidencial y serán utilizados únicamente para el proyecto Pre-ICFES Gratuito para Jóvenes en Bogotá. El titular de los datos tiene derecho a conocer, actualizar, rectificar y suprimir sus datos personales, así como a revocar el consentimiento otorgado para el tratamiento de los mismos, a través de los canales habilitados para ello por nuestra organización.
+      </p>
+
+      <div class="form-group checkbox-group">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="aceptaPrivacidad" />
+          <span>¿Acepta el tratamiento de sus datos conforme a la información descrita? *</span>
+        </label>
+        <span class="error-message" *ngIf="getFieldError('aceptaPrivacidad')">
+          {{ getFieldError('aceptaPrivacidad') }}
+        </span>
+      </div>
+    </div>
+
+    <div *ngIf="currentStep === 3" class="form-section">
+      <h2>Datos Personales</h2>
+      <p class="section-info">
+        En nuestro proceso de selección, valoramos la actitud por encima de la aptitud. Te animamos a responder con total sinceridad.
+      </p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre Completo *</label>
+          <input type="text" formControlName="nombreCompleto" placeholder="Ingrese su nombre completo" />
+          <span class="error-message" *ngIf="getFieldError('nombreCompleto')">{{ getFieldError('nombreCompleto') }}</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Tipo de documento de identidad *</label>
+          <select formControlName="tipoDocumento">
+            <option value="">Seleccione...</option>
+            <option *ngFor="let tipo of tiposDocumento" [value]="tipo">{{ tipo }}</option>
+          </select>
+          <span class="error-message" *ngIf="getFieldError('tipoDocumento')">{{ getFieldError('tipoDocumento') }}</span>
+        </div>
+
+        <div class="form-group">
+          <label>Número de Documento de Identidad (sin puntos, ni comas) *</label>
+          <input type="text" formControlName="numeroDocumento" placeholder="Sin puntos, comas o espacios" />
+          <span class="error-message" *ngIf="getFieldError('numeroDocumento')">{{ getFieldError('numeroDocumento') }}</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Número de Celular (Personal con WhatsApp) *</label>
+          <input type="text" formControlName="celular" placeholder="Sin puntos, comas o espacios" />
+          <span class="error-message" *ngIf="getFieldError('celular')">{{ getFieldError('celular') }}</span>
+        </div>
+
+        <div class="form-group">
+          <label>Correo Electrónico (Preferiblemente Gmail) *</label>
+          <input type="email" formControlName="correo" placeholder="correo@ejemplo.com" />
+          <span class="error-message" *ngIf="getFieldError('correo')">{{ getFieldError('correo') }}</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Fecha de nacimiento *</label>
+          <input type="date" formControlName="fechaNacimiento" />
+          <span class="error-message" *ngIf="getFieldError('fechaNacimiento')">{{ getFieldError('fechaNacimiento') }}</span>
+        </div>
+
+        <div class="form-group">
+          <label>Localidad de Residencia *</label>
+          <select formControlName="localidadResidencia">
+            <option value="">Seleccione...</option>
+            <option *ngFor="let loc of localidadesBogota" [value]="loc">{{ loc }}</option>
+          </select>
+          <span class="error-message" *ngIf="getFieldError('localidadResidencia')">{{ getFieldError('localidadResidencia') }}</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Género *</label>
+          <select formControlName="genero">
+            <option value="">Seleccione...</option>
+            <option *ngFor="let gen of generos" [value]="gen">{{ gen }}</option>
+          </select>
+          <span class="error-message" *ngIf="getFieldError('genero')">{{ getFieldError('genero') }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="currentStep === 4" class="form-section">
+      <h2>Formación y experiencia</h2>
+
+      <div class="form-group">
+        <label>Por favor indique el semestre académico que se encuentra cursando, si es el caso, o nos confirme si ya cuenta con Título profesional *</label>
+        <select formControlName="nivelFormacion">
+          <option value="">Seleccione...</option>
+          <option *ngFor="let nivel of nivelesFormacion" [value]="nivel">{{ nivel }}</option>
+        </select>
+        <span class="error-message" *ngIf="getFieldError('nivelFormacion')">{{ getFieldError('nivelFormacion') }}</span>
+      </div>
+
+      <div class="form-group">
+        <label>Si se encuentra estudiando o ya tiene Título profesional, por favor indique su profesión u ocupación *</label>
+        <input type="text" formControlName="profesionOcupacion" placeholder="Profesión u ocupación" />
+        <span class="error-message" *ngIf="getFieldError('profesionOcupacion')">{{ getFieldError('profesionOcupacion') }}</span>
+      </div>
+
+      <div class="form-group">
+        <label>Indique la Institución de Educación Superior *</label>
+        <select formControlName="institucionSuperior">
+          <option value="">Seleccione...</option>
+          <option *ngFor="let inst of instituciones" [value]="inst">{{ inst }}</option>
+        </select>
+        <span class="error-message" *ngIf="getFieldError('institucionSuperior')">{{ getFieldError('institucionSuperior') }}</span>
+      </div>
+
+      <div class="form-group" *ngIf="inscripcionDocenteForm.get('institucionSuperior')?.value === 'Otro'">
+        <label>Otro: *</label>
+        <input type="text" formControlName="institucionSuperiorOtra" placeholder="Escribe la institución" />
+        <span class="error-message" *ngIf="getFieldError('institucionSuperiorOtra')">{{ getFieldError('institucionSuperiorOtra') }}</span>
+      </div>
+
+      <div class="form-group">
+        <label>Por favor Anexa tu Hoja de Vida (Formato pdf) *</label>
+        <input type="file" accept=".pdf" (change)="onFileChange($event, 'hojaVida')" />
+        <small>Sube 1 archivo compatible: PDF. Tamaño máximo: 10 GB.</small>
+        <span class="error-message" *ngIf="getFieldError('hojaVida')">{{ getFieldError('hojaVida') }}</span>
+      </div>
+    </div>
+
+    <div *ngIf="currentStep === 5" class="form-section">
+      <h2>Disponibilidad y área</h2>
+
+      <div class="form-group">
+        <label>¿Actualmente tiene alguna situación pendiente con entidades de control o inhabilidades por delitos sexuales contra menores de edad? *</label>
+        <select formControlName="tieneSituacionPendiente">
+          <option value="">Seleccione...</option>
+          <option value="Si">Si</option>
+          <option value="No">No</option>
+        </select>
+        <span class="error-message" *ngIf="getFieldError('tieneSituacionPendiente')">{{ getFieldError('tieneSituacionPendiente') }}</span>
+      </div>
+
+      <div class="form-group">
+        <label>¿En qué Área estaría dispuesto(a) a brindar su conocimiento? (Seleccione 1 o 2 opciones) *</label>
+        <div class="checkbox-list">
+          <label class="checkbox-item" *ngFor="let a of areas">
+            <input type="checkbox" [value]="a" (change)="onCheckboxArrayChange($event, 'areasConocimiento')" />
+            <span>{{ a }}</span>
+          </label>
+        </div>
+        <span class="error-message" *ngIf="getFieldError('areasConocimiento')">{{ getFieldError('areasConocimiento') }}</span>
+      </div>
+
+      <div class="form-group">
+        <label>Modalidad (puede seleccionar más de una opción) *</label>
+        <div class="checkbox-list">
+          <label class="checkbox-item" *ngFor="let m of modalidades">
+            <input type="checkbox" [value]="m" (change)="onCheckboxArrayChange($event, 'modalidades')" />
+            <span>{{ m }}</span>
+          </label>
+        </div>
+        <span class="error-message" *ngIf="getFieldError('modalidades')">{{ getFieldError('modalidades') }}</span>
+      </div>
+
+      <div class="form-group">
+        <label>¿A cuál de estos nodos y/o localidades se le facilitaría llegar a dictar su clase? (Puede seleccionar más de uno) *</label>
+        <div class="checkbox-list">
+          <label class="checkbox-item" *ngFor="let n of nodos">
+            <input type="checkbox" [value]="n" (change)="onCheckboxArrayChange($event, 'nodosDisponibles')" />
+            <span>{{ n }}</span>
+          </label>
+        </div>
+        <span class="error-message" *ngIf="getFieldError('nodosDisponibles')">{{ getFieldError('nodosDisponibles') }}</span>
+      </div>
+    </div>
+
+    <div *ngIf="currentStep === 6" class="form-section">
+      <h2>No olvides seguirnos en Redes Sociales</h2>
+      <div class="redes-reminder">
+        <p>Para estar al tanto de la convocatoria :D</p>
+        <div class="redes-links">
+          <a href="https://www.instagram.com/preicfesjovenesbogota/" target="_blank">Instagram</a>
+          <a href="https://www.facebook.com/profile.php?id=100085044704018" target="_blank">Facebook</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="button"
+        class="btn-previous"
+        (click)="previousStep()"
+        *ngIf="currentStep > 0"
+      >
+        ← Anterior
+      </button>
+
+      <button
+        type="button"
+        class="btn-next"
+        (click)="nextStep()"
+        *ngIf="currentStep < steps.length - 1"
+      >
+        Siguiente →
+      </button>
+
+      <button
+        type="submit"
+        class="btn-submit"
+        *ngIf="currentStep === steps.length - 1"
+        [disabled]="inscripcionDocenteForm.invalid || isSubmitting"
+      >
+        <span *ngIf="!isSubmitting">Enviar Preinscripción</span>
+        <span *ngIf="isSubmitting">Enviando...</span>
+      </button>
+    </div>
+  </form>
+</div>
