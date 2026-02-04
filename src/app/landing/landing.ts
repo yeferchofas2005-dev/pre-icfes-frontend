@@ -18,22 +18,26 @@ export class Landing {
   slides = [
     {
       title: 'Bienvenido a Preicfes Gratuito',
-      text: 'Educación gratuita para jóvenes que sueñan con un mejor futuro.'
-    },
-    {
-      title: 'Inscripciones abiertas',
-      text: 'Únete a nuestro programa y prepárate para las pruebas Saber 11.'
+      text: 'Creemos en el poder de la educación para transformar vidas. Aquí acompañamos a jóvenes en su camino hacia las pruebas Saber 11, con clases gratuitas, apoyo académico y orientación para construir un mejor futuro.',
+      img: 'assets/anuncios/anuncio1.png'
     },
     {
       title: 'Síguenos en Instagram',
-      text: 'Mantente informado sobre clases, eventos y noticias.'
+      text: 'Entérate de nuestras clases, eventos, convocatorias y logros. Sé parte de nuestra comunidad y acompáñanos en este proyecto que transforma oportunidades en realidades.',
+      img: 'assets/anuncios/anuncio2.png'
     },
     {
-    title: 'Inscripciones abiertas',
-    text: 'Prepárate con nosotros',
-    img: 'assets/logo.png'
+      title: 'Buscamos voluntarios docentes',
+      text: '¿Te apasiona enseñar y generar impacto social? Únete como voluntario y ayuda a preparar a jóvenes para las pruebas Saber 11. Tu conocimiento puede cambiar historias.',
+      img: 'assets/anuncios/anuncio3.png'
+    },
+    {
+      title: 'Apoya a un futuro graduado',
+      text: 'Con tu apoyo podemos llegar a más jóvenes. Dona y contribuye a que nuevas generaciones accedan a educación gratuita y de calidad. Juntos construimos oportunidades.',
+      img: 'assets/anuncios/anuncio4.png'
     }
   ];
+
 
   currentSlide = 0;
 
