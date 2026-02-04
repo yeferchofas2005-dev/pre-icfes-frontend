@@ -53,6 +53,35 @@ export interface InscripcionData {
   fechaRegistro?: string;
 }
 
+export interface InscripcionDocenteData {
+  tipoFormulario: 'docente';
+
+  aceptaCondicionesVoluntariado: boolean;
+  aceptaPrivacidad: boolean;
+
+  nombreCompleto: string;
+  tipoDocumento: string;
+  numeroDocumento: string;
+  celular: string;
+  correo: string;
+  fechaNacimiento: string;
+  localidadResidencia: string;
+  genero: string;
+
+  nivelFormacion: string;
+  profesionOcupacion: string;
+  institucionSuperior: string;
+  institucionSuperiorOtra?: string;
+  hojaVida?: File | null;
+
+  tieneSituacionPendiente: string;
+  areasConocimiento: string[];
+  modalidades: string[];
+  nodosDisponibles: string[];
+
+  fechaRegistro?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -62,6 +91,8 @@ export class InscripcionService {
    * ID de implementación: AKfycbxZRpUUEk_5QtOoeFb8DgCCzHntjF4d5P41yZZmkiP7JJ_KVjCP_V960oZSVAZGSMt9
    */
   private readonly GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxIboqgSDute95LV_0oEYu55CsGBuEozRcVoKrY9LObHBAs97jtYA33PbNjnkU7ijag/exec';
+
+  private readonly GOOGLE_SCRIPT_URL_DOCENTE = 'https://script.google.com/macros/s/AKfycbx5_eQBSb-9eoXyDxvJjoVkXqj9rA8yM0EhfMpb34pnPdrAKYVBglNyk6jq5vu_Dhff/exec';
 
   constructor(private http: HttpClient) {}
 
@@ -93,6 +124,31 @@ export class InscripcionService {
   
     return this.http.post(
       this.GOOGLE_SCRIPT_URL,
+      formData,
+      { responseType: 'text' }
+    );
+  }
+
+  enviarInscripcionDocente(
+    data: InscripcionDocenteData,
+    hojaVidaBase64: string | null
+  ): Observable<any> {
+    const formData = new FormData();
+
+    formData.append(
+      'data',
+      JSON.stringify({
+        ...data,
+        fechaRegistro: new Date().toISOString()
+      })
+    );
+
+    if (hojaVidaBase64) {
+      formData.append('hojaVida', hojaVidaBase64);
+    }
+
+    return this.http.post(
+      this.GOOGLE_SCRIPT_URL_DOCENTE,
       formData,
       { responseType: 'text' }
     );
