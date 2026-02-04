@@ -1,0 +1,487 @@
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a routerLink="/">
+      <img
+        src="assets/logo.png"
+        alt="Preicfes Gratuito"
+        class="nav-logo"
+      />
+    </a>
+    <div class="nav-buttons">
+      <a class="btn-login" routerLink="/">Volver al inicio</a>
+    </div>
+  </div>
+</nav>
+
+<div class="form-container">
+  <!-- Indicador de progreso -->
+  <div class="progress-indicator">
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="((currentStep + 1) / steps.length) * 100"></div>
+    </div>
+    <p class="progress-text">Paso {{ currentStep + 1 }} de {{ steps.length }}</p>
+  </div>
+
+  <!-- Navegación de pasos (solo en desktop) -->
+  <div class="steps-navigation">
+    <div 
+      *ngFor="let step of steps; let i = index" 
+      class="step-indicator"
+      [class.active]="i === currentStep"
+      [class.completed]="i < currentStep"
+      [class.valid]="isStepValid(i)"
+      (click)="goToStep(i)"
+    >
+      <span class="step-number">{{ i + 1 }}</span>
+      <span class="step-title">{{ step.title }}</span>
+    </div>
+  </div>
+
+  <form [formGroup]="inscripcionForm" (ngSubmit)="onSubmit()" class="inscripcion-form">
+    
+    <!-- Paso 0: Introducción -->
+    <div *ngIf="currentStep === 0" class="form-section">
+      <div class="form-header">
+        <h1>Preinscripción PreICFES Gratuito 2025</h1>
+        <div class="intro-text">
+          <p>
+            Esta iniciativa nace con el fin de reforzar los contenidos académicos clave que se evalúan en el examen del ICFES y brindar TIPS, en compañía de estudiantes y profesionales de Universidades como la U. Nacional, U. Distrital, U. Pedagógica, U. Andes, entre otras; en los módulos de Matemáticas 🧮, Ciencias Naturales 🌱, Lectura Crítica 📚, Inglés 🗣️, Asesoría Vocacional 🤓, Ciencias Sociales y Competencias Ciudadanas 🇨🇴 con enfoque en DDHH, Comunidades Étnicas y Cultura de Paz.✊🏽🦋🕊️
+          </p>
+          <p>
+            Tendremos Nodos presenciales los días Sábados en Bogotá y un Nodo Virtual, los días martes y jueves entre semana.
+          </p>
+          <p>
+            Iniciamos las sesiones en el mes de Mayo y finalizamos en el mes de Agosto 2025.
+          </p>
+        </div>
+
+        <div class="nodos-info">
+          <h3>Nodos Presenciales:</h3>
+          <ul>
+            <li>Fontibón - Centro de Desarrollo Comunitario "La Giralda"</li>
+            <li>San Cristóbal - Lugar por Confirmar</li>
+            <li>Kennedy - Colegio INEM de Kennedy</li>
+            <li>Bosa - Universidad Distrital Sede Bosa Porvenir</li>
+            <li>Centro - Universidad Nacional de Colombia - Sede Bogotá</li>
+            <li>Usme - Centro de Desarrollo Comunitario Julio Cesar Sánchez</li>
+            <li>(Ciudad Bolívar - Soacha) - Universidad Uniminuto Sede Perdomo</li>
+            <li>Engativá - Sede por Confirmar - Condicionado a la cantidad de inscripciones</li>
+            <li>Suba - Sede por Confirmar - Condicionado a la cantidad de inscripciones</li>
+            <li>Nodo Virtual (Solo para personas que no residen en Bogotá - Soacha)</li>
+            <li>Plataforma Microsoft TEAMS</li>
+          </ul>
+        </div>
+
+        <div class="gratis-banner">
+          <p class="gratis-text">Y como nos gusta !! Totalmente ¡¡GRATIS!!</p>
+          <p class="derecho-text">Porque la Educación es un Derecho! ✊🏾🤓💯📝</p>
+        </div>
+
+        <div class="redes-sociales">
+          <h3>Antes de continuar, como requisito, por favor seguirnos en nuestras redes sociales.</h3>
+          <div class="redes-links">
+            <a href="https://www.tiktok.com/@preicfes.gratuito11?_t=ZS-8vWYl3ObzYV&_r=1" target="_blank">Tik Tok</a>
+            <a href="https://www.instagram.com/preicfesjovenesbogota/" target="_blank">Instagram</a>
+            <a href="https://www.facebook.com/profile.php?id=100085044704018" target="_blank">Facebook</a>
+            <a href="https://www.instagram.com/el_jefescobarr/" target="_blank">Coord. General</a>
+            <a href="https://www.instagram.com/david_santos_azir/" target="_blank">Coord. Nodo Bosa</a>
+            <a href="https://www.instagram.com/jhoanmrczp/" target="_blank">Coord. Nodo C. Bolívar</a>
+            <a href="https://www.instagram.com/camilomurilloooo/" target="_blank">Coord. Nodo UNAL</a>
+            <a href="https://www.instagram.com/ariadna2904/" target="_blank">Coord. Nodo Fontibón</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 1: Aviso de Privacidad -->
+    <div *ngIf="currentStep === 1" class="form-section">
+      <h2>Aviso de Privacidad</h2>
+      <p class="privacy-text">
+        De acuerdo con la Ley 1581 de 2012, por la cual se dictan disposiciones generales para la protección de datos personales, le informamos que los datos personales suministrados en este formulario serán tratados de manera confidencial y serán utilizados únicamente para el proyecto PreICFES Jóvenes Bogotá. El titular de los datos tiene derecho a conocer, actualizar, rectificar y suprimir sus datos personales, así como a revocar el consentimiento otorgado para el tratamiento de los mismos, a través de los canales habilitados para ello por nuestra organización.
+      </p>
+      <div class="form-group checkbox-group">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="aceptaPrivacidad" />
+          <span>¿Acepta el tratamiento de sus datos conforme a la información descrita? *</span>
+        </label>
+        <span class="error-message" *ngIf="getFieldError('aceptaPrivacidad')">
+          {{ getFieldError('aceptaPrivacidad') }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Paso 2: Datos Personales -->
+    <div *ngIf="currentStep === 2" class="form-section">
+      <h2>Datos Personales</h2>
+      <p class="section-info">
+        Este año contamos con Cupos Limitados, con el objetivo de asegurar el cupo a quien en verdad lo necesita. Si completas el formulario en su totalidad con información clara y veraz, y adjuntas documentos legibles, tendrás más posibilidad de ser beneficiario(a).
+      </p>
+      <p class="section-info">¡Aprovecha esta oportunidad! 🤓👍</p>
+      <p class="section-info">
+        - Tenga en cuenta que hacer parte de una comunidad diferencial le sumará puntos para acceder a la iniciativa.
+      </p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre Completo *</label>
+          <input type="text" formControlName="nombreCompleto" placeholder="Ingrese su nombre completo" />
+          <span class="error-message" *ngIf="getFieldError('nombreCompleto')">
+            {{ getFieldError('nombreCompleto') }}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Tipo de Documento de Identidad *</label>
+          <select formControlName="tipoDocumento">
+            <option value="">Seleccione...</option>
+            <option *ngFor="let tipo of tiposDocumento" [value]="tipo">{{ tipo }}</option>
+          </select>
+          <span class="error-message" *ngIf="getFieldError('tipoDocumento')">
+            {{ getFieldError('tipoDocumento') }}
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label>Número de Documento de Identidad *</label>
+          <input type="text" formControlName="numeroDocumento" placeholder="Sin puntos, comas o espacios" />
+          <small>Persona mayor de 18 años con Cédula de Ciudadanía.</small>
+          <span class="error-message" *ngIf="getFieldError('numeroDocumento')">
+            {{ getFieldError('numeroDocumento') }}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Anexar copia de su Documento de Identidad por ambas caras en formato PDF. *</label>
+        <input type="file" accept=".pdf" (change)="onFileChange($event, 'documentoIdentidad')" />
+        <small>Sube 1 archivo compatible: PDF. Tamaño máximo: 10 GB.</small>
+        <span class="error-message" *ngIf="getFieldError('documentoIdentidad')">
+          {{ getFieldError('documentoIdentidad') }}
+        </span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Fecha de Nacimiento *</label>
+          <input type="date" formControlName="fechaNacimiento" />
+          <span class="error-message" *ngIf="getFieldError('fechaNacimiento')">
+            {{ getFieldError('fechaNacimiento') }}
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label>Pertenece a alguna de las siguientes Comunidades o Pueblos? *</label>
+          <select formControlName="comunidad">
+            <option value="">Seleccione...</option>
+            <option *ngFor="let com of comunidades" [value]="com">{{ com }}</option>
+          </select>
+          <span class="error-message" *ngIf="getFieldError('comunidad')">
+            {{ getFieldError('comunidad') }}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Género *</label>
+          <select formControlName="genero">
+            <option value="">Seleccione...</option>
+            <option *ngFor="let gen of generos" [value]="gen">{{ gen }}</option>
+          </select>
+          <span class="error-message" *ngIf="getFieldError('genero')">
+            {{ getFieldError('genero') }}
+          </span>
+        </div>
+
+
+        <div class="form-group">
+          <label>Estrato Socioeconómico *</label>
+          <select formControlName="estrato">
+            <option value="">Seleccione...</option>
+            <option *ngFor="let estrato of estratos" [value]="estrato">{{ estrato }}</option>
+          </select>
+          <span class="error-message" *ngIf="getFieldError('estrato')">
+            {{ getFieldError('estrato') }}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Número de Celular (Personal) *</label>
+          <input type="text" formControlName="celular" placeholder="Sin puntos, comas o espacios" />
+          <small>Preferiblemente con WhatsApp</small>
+          <span class="error-message" *ngIf="getFieldError('celular')">
+            {{ getFieldError('celular') }}
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label>Correo electrónico (Preferiblemente Gmail) *</label>
+          <input type="email" formControlName="correo" placeholder="correo@ejemplo.com" />
+          <span class="error-message" *ngIf="getFieldError('correo')">
+            {{ getFieldError('correo') }}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>EPS *</label>
+        <input type="text" formControlName="eps" placeholder="Nombre de su EPS" />
+        <span class="error-message" *ngIf="getFieldError('eps')">
+          {{ getFieldError('eps') }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Paso 3: Contacto de Emergencia -->
+    <div *ngIf="currentStep === 3" class="form-section">
+      <h2>Contacto en caso de Emergencia</h2>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre Contacto en caso de Emergencia *</label>
+          <input type="text" formControlName="nombreContactoEmergencia" placeholder="Nombre completo" />
+          <span class="error-message" *ngIf="getFieldError('nombreContactoEmergencia')">
+            {{ getFieldError('nombreContactoEmergencia') }}
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label>Parentezco Contacto en caso de Emergencia *</label>
+          <select formControlName="parentezcoContactoEmergencia">
+            <option value="">Seleccione...</option>
+            <option *ngFor="let par of parentezcos" [value]="par">{{ par }}</option>
+          </select>
+          <span class="error-message" *ngIf="getFieldError('parentezcoContactoEmergencia')">
+            {{ getFieldError('parentezcoContactoEmergencia') }}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="inscripcionForm.get('parentezcoContactoEmergencia')?.value === 'Otro'">
+        <label>Especifique *</label>
+        <input type="text" formControlName="parentezcoOtro" placeholder="Especifique el parentezco" />
+        <span class="error-message" *ngIf="getFieldError('parentezcoOtro')">
+          {{ getFieldError('parentezcoOtro') }}
+        </span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Número de contacto en caso de emergencia *</label>
+          <input type="text" formControlName="numeroContactoEmergencia" placeholder="Sin puntos, comas o espacios" />
+          <span class="error-message" *ngIf="getFieldError('numeroContactoEmergencia')">
+            {{ getFieldError('numeroContactoEmergencia') }}
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label>Correo electrónico contacto en caso de emergencia *</label>
+          <input type="email" formControlName="correoContactoEmergencia" placeholder="correo@ejemplo.com" />
+          <span class="error-message" *ngIf="getFieldError('correoContactoEmergencia')">
+            {{ getFieldError('correoContactoEmergencia') }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 4: Consentimiento Informado -->
+    <div *ngIf="currentStep === 4" class="form-section">
+      <h2>CONSENTIMIENTO INFORMADO PARA BENEFICIARI@S MAYORES DE EDAD</h2>
+      <p class="section-info">
+        Por favor, subir consentimiento informado, debidamente diligenciado.
+      </p>
+      <p class="section-info">
+        Formato del Documento en el siguiente link: 
+        <a href="https://drive.google.com/file/d/1MI2fyLkLfCxEbAHUgVhSTvbrffYOb0FW/view?usp=sharing" target="_blank">
+          Descargar formato
+        </a>
+      </p>
+      <p class="section-info">
+        Descargar, imprimir, firmar y Escanear o Descargar y firmar digitalmente, con un editor de PDF. [Solo es válido el Archivo en PDF]
+      </p>
+      <div class="form-group">
+        <label>Subir Consentimiento Informado *</label>
+        <input type="file" accept=".pdf" (change)="onFileChange($event, 'consentimientoInformado')" />
+        <small>Sube 1 archivo compatible: PDF. Tamaño máximo: 10 GB.</small>
+        <span class="error-message" *ngIf="getFieldError('consentimientoInformado')">
+          {{ getFieldError('consentimientoInformado') }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Paso 5: Localidad y Nodo -->
+    <div *ngIf="currentStep === 5" class="form-section">
+      <h2>Localidad y Nodo</h2>
+
+      <div class="form-group">
+        <label>Localidad de Residencia en Bogotá - Soacha *</label>
+        <select formControlName="localidadResidencia">
+          <option value="">Seleccione...</option>
+          <option *ngFor="let loc of localidadesBogota" [value]="loc">{{ loc }}</option>
+        </select>
+        <span class="error-message" *ngIf="getFieldError('localidadResidencia')">
+          {{ getFieldError('localidadResidencia') }}
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label>Localidad o Nodo donde le gustaría asistir al Pre-ICFES Gratuito *</label>
+        <select formControlName="nodoPreferido">
+          <option value="">Seleccione...</option>
+          <option *ngFor="let nodo of nodos" [value]="nodo">{{ nodo }}</option>
+        </select>
+        <span class="error-message" *ngIf="getFieldError('nodoPreferido')">
+          {{ getFieldError('nodoPreferido') }}
+        </span>
+      </div>
+
+      <div class="form-group" *ngIf="inscripcionForm.get('nodoPreferido')?.value === '(Modalidad Virtual) - Universidad Nacional'">
+        <label>En caso de que tu inscripción sea para la Modalidad Virtual, debido a que no resides en Soacha o Bogotá, Cuéntanos ¿De donde eres? o ¿De qué ciudad y/o departamento del país te conectarías? *</label>
+        <input type="text" formControlName="ciudadOrigen" placeholder="Ciudad y/o departamento" />
+        <span class="error-message" *ngIf="getFieldError('ciudadOrigen')">
+          {{ getFieldError('ciudadOrigen') }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Paso 6: Información Educativa -->
+    <div *ngIf="currentStep === 6" class="form-section">
+      <h2>Información Educativa</h2>
+
+      <div class="form-group">
+        <label>Se encuentra cursando grado 11° en una institución educativa de Bogotá? *</label>
+        <select formControlName="cursandoGrado11">
+          <option value="">Seleccione...</option>
+          <option *ngFor="let tipo of tiposColegio" [value]="tipo">{{ tipo }}</option>
+        </select>
+        <span class="error-message" *ngIf="getFieldError('cursandoGrado11')">
+          {{ getFieldError('cursandoGrado11') }}
+        </span>
+      </div>
+
+      <div class="form-row" *ngIf="inscripcionForm.get('cursandoGrado11')?.value === 'Sí, Colegio Público' || inscripcionForm.get('cursandoGrado11')?.value === 'Sí, Colegio Privado'">
+        <div class="form-group">
+          <label>Nombre de la Institución Educativa o sino N/A *</label>
+          <input type="text" formControlName="nombreInstitucion" placeholder="Nombre de la institución" />
+          <span class="error-message" *ngIf="getFieldError('nombreInstitucion')">
+            {{ getFieldError('nombreInstitucion') }}
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label>Correo electrónico, Nombre Rector, Coordinador o Contacto de su Institución Educativa, sino N/a *</label>
+          <input type="text" formControlName="contactoInstitucion" placeholder="Correo o contacto" />
+          <span class="error-message" *ngIf="getFieldError('contactoInstitucion')">
+            {{ getFieldError('contactoInstitucion') }}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>¿Por qué te gustaría hacer parte del PreICFES Gratuito versión 2025? *</label>
+        <textarea formControlName="razonParticipar" rows="4" placeholder="Escribe tu respuesta aquí..."></textarea>
+        <span class="error-message" *ngIf="getFieldError('razonParticipar')">
+          {{ getFieldError('razonParticipar') }}
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label>Se encuentra inscrito(a) para presentar la prueba Saber 11 en el mes de Agosto del 2025?</label>
+        <input type="text" formControlName="inscritoSaber11" placeholder="Sí o No" />
+      </div>
+
+      <div class="form-group">
+        <label>¿Qué te gustaría estudiar? También es válido mencionar si deseas trabajar antes de estudiar.</label>
+        <textarea formControlName="queEstudiar" rows="3" placeholder="Escribe tu respuesta aquí..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>¿En qué Institución de Educación Superior, Técnica, Tecnológica o Profesional? *</label>
+        <select formControlName="institucionSuperior">
+          <option value="">Seleccione...</option>
+          <option *ngFor="let inst of instituciones" [value]="inst">{{ inst }}</option>
+        </select>
+        <span class="error-message" *ngIf="getFieldError('institucionSuperior')">
+          {{ getFieldError('institucionSuperior') }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Paso 7: Simulacro -->
+    <div *ngIf="currentStep === 7" class="form-section">
+      <h2>Simulacro</h2>
+      <p class="section-info">
+        El PreICFES es 100% Gratuito en su formación. Si desea realizar uno o dos Simulacros, para medir sus conocimientos (100% personalizado - Puntaje Global Prueba Saber 11°) tendrá un costo no superior a los ($40.000) cada uno, en modalidad presencial o virtual que dependerá del número de interesad@s.
+      </p>
+      <div class="form-group">
+        <label>De ser así, ¿Estaría dispuesto(a) a pagar el costo de su simulacro? *</label>
+        <select formControlName="dispuestoPagarSimulacro">
+          <option value="">Seleccione...</option>
+          <option *ngFor="let disp of disposicionSimulacro" [value]="disp">{{ disp }}</option>
+        </select>
+        <span class="error-message" *ngIf="getFieldError('dispuestoPagarSimulacro')">
+          {{ getFieldError('dispuestoPagarSimulacro') }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Paso 8: Información Adicional -->
+    <div *ngIf="currentStep === 8" class="form-section">
+      <h2>Información Adicional</h2>
+      <div class="form-group">
+        <label>¿Cómo te enteraste de la convocatoria? *</label>
+        <select formControlName="comoSeEntero">
+          <option value="">Seleccione...</option>
+          <option *ngFor="let fuente of comoSeEntero" [value]="fuente">{{ fuente }}</option>
+        </select>
+        <span class="error-message" *ngIf="getFieldError('comoSeEntero')">
+          {{ getFieldError('comoSeEntero') }}
+        </span>
+      </div>
+
+      <div class="redes-reminder">
+        <p>No olvides, como requisito seguirnos en Redes Sociales, para estar al tanto de la convocatoria :D</p>
+        <div class="redes-links">
+          <a href="https://www.instagram.com/preicfesjovenesbogota/" target="_blank">Instagram</a>
+          <a href="https://www.facebook.com/profile.php?id=100085044704018" target="_blank">Facebook</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="form-actions">
+      <button 
+        type="button" 
+        class="btn-previous" 
+        (click)="previousStep()"
+        *ngIf="currentStep > 0"
+      >
+        ← Anterior
+      </button>
+      
+      <button 
+        type="button" 
+        class="btn-next" 
+        (click)="nextStep()"
+        *ngIf="currentStep < steps.length - 1"
+      >
+        Siguiente →
+      </button>
+      
+      <button 
+        type="submit" 
+        class="btn-submit" 
+        *ngIf="currentStep === steps.length - 1"
+        [disabled]="inscripcionForm.invalid || isSubmitting"
+      >
+        <span *ngIf="!isSubmitting">Enviar Preinscripción</span>
+        <span *ngIf="isSubmitting">Enviando...</span>
+      </button>
+    </div>
+  </form>
+</div>
