@@ -7,6 +7,11 @@
   box-sizing: border-box;
 }
 
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   background: #f5f7fa;
@@ -27,28 +32,29 @@ body {
 .nav-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 18px 8%;
+  padding: 16px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .nav-logo {
-  width: 78px;
+  width: 72px;
 }
 
 .nav-buttons {
   display: flex;
-  gap: 16px;
+  gap: 12px;
 }
 
 .nav-buttons a {
   text-decoration: none;
-  padding: 14px 32px;
+  padding: 12px 28px;
   border-radius: 30px;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.95rem;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .btn-login {
@@ -74,7 +80,7 @@ body {
    DIRECTIVOS SECTION
 ====================== */
 .directivos-section {
-  padding: 140px 10% 100px;
+  padding: 140px 20px 100px;
   background: white;
   text-align: center;
 }
@@ -119,10 +125,17 @@ body {
 ====================== */
 .directivos-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 48px;
   max-width: 1300px;
   margin: 0 auto;
+  padding: 0 10px;
+}
+
+/* CENTRAR COORDINADOR GENERAL */
+.directivos-cards.general {
+  display: flex;
+  justify-content: center;
 }
 
 /* ======================
@@ -130,10 +143,12 @@ body {
 ====================== */
 .directivo-card {
   background: #f5f7fa;
-  padding: 48px 30px 46px;
+  padding: 48px 32px;
   border-radius: 28px;
   box-shadow: 0 14px 35px rgba(0,0,0,0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 360px;
+  margin: 0 auto;
 }
 
 .directivo-card:hover {
@@ -141,10 +156,11 @@ body {
   box-shadow: 0 22px 50px rgba(0,0,0,0.15);
 }
 
-/* IMAGEN GRANDE */
+/* IMAGEN */
 .directivo-card img {
-  width: 210px;
-  height: 210px;
+  width: 220px;
+  height: 220px;
+  max-width: 100%;
   object-fit: cover;
   border-radius: 50%;
   border: 7px solid #2f5fd0;
@@ -154,7 +170,7 @@ body {
 
 /* TEXTO */
 .directivo-card h4 {
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   font-weight: 700;
   margin-bottom: 10px;
   color: #1f2a63;
@@ -167,16 +183,31 @@ body {
 }
 
 /* ======================
-   RESPONSIVE
+   RESPONSIVE MOBILE
 ====================== */
 @media (max-width: 768px) {
 
+  .nav-container {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .nav-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   .directivos-section {
-    padding: 120px 6% 80px;
+    padding: 120px 16px 80px;
   }
 
   .section-title {
     font-size: 2.1rem;
+  }
+
+  .section-text {
+    font-size: 1.15rem;
+    margin-bottom: 50px;
   }
 
   .subsection-title {
@@ -184,9 +215,18 @@ body {
     margin-top: 60px;
   }
 
+  .directivos-cards {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .directivo-card {
+    padding: 36px 24px;
+  }
+
   .directivo-card img {
-    width: 170px;
-    height: 170px;
+    width: 180px;
+    height: 180px;
   }
 
   .directivo-card h4 {
