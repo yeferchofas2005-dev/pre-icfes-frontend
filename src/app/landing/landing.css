@@ -340,12 +340,164 @@ body {
 }
 
 /* ======================
-   MAPA
+   LOCALIDADES SECTION
 ====================== */
-.map-placeholder {
-  height: 280px;
-  background: #ddd;
-  border-radius: 18px;
+.localidades-section {
+  background: #f5f7fa;
+}
+
+/* SLIDER CONTENEDOR */
+.localidades-slider {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 20px 0 10px;
+}
+
+.localidades-slider::-webkit-scrollbar {
+  display: none;
+}
+
+/* CARD */
+.localidad-card {
+  flex: 0 0 320px;
+  background: white;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+  scroll-snap-align: center;
+  transition: transform 0.3s ease;
+}
+
+.localidad-card:hover {
+  transform: translateY(-8px);
+}
+
+/* IMAGEN */
+.localidad-card img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+}
+
+/* INFO */
+.localidad-info {
+  padding: 22px;
+  text-align: center;
+}
+
+.localidad-info h3 {
+  font-size: 1.5rem;
+  color: #1f2a63;
+  margin-bottom: 8px;
+}
+
+.coordinador {
+  font-size: 1rem;
+  color: #2f5fd0;
+  margin-bottom: 10px;
+}
+
+.descripcion {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 18px;
+}
+
+/* ======================
+   LOCALIDADES SECTION
+====================== */
+.localidades-section {
+  background: #f5f7fa;
+  overflow: hidden;
+}
+
+/* ======================
+   SLIDER
+====================== */
+.localidades-slider {
+  display: flex;
+  gap: 24px;
+  padding: 20px 10%;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Scrollbar visible y elegante */
+.localidades-slider::-webkit-scrollbar {
+  height: 8px;
+}
+
+.localidades-slider::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.localidades-slider::-webkit-scrollbar-thumb {
+  background: rgba(31, 42, 99, 0.35);
+  border-radius: 10px;
+}
+
+.localidades-slider::-webkit-scrollbar-thumb:hover {
+  background: rgba(31, 42, 99, 0.55);
+}
+
+/* ======================
+   CARD
+====================== */
+.localidad-card {
+  flex: 0 0 320px;
+  background: #ffffff;
+  border-radius: 22px;
+  overflow: hidden;
+
+  box-shadow: 0 14px 35px rgba(0,0,0,0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.localidad-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 45px rgba(0,0,0,0.18);
+}
+
+/* ======================
+   IMAGEN
+====================== */
+.localidad-card img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ======================
+   INFO
+====================== */
+.localidad-info {
+  padding: 18px 20px 22px;
+}
+
+.localidad-info h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1f2a63;
+}
+
+.localidad-info .coordinador {
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  color: #2f5fd0;
+}
+
+.localidad-info .descripcion {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #555;
 }
 
 /* ======================
@@ -396,3 +548,27 @@ body {
     font-size: 1.05rem;
   }
 }
+
+/* ======================
+   RESPONSIVE – MOBILE - LOCALIDADES
+====================== */
+@media (max-width: 768px) {
+
+  .localidades-slider {
+    padding: 20px 6%;
+    gap: 18px;
+  }
+
+  .localidad-card {
+    flex: 0 0 85%;
+  }
+
+  .localidad-info h3 {
+    font-size: 1.3rem;
+  }
+
+  .localidad-info .descripcion {
+    font-size: 1rem;
+  }
+}
+

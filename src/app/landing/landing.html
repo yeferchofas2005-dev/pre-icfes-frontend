@@ -49,8 +49,9 @@
     />
 
     <div class="nav-buttons">
-      <a class="btn-login">Iniciar sesión</a>
-      <a class="btn-inscribete" routerLink="/inscripcion">Inscribete</a>
+      <a class="btn-login" routerLink="/login">Iniciar sesión</a>
+      <!-- <a class="btn-inscribete" routerLink="/inscripcion">Inscribete</a> -->
+      <a class="btn-inscribete" href="https://docs.google.com/forms/d/e/1FAIpQLScdw5BdO9yilAQvyFCqexUdwy9fVdBSsW0KD7DzzvfP7g--yw/viewform">Inscribete</a>
     </div>
   </div>
 </nav>
@@ -68,12 +69,8 @@
       Creemos en el poder transformador del conocimiento
     </p>
 
-    <a
-      routerLink="/inscripcion"
-      class="btn-primary"
-    >
-      Inscríbete
-    </a>
+    <!-- <a routerLink="/inscripcion" class="btn-primary">Inscríbete</a> -->
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLScdw5BdO9yilAQvyFCqexUdwy9fVdBSsW0KD7DzzvfP7g--yw/viewform" class="btn-primary">Inscríbete</a>
   </div>
 </header>
 
@@ -178,7 +175,10 @@
     Buscamos voluntarios comprometidos con la educación y el cambio social.
   </p>
 
-  <a href="/inscripcion-docente" class="btn-section">
+  <!-- <a routerLink="/inscripcion-docente" class="btn-section">
+    Quiero ser profesor voluntario
+  </a> -->
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfI02BUYT694v7mFPPCG0Hq-mSB3XX2TlIJ1WvFmcyG_Som_Q/viewform" class="btn-section">
     Quiero ser profesor voluntario
   </a>
 </section>
@@ -205,7 +205,190 @@
 <!-- ======================
      UBICACIÓN
 ====================== -->
-<section class="section">
+<section class="section localidades-section">
   <h2>¿Dónde nos ubicamos?</h2>
-  <a title="Milenioscuro, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Bogot%C3%A1_-_Antonio_Nari%C3%B1o.svg"><img width="512" alt="Bogotá - Antonio Nariño" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Bogot%C3%A1_-_Antonio_Nari%C3%B1o.svg/512px-Bogot%C3%A1_-_Antonio_Nari%C3%B1o.svg.png?20150820042502"></a>
+
+  <div class="localidades-slider">
+
+    <!-- SUBA -->
+    <div class="localidad-card">
+      <img src="assets/localidades/suba.jpg" alt="Localidad Suba" />
+      <div class="localidad-info">
+        <h3>Suba</h3>
+        <p class="coordinador">
+          Coordinador: <strong>Cesar Iván Hernández</strong>
+        </p>
+        <p class="descripcion">
+          Lugar por confirmar. Nodo enfocado en el acompañamiento académico
+          de jóvenes del norte de Bogotá.
+        </p>
+      </div>
+    </div>
+
+    <!-- KENNEDY -->
+    <div class="localidad-card">
+      <img src="assets/localidades/kennedy.jpg" alt="Localidad Kennedy" />
+      <div class="localidad-info">
+        <h3>Kennedy</h3>
+        <p class="coordinador">
+          Coordinador: <strong>José Wolf</strong>
+        </p>
+        <p class="descripcion">
+          Lugar por confirmar. Punto clave de formación académica
+          en el suroccidente de la ciudad.
+        </p>
+      </div>
+    </div>
+
+    <!-- SAN CRISTÓBAL -->
+    <div class="localidad-card">
+      <img src="assets/localidades/san-cristobal.jpg" alt="San Cristóbal" />
+      <div class="localidad-info">
+        <h3>San Cristóbal</h3>
+        <p class="coordinador">
+          Coordinadora: <strong>Heidy Tatiana Simbaqueva</strong>
+        </p>
+        <p class="descripcion">
+          Lugar por confirmar. Espacio comunitario para el fortalecimiento
+          académico de jóvenes del suroriente de Bogotá.
+        </p>
+      </div>
+    </div>
+
+    <!-- FONTIBÓN -->
+    <div class="localidad-card">
+      <img src="assets/localidades/fontibon.jpg" alt="Fontibón" />
+      <div class="localidad-info">
+        <h3>Fontibón</h3>
+        <p class="coordinador">
+          Coordinadora: <strong>Ariadna Vallecilla</strong>
+        </p>
+        <p class="descripcion">
+          Lugar por confirmar. Nodo de apoyo educativo para jóvenes
+          del occidente de la ciudad.
+        </p>
+      </div>
+    </div>
+
+    <!-- USME -->
+    <div class="localidad-card">
+      <img src="assets/localidades/usme.jpg" alt="Usme" />
+      <div class="localidad-info">
+        <h3>Usme</h3>
+        <p class="coordinador">
+          Coordinador: <strong>Brayan Jorsey Mejía</strong>
+        </p>
+        <p class="descripcion">
+          Lugar por confirmar. Acompañamiento académico para jóvenes
+          del sur de Bogotá.
+        </p>
+      </div>
+    </div>
+
+    <!-- CIUDAD BOLÍVAR -->
+    <div class="localidad-card">
+      <img src="assets/localidades/ciudad-bolivar.jpg" alt="Ciudad Bolívar" />
+      <div class="localidad-info">
+        <h3>Ciudad Bolívar</h3>
+        <p class="coordinador">
+          Coordinador: <strong>Jhoan Manuel Rodríguez Cerinza</strong>
+        </p>
+        <p class="descripcion">
+          Lugar por confirmar. Espacio de formación con enfoque social
+          y comunitario para jóvenes del sur.
+        </p>
+      </div>
+    </div>
+
+    <!-- BOSA -->
+    <div class="localidad-card">
+      <img src="assets/localidades/bosa.jpg" alt="Bosa" />
+      <div class="localidad-info">
+        <h3>Bosa</h3>
+        <p class="coordinador">
+          Coordinador: <strong>Juan David Santos Poblador</strong>
+        </p>
+        <p class="descripcion">
+          Lugar por confirmar. Nodo educativo para jóvenes
+          del suroccidente de Bogotá.
+        </p>
+      </div>
+    </div>
+
+    <!-- PUENTE ARANDA -->
+    <div class="localidad-card">
+      <img src="assets/localidades/puente-aranda.jpg" alt="Puente Aranda" />
+      <div class="localidad-info">
+        <h3>Puente Aranda</h3>
+        <p class="coordinador">
+          Coordinador: <strong>Por confirmar</strong>
+        </p>
+        <p class="descripcion">
+          Lugar por confirmar. Nodo estratégico en el centro-occidente
+          de la ciudad.
+        </p>
+      </div>
+    </div>
+
+    <!-- CENTRO / TEUSAQUILLO / UNAL -->
+    <div class="localidad-card">
+      <img src="assets/localidades/teusaquillo.jpg" alt="Centro - Teusaquillo" />
+      <div class="localidad-info">
+        <h3>Centro / Teusaquillo</h3>
+        <p class="coordinador">
+          Coordinador: <strong>Camilo Murillo</strong>
+        </p>
+        <p class="descripcion">
+          Lugar por confirmar. Nodo articulado con espacios universitarios
+          y académicos del centro de Bogotá.
+        </p>
+      </div>
+    </div>
+
+    <!-- ENGATIVÁ -->
+    <div class="localidad-card">
+      <img src="assets/localidades/engativa.jpg" alt="Engativá" />
+      <div class="localidad-info">
+        <h3>Engativá</h3>
+        <p class="coordinador">
+          Coordinador: <strong>Por confirmar</strong>
+        </p>
+        <p class="descripcion">
+          Lugar por confirmar. Nodo proyectado para atención académica
+          de jóvenes del noroccidente.
+        </p>
+      </div>
+    </div>
+
+    <!-- SOACHA -->
+    <div class="localidad-card">
+      <img src="assets/localidades/soacha.jpg" alt="Soacha" />
+      <div class="localidad-info">
+        <h3>Soacha</h3>
+        <p class="coordinador">
+          Coordinador: <strong>Por confirmar</strong>
+        </p>
+        <p class="descripcion">
+          Lugar por confirmar. Nodo metropolitano para jóvenes
+          del municipio de Soacha.
+        </p>
+      </div>
+    </div>
+
+    <!-- NODO VIRTUAL -->
+    <div class="localidad-card">
+      <img src="assets/localidades/virtual.jpg" alt="Nodo Virtual" />
+      <div class="localidad-info">
+        <h3>Virtual</h3>
+        <p class="coordinador">
+          Coordinador: <strong>Jefferson Escobar Rivas</strong>
+        </p>
+        <p class="descripcion">
+          Clases virtuales a través de Microsoft Teams para estudiantes
+          que no pueden asistir de manera presencial.
+        </p>
+      </div>
+    </div>
+
+  </div>
 </section>
