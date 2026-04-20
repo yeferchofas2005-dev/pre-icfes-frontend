@@ -43,7 +43,7 @@
 <nav class="navbar">
   <div class="nav-container">
     <img
-      src="assets/icon/logo.png"
+      src="assets/logo.png"
       alt="Preicfes Gratuito"
       class="nav-logo"
     />
@@ -60,86 +60,17 @@
      HERO
 ====================== -->
 <header class="hero">
-  <div class="hero-inner">
-    <div class="hero-copy">
-      <div class="hero-badge">Inscripciones abiertas · Bogotá D.C.</div>
+  <div class="hero-content">
+    <img src="assets/logo.png" alt="Preicfes Logo" class="logo" />
 
-      <h1>Preicfes gratuito para jóvenes</h1>
+    <h1>Preicfes gratuito para jóvenes</h1>
 
-      <p class="subtitle">
-        Creemos en el poder transformador del conocimiento.
-      </p>
+    <p class="subtitle">
+      Creemos en el poder transformador del conocimiento
+    </p>
 
-      <div class="hero-actions">
-        <a
-          href="https://docs.google.com/forms/d/e/1FAIpQLScdw5BdO9yilAQvyFCqexUdwy9fVdBSsW0KD7DzzvfP7g--yw/viewform"
-          class="btn-primary btn-hero"
-        >
-          Inscríbete ahora
-        </a>
-        <a href="#" class="btn-outline btn-hero">
-          Conoce el programa
-        </a>
-      </div>
-
-      <div class="hero-trust">
-        <span>Sin costo</span>
-        <span>Sin requisitos</span>
-        <span>Profesores voluntarios</span>
-      </div>
-    </div>
-
-    <div class="hero-media">
-      <div class="hero-media-main">
-        <img
-          src="assets/anuncios/Prepeople.jpg"
-          alt="Estudiantes preparándose"
-        />
-      </div>
-
-      <div class="hero-media-secondary">
-        <img
-          src="assets/anuncios/2Pre.jpg"
-          alt="Estudiante escribiendo"
-        />
-      </div>
-
-      <div class="hero-chip hero-chip-score">
-        <strong>+500 pts</strong>
-        <span>Mejora promedio</span>
-      </div>
-
-      <div class="hero-chip hero-chip-subject">
-        <strong>Lectura crítica</strong>
-        <span>Módulo desbloqueado</span>
-      </div>
-
-      <div class="instagram-link">
-        <a href="https://www.instagram.com/preicfesjovenesbogota/" target="_blank">
-          <img src="assets/instagram/Instagram_icon.png" alt="Instagram" class="instagram-logo" />
-          <span>Síguenos</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <strong>+4500</strong>
-      <span>Alumnos preparados</span>
-    </div>
-    <div class="hero-stat">
-      <strong>+13</strong>
-      <span>Semanas intensivas</span>
-    </div>
-    <div class="hero-stat">
-      <strong>Bogotá</strong>
-      <span>Sedes presenciales</span>
-    </div>
-    <div class="hero-stat">
-      <strong>Microsoft teams</strong>
-      <span>Clases virtuales</span>
-    </div>
+    <!-- <a routerLink="/inscripcion" class="btn-primary">Inscríbete</a> -->
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLScdw5BdO9yilAQvyFCqexUdwy9fVdBSsW0KD7DzzvfP7g--yw/viewform" class="btn-primary">Inscríbete</a>
   </div>
 </header>
 
@@ -202,25 +133,20 @@
   <h2 class="section-title">#MiCausaEs</h2>
 
   <div class="cards causa-cards">
-
     <div class="card causa-card">
       <h3>Educación</h3>
-      <img src="assets/micausaes/micausaes1.png" alt="Icono de educación" class="causa-icon" />
       <p>Creamos que la educación es la base para transformar realidades.</p>
     </div>
 
     <div class="card causa-card">
       <h3>Equidad</h3>
-      <img src="assets/micausaes/micausaes2.png" alt="Icono de equidad" class="causa-icon" />
       <p>Todos los jóvenes merecen las mismas oportunidades.</p>
     </div>
 
     <div class="card causa-card">
       <h3>Compromiso social</h3>
-      <img src="assets/micausaes/micausaes3.png" alt="Icono de compromiso social" class="causa-icon" />
       <p>Trabajamos por una Bogotá con más acceso al conocimiento.</p>
     </div>
-
   </div>
 </section>
 
@@ -282,7 +208,7 @@
 <section class="section certificate-section">
   <div class="certificate-card">
     <div>
-      <img src="assets/icon/logo.png" alt="Preicfes Logo" class="certificate-logo" />
+      <img src="assets/logo.png" alt="Preicfes Logo" class="certificate-logo" />
       <h2>¿Eres estudiante?</h2>
       <p class="section-text">
         Descarga tu certificado y verifica tu participación en el programa.
@@ -302,7 +228,7 @@
     <button class="close-btn" (click)="closeCertificateModal()">×</button>
 
     <div class="popup-content">
-      <img src="assets/icon/logo.png" alt="Preicfes Logo" class="certificate-popup-logo" />
+      <img src="assets/logo.png" alt="Preicfes Logo" class="certificate-popup-logo" />
       <h3>¿Eres estudiante?</h3>
       <p>Elige el tipo de documento y escribe tu número para descargar tu certificado.</p>
 
@@ -353,189 +279,167 @@
 
   <div class="localidades-slider">
 
-    <!-- NODO SAN CRISTÓBAL SUR -->
+    <!-- SUBA -->
     <div class="localidad-card">
-      <img src="assets/localidades/NodoSanCristobalSur.png" alt="Nodo San Cristóbal Sur" />
+      <img src="assets/localidades/suba.jpg" alt="Localidad Suba" />
       <div class="localidad-info">
-        <h3>Nodo San Cristóbal Sur</h3>
-        <p class="coordinador">
-          Coordinador: <strong>Heidy Tatiana Simbaqueva</strong>
-        </p>
-        <p class="descripcion">
-          Espacio de formación académica para jóvenes en San Cristóbal Sur.
-        </p>
-        <p class="direccion">
-          Dirección: 76 Sur, Cl. 25 Sur #9, Bogotá <a href="https://maps.app.goo.gl/q4q2XfTdaGDuHATu6" target="_blank" class="maps-link"><img src="assets/maps.png" alt="Ver en Maps" /><span>Ver en Maps</span></a>
-        </p>
-      </div>
-    </div>
-
-    <!-- NODO FONTIBÓN -->
-    <div class="localidad-card">
-      <img src="assets/localidades/NodoFontibon.png" alt="Nodo Fontibón" />
-      <div class="localidad-info">
-        <h3>Nodo Fontibón</h3>
-        <p class="coordinador">
-          Coordinador: <strong>Ariadna Vallecilla</strong>
-        </p>
-        <p class="descripcion">
-          Espacio de formación académica para jóvenes en Fontibón.
-        </p>
-        <p class="direccion">
-          Dirección: Cra. 104b #22, Bogotá <a href="https://maps.app.goo.gl/j6pG3rysaf1D63XY8" target="_blank" class="maps-link"><img src="assets/maps.png" alt="Ver en Maps" /><span>Ver en Maps</span></a>
-        </p>
-      </div>
-    </div>
-
-    <!-- NODO USME -->
-    <div class="localidad-card">
-      <img src="assets/localidades/NodoUsme-Ruu.png" alt="Nodo Usme" />
-      <div class="localidad-info">
-        <h3>Nodo Usme</h3>
-        <p class="coordinador">
-          Coordinador: <strong>Brayan Jorsey Mejía</strong>
-        </p>
-        <p class="descripcion">
-          Espacio de formación académica para jóvenes en Usme.
-        </p>
-        <p class="direccion">
-          Dirección: Calle 40 #24-55, Bogotá <a href="https://maps.app.goo.gl/vAKTxT7NycvEPmMh7" target="_blank" class="maps-link"><img src="assets/maps.png" alt="Ver en Maps" /><span>Ver en Maps</span></a>
-        </p>
-      </div>
-    </div>
-
-    <!-- NODO ENGATIVÁ -->
-    <div class="localidad-card">
-      <img src="assets/localidades/NodoEngativa.png" alt="Nodo Engativá" />
-      <div class="localidad-info">
-        <h3>Nodo Engativá</h3>
-        <p class="coordinador">
-          Coordinador: <strong>Por confirmar</strong>
-        </p>
-        <p class="descripcion">
-          Espacio de formación académica para jóvenes en Engativá.
-        </p>
-        <p class="direccion">
-          Dirección: Cl. 89 Bis #91-20, Engativá, Bogotá <a href="https://maps.app.goo.gl/F39mxom1HUjUSKFT9" target="_blank" class="maps-link"><img src="assets/maps.png" alt="Ver en Maps" /><span>Ver en Maps</span></a>
-        </p>
-      </div>
-    </div>
-
-    <!-- NODO SUBA -->
-    <div class="localidad-card">
-      <img src="assets/localidades/NodoSuba.png" alt="Nodo Suba" />
-      <div class="localidad-info">
-        <h3>Nodo Suba</h3>
+        <h3>Suba</h3>
         <p class="coordinador">
           Coordinador: <strong>Cesar Iván Hernández</strong>
         </p>
         <p class="descripcion">
-          Espacio de formación académica para jóvenes en Suba.
-        </p>
-        <p class="direccion">
-          Dirección: Cl. 130 Bis, Bogotá <a href="https://maps.app.goo.gl/YCTLR23ZrvLrYyjF7" target="_blank" class="maps-link"><img src="assets/maps.png" alt="Ver en Maps" /><span>Ver en Maps</span></a>
+          Lugar por confirmar. Nodo enfocado en el acompañamiento académico
+          de jóvenes del norte de Bogotá.
         </p>
       </div>
     </div>
 
-    <!-- NODO UNIVERSIDAD NACIONAL -->
+    <!-- KENNEDY -->
     <div class="localidad-card">
-      <img src="assets/localidades/NodoUniversidadNacionalSedeBogota.jpg" alt="Nodo Universidad Nacional" />
+      <img src="assets/localidades/kennedy.jpg" alt="Localidad Kennedy" />
       <div class="localidad-info">
-        <h3>Nodo Universidad Nacional</h3>
-        <p class="coordinador">
-          Coordinador: <strong>Camilo Murillo</strong>
-        </p>
-        <p class="descripcion">
-          Espacio de formación académica para jóvenes en Universidad Nacional.
-        </p>
-        <p class="direccion">
-          Dirección: Ave Cra 30 #45-3, Bogotá <a href="https://maps.app.goo.gl/WcxHdkc94fJCBWon6" target="_blank" class="maps-link"><img src="assets/maps.png" alt="Ver en Maps" /><span>Ver en Maps</span></a>
-        </p>
-      </div>
-    </div>
-
-    <!-- NODO CIUDAD BOLÍVAR -->
-    <div class="localidad-card">
-      <img src="assets/localidades/NodoCiudadBolivar.png" alt="Nodo Ciudad Bolívar" />
-      <div class="localidad-info">
-        <h3>Nodo Ciudad Bolívar</h3>
-        <p class="coordinador">
-          Coordinador: <strong>Jhoan Manuel Rodríguez Cerinza</strong>
-        </p>
-        <p class="descripcion">
-          Espacio de formación académica para jóvenes en Ciudad Bolívar.
-        </p>
-        <p class="direccion">
-          Dirección: Calle 68d Bis A Sur #49F - 70 <a href="https://maps.app.goo.gl/pjUfLNjJrbzxu9kJA" target="_blank" class="maps-link"><img src="assets/maps.png" alt="Ver en Maps" /><span>Ver en Maps</span></a>
-        </p>
-      </div>
-    </div>
-
-    <!-- NODO KENNEDY -->
-    <div class="localidad-card">
-      <img src="assets/localidades/NodoKennedy.png" alt="Nodo Kennedy" />
-      <div class="localidad-info">
-        <h3>Nodo Kennedy</h3>
+        <h3>Kennedy</h3>
         <p class="coordinador">
           Coordinador: <strong>José Wolf</strong>
         </p>
         <p class="descripcion">
-          Espacio de formación académica para jóvenes en Kennedy.
-        </p>
-        <p class="direccion">
-          Dirección: Cl. 38c Sur #79-08, Kennedy, Bogotá <a href="https://maps.app.goo.gl/QqAq9AZNJGVzLsqf9" target="_blank" class="maps-link"><img src="assets/maps.png" alt="Ver en Maps" /><span>Ver en Maps</span></a>
+          Lugar por confirmar. Punto clave de formación académica
+          en el suroccidente de la ciudad.
         </p>
       </div>
     </div>
 
-    <!-- NODO BOSA PORVENIR -->
+    <!-- SAN CRISTÓBAL -->
     <div class="localidad-card">
-      <img src="assets/localidades/NodoBosaPorvenir.png" alt="Nodo Bosa Porvenir" />
+      <img src="assets/localidades/san_cristobal.jpg" alt="San Cristóbal" />
       <div class="localidad-info">
-        <h3>Nodo Bosa Porvenir</h3>
+        <h3>San Cristóbal</h3>
+        <p class="coordinador">
+          Coordinadora: <strong>Heidy Tatiana Simbaqueva</strong>
+        </p>
+        <p class="descripcion">
+          Lugar por confirmar. Espacio comunitario para el fortalecimiento
+          académico de jóvenes del suroriente de Bogotá.
+        </p>
+      </div>
+    </div>
+
+    <!-- FONTIBÓN -->
+    <div class="localidad-card">
+      <img src="assets/localidades/fontibon.jpg" alt="Fontibón" />
+      <div class="localidad-info">
+        <h3>Fontibón</h3>
+        <p class="coordinador">
+          Coordinadora: <strong>Ariadna Vallecilla</strong>
+        </p>
+        <p class="descripcion">
+          Lugar por confirmar. Nodo de apoyo educativo para jóvenes
+          del occidente de la ciudad.
+        </p>
+      </div>
+    </div>
+
+    <!-- USME -->
+    <div class="localidad-card">
+      <img src="assets/localidades/usme.jpg" alt="Usme" />
+      <div class="localidad-info">
+        <h3>Usme</h3>
+        <p class="coordinador">
+          Coordinador: <strong>Brayan Jorsey Mejía</strong>
+        </p>
+        <p class="descripcion">
+          Lugar por confirmar. Acompañamiento académico para jóvenes
+          del sur de Bogotá.
+        </p>
+      </div>
+    </div>
+
+    <!-- CIUDAD BOLÍVAR -->
+    <div class="localidad-card">
+      <img src="assets/localidades/ciudad_bolivar.jpg" alt="Ciudad Bolívar" />
+      <div class="localidad-info">
+        <h3>Ciudad Bolívar</h3>
+        <p class="coordinador">
+          Coordinador: <strong>Jhoan Manuel Rodríguez Cerinza</strong>
+        </p>
+        <p class="descripcion">
+          Lugar por confirmar. Espacio de formación con enfoque social
+          y comunitario para jóvenes del sur.
+        </p>
+      </div>
+    </div>
+
+    <!-- BOSA -->
+    <div class="localidad-card">
+      <img src="assets/localidades/bosa.jpg" alt="Bosa" />
+      <div class="localidad-info">
+        <h3>Bosa</h3>
         <p class="coordinador">
           Coordinador: <strong>Juan David Santos Poblador</strong>
         </p>
         <p class="descripcion">
-          Espacio de formación académica para jóvenes en Bosa Porvenir.
-        </p>
-        <p class="direccion">
-          Dirección: Cl. 52 Sur #93d-39, Bogotá <a href="https://maps.app.goo.gl/5CWpiABD5GaBTPxT9" target="_blank" class="maps-link"><img src="assets/maps.png" alt="Ver en Maps" /><span>Ver en Maps</span></a>
+          Lugar por confirmar. Nodo educativo para jóvenes
+          del suroccidente de Bogotá.
         </p>
       </div>
     </div>
 
-    <!-- NODO UNIMINUTO PERDOMO - SOACHA -->
+    <!-- PUENTE ARANDA -->
     <div class="localidad-card">
-      <img src="assets/localidades/NodoUniminutoPerdomo-Soacha.png" alt="Nodo Uniminuto Perdomo - Soacha" />
+      <img src="assets/localidades/puente_aranda.jpg" alt="Puente Aranda" />
       <div class="localidad-info">
-        <h3>Nodo Uniminuto Perdomo - Soacha</h3>
+        <h3>Puente Aranda</h3>
         <p class="coordinador">
           Coordinador: <strong>Por confirmar</strong>
         </p>
         <p class="descripcion">
-          Espacio de formación académica para jóvenes en Uniminuto Perdomo - Soacha.
-        </p>
-        <p class="direccion">
-          Dirección: 59 Sur98 Cra. 72 <a href="https://maps.app.goo.gl/PNRzKJQkK3nbXhG28" target="_blank" class="maps-link"><img src="assets/maps.png" alt="Ver en Maps" /><span>Ver en Maps</span></a>
+          Lugar por confirmar. Nodo estratégico en el centro-occidente
+          de la ciudad.
         </p>
       </div>
     </div>
 
-    <!-- NODO PUENTE ARANDA -->
+    <!-- CENTRO / TEUSAQUILLO / UNAL -->
     <div class="localidad-card">
-      <img src="assets/localidades/NodoPuenteAranda.png" alt="Nodo Puente Aranda" />
+      <img src="assets/localidades/teusaquillo.jpg" alt="Centro - Teusaquillo" />
       <div class="localidad-info">
-        <h3>Nodo Puente Aranda</h3>
+        <h3>Centro / Teusaquillo</h3>
+        <p class="coordinador">
+          Coordinador: <strong>Camilo Murillo</strong>
+        </p>
+        <p class="descripcion">
+          Lugar por confirmar. Nodo articulado con espacios universitarios
+          y académicos del centro de Bogotá.
+        </p>
+      </div>
+    </div>
+
+    <!-- ENGATIVÁ -->
+    <div class="localidad-card">
+      <img src="assets/localidades/engativa.jpg" alt="Engativá" />
+      <div class="localidad-info">
+        <h3>Engativá</h3>
         <p class="coordinador">
           Coordinador: <strong>Por confirmar</strong>
         </p>
         <p class="descripcion">
-          Espacio de formación académica para jóvenes en Puente Aranda.
+          Lugar por confirmar. Nodo proyectado para atención académica
+          de jóvenes del noroccidente.
         </p>
-        <p class="direccion">
-          Dirección: Cl. 1b #52A-02, Puente Aranda, Bogotá <a href="https://maps.app.goo.gl/G7usDvx4ErHGf8CC6" target="_blank" class="maps-link"><img src="assets/maps.png" alt="Ver en Maps" /><span>Ver en Maps</span></a>
+      </div>
+    </div>
+
+    <!-- SOACHA -->
+    <div class="localidad-card">
+      <img src="assets/localidades/soacha.jpg" alt="Soacha" />
+      <div class="localidad-info">
+        <h3>Soacha</h3>
+        <p class="coordinador">
+          Coordinador: <strong>Por confirmar</strong>
+        </p>
+        <p class="descripcion">
+          Lugar por confirmar. Nodo metropolitano para jóvenes
+          del municipio de Soacha.
         </p>
       </div>
     </div>
@@ -544,12 +448,13 @@
     <div class="localidad-card">
       <img src="assets/localidades/virtual.jpg" alt="Nodo Virtual" />
       <div class="localidad-info">
-        <h3>Nodo Virtual</h3>
+        <h3>Virtual</h3>
         <p class="coordinador">
           Coordinador: <strong>Jefferson Escobar Rivas</strong>
         </p>
         <p class="descripcion">
-          Clases virtuales a través de Microsoft Teams para estudiantes que no pueden asistir de manera presencial.
+          Clases virtuales a través de Microsoft Teams para estudiantes
+          que no pueden asistir de manera presencial.
         </p>
       </div>
     </div>
