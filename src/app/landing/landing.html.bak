@@ -60,86 +60,17 @@
      HERO
 ====================== -->
 <header class="hero">
-  <div class="hero-inner">
-    <div class="hero-copy">
-      <div class="hero-badge">Inscripciones abiertas · Bogotá D.C.</div>
+  <div class="hero-content">
+    <img src="assets/logo.png" alt="Preicfes Logo" class="logo" />
 
-      <h1>Preicfes gratuito para jóvenes</h1>
+    <h1>Preicfes gratuito para jóvenes</h1>
 
-      <p class="subtitle">
-        Creemos en el poder transformador del conocimiento.
-      </p>
+    <p class="subtitle">
+      Creemos en el poder transformador del conocimiento
+    </p>
 
-      <div class="hero-actions">
-        <a
-          href="https://docs.google.com/forms/d/e/1FAIpQLScdw5BdO9yilAQvyFCqexUdwy9fVdBSsW0KD7DzzvfP7g--yw/viewform"
-          class="btn-primary btn-hero"
-        >
-          Inscríbete ahora
-        </a>
-        <a href="#" class="btn-outline btn-hero">
-          Conoce el programa
-        </a>
-      </div>
-
-      <div class="hero-trust">
-        <span>Sin costo</span>
-        <span>Sin requisitos</span>
-        <span>Profesores voluntarios</span>
-      </div>
-    </div>
-
-    <div class="hero-media">
-      <div class="hero-media-main">
-        <img
-          src="assets/anuncios/Prepeople.jpg"
-          alt="Estudiantes preparándose"
-        />
-      </div>
-
-      <div class="hero-media-secondary">
-        <img
-          src="assets/anuncios/2Pre.jpg"
-          alt="Estudiante escribiendo"
-        />
-      </div>
-
-      <div class="hero-chip hero-chip-score">
-        <strong>+500 pts</strong>
-        <span>Mejora promedio</span>
-      </div>
-
-      <div class="hero-chip hero-chip-subject">
-        <strong>Lectura crítica</strong>
-        <span>Módulo desbloqueado</span>
-      </div>
-
-      <div class="instagram-link">
-        <a href="https://www.instagram.com/preicfesjovenesbogota/" target="_blank">
-          <img src="assets/instagram/Instagram_icon.png" alt="Instagram" class="instagram-logo" />
-          <span>Síguenos</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <strong>100%</strong>
-      <span>Costo cubierto</span>
-    </div>
-    <div class="hero-stat">
-      <strong>+1000</strong>
-      <span>Alumnos preparados</span>
-    </div>
-    <div class="hero-stat">
-      <strong>+12</strong>
-      <span>Semanas intensivas</span>
-    </div>
-    <div class="hero-stat">
-      <strong>Bogotá</strong>
-      <span>Sedes presenciales</span>
-    </div>
+    <!-- <a routerLink="/inscripcion" class="btn-primary">Inscríbete</a> -->
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLScdw5BdO9yilAQvyFCqexUdwy9fVdBSsW0KD7DzzvfP7g--yw/viewform" class="btn-primary">Inscríbete</a>
   </div>
 </header>
 

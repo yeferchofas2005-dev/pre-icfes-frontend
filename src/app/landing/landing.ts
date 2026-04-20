@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -53,6 +53,48 @@ export class Landing {
 
   closeIntroPopup() {
     this.showIntroPopup = false;
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      if (this.showIntroPopup) {
+        this.closeIntroPopup();
+      } else if (this.showCertificateModal) {
+        this.closeCertificateModal();
+      }
+    }
+  }
+
+  /* ======================
+     CERTIFICADO
+  ====================== */
+  showCertificateModal = false;
+  certificateStatusMessage = '';
+
+  openCertificateModal() {
+    this.certificateStatusMessage = '';
+    this.showCertificateModal = true;
+  }
+
+  closeCertificateModal() {
+    this.showCertificateModal = false;
+  }
+
+  submitCertificate(documentType: string, documentNumber: string) {
+    const trimmedNumber = documentNumber?.trim();
+    if (!documentType || !trimmedNumber) {
+      this.certificateStatusMessage = 'Por favor selecciona el tipo de documento e ingresa el número.';
+      return;
+    }
+
+    const typeLabel = documentType === 'cc'
+      ? 'Cédula de ciudadanía'
+      : documentType === 'ti'
+      ? 'Tarjeta de identidad'
+      : 'Cédula de extranjería';
+
+    this.certificateStatusMessage = `Documento seleccionado: ${typeLabel}. Número: ${trimmedNumber}`;
   }
 }
 
