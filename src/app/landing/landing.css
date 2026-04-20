@@ -704,6 +704,63 @@ body {
   display: none;
 }
 
+.direccion {
+  display: inline;
+  margin-top: 4px;
+  margin-bottom: 0;
+  color: #2f2f59;
+  font-size: 0.95rem;
+  line-height: 1.05;
+}
+
+.maps-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #1f2a63;
+  font-weight: 700;
+  text-decoration: none;
+  vertical-align: middle;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+
+.maps-link img {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 14px;
+}
+
+.maps-link span {
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.localidad-info .direccion {
+  margin-bottom: 0;
+}
+
+.localidad-info .direccion a.maps-link {
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+}
+
+.localidad-card .maps-link img {
+  width: 14px;
+  height: 14px;
+  max-width: 14px;
+  display: inline-block;
+}
+
+.localidad-card .maps-link {
+  align-items: center;
+  gap: 0.25rem;
+}
+
 .certificate-section {
   padding: 40px 0 24px;
   background: #f7f9ff;
