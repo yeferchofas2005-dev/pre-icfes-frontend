@@ -616,6 +616,8 @@ body {
 /* ======================
    MI CAUSA ES
 ====================== */
+
+/* GRID */
 .causa-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -624,23 +626,64 @@ body {
   margin: auto;
 }
 
-.causa-card p {
-  font-size: 1.15rem;      
-  line-height: 1.7;
-  color: #3a3a3a;
+/* CARD */
+.causa-card {
+  text-align: center;
+  padding: 30px 25px;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* HOVER CARD */
+.causa-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* TITULO */
 .causa-card h3 {
   font-size: 1.45rem;
   color: #2f5fd0;
-  margin-bottom: 14px;
+  margin-bottom: 15px;
 }
 
+/* IMAGEN RECTANGULAR GRANDE */
+.causa-icon {
+  width: 100%;             
+  max-width: 380px;         /* límite para que no se vuelva gigante */
+  height: 220px;            /* forma rectangular */
+  
+  object-fit: cover;
+  border-radius: 16px;
+  margin: 20px auto;
+  display: block;
+
+  /* sombra elegante */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* HOVER */
+.causa-card:hover .causa-icon {
+  transform: scale(1.03);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* HOVER IMAGEN */
+.causa-card:hover .causa-icon {
+  transform: scale(1.05);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+/* TEXTO */
 .causa-card p {
   font-size: 1.05rem;
+  line-height: 1.6;
   color: #3a3a3a;
 }
-
 /* ======================
    LOCALIDADES SECTION
 ====================== */
