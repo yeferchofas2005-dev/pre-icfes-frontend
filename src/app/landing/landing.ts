@@ -1,10 +1,12 @@
 import { Component, HostListener } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { CertificateService } from '../services/certificate.service';
+import { CertificateComponent } from '../certificate/certificate.component';
 
 @Component({
   selector: 'app-landing',
-  imports: [NgIf, RouterLink],
+  imports: [NgIf, RouterLink, CertificateComponent],
   templateUrl: './landing.html',
   styleUrl: './landing.css',
 })
@@ -62,6 +64,8 @@ export class Landing {
         this.closeIntroPopup();
       } else if (this.showCertificateModal) {
         this.closeCertificateModal();
+      } else if (this.showCertificateView) {
+        this.closeCertificateView();
       }
     }
   }
@@ -70,7 +74,12 @@ export class Landing {
      CERTIFICADO
   ====================== */
   showCertificateModal = false;
+  showCertificateView = false;
   certificateStatusMessage = '';
+  selectedNodo = '';
+  certificateData: any = {};
+
+  constructor(private certificateService: CertificateService) {}
 
   openCertificateModal() {
     this.certificateStatusMessage = '';
@@ -81,20 +90,56 @@ export class Landing {
     this.showCertificateModal = false;
   }
 
-  submitCertificate(documentType: string, documentNumber: string) {
+  closeCertificateView() {
+    this.showCertificateView = false;
+  }
+
+  submitCertificate(documentType: string, documentNumber: string, nodoValue: string) {
     const trimmedNumber = documentNumber?.trim();
-    if (!documentType || !trimmedNumber) {
-      this.certificateStatusMessage = 'Por favor selecciona el tipo de documento e ingresa el número.';
+    const nodo = this.getNodoName(nodoValue);
+    if (!documentType || !trimmedNumber || !nodo) {
+      this.certificateStatusMessage = 'Por favor selecciona el tipo de documento, ingresa el número y selecciona el nodo.';
       return;
     }
 
-    const typeLabel = documentType === 'cc'
-      ? 'Cédula de ciudadanía'
-      : documentType === 'ti'
-      ? 'Tarjeta de identidad'
-      : 'Cédula de extranjería';
+    this.certificateService.getStudentData(nodo, trimmedNumber).subscribe(data => {
+      if (data) {
+        this.certificateData = {
+          nombre: data.nombre || '',
+          documento: trimmedNumber,
+          nodo: nodo,
+          tipoDocumento: documentType.toUpperCase(),
+          direccion: this.certificateService.getDireccion(nodo),
+          coordinador: this.certificateService.getCoordinador(nodo)
+        };
+        console.log('Datos del certificado:', this.certificateData);
+        this.showCertificateModal = false;
+        this.showCertificateView = true;
+      } else {
+        this.certificateStatusMessage = 'Estudiante no encontrado en el nodo seleccionado.';
+      }
+    }, error => {
+      this.certificateStatusMessage = 'Error al consultar los datos. Inténtalo de nuevo.';
+      console.error(error);
+    });
+  }
 
-    this.certificateStatusMessage = `Documento seleccionado: ${typeLabel}. Número: ${trimmedNumber}`;
+  getNodoName(value: string): string {
+    const map: { [key: string]: string } = {
+      'san-cristobal-sur': 'Nodo San Cristóbal Sur',
+      'fontibon': 'FONTIBÓN',
+      'usme': 'Nodo Usme',
+      'engativa': 'Engativá',
+      'suba': 'Nodo Suba',
+      'universidad-nacional': 'UNAL',
+      'ciudad-bolivar': 'CIUDAD BOLIVAR',
+      'kennedy': 'KENNEDY',
+      'bosa-porvenir': 'BOSA',
+      'uniminuto-soacha': 'UNIMINUTO PERDOMO',
+      'puente-aranda': 'PUENTE ARANDA',
+      'virtual': 'Nodo Virtual'
+    };
+    return map[value] || '';
   }
 }
 

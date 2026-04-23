@@ -323,9 +323,26 @@
           maxlength="20"
         />
 
+        <label for="nodo">Selecciona tu nodo</label>
+        <select id="nodo" #certNodo>
+          <option value="">Elige un nodo...</option>
+          <option value="san-cristobal-sur">Nodo San Cristóbal Sur</option>
+          <option value="fontibon">Nodo Fontibón</option>
+          <option value="usme">Nodo Usme</option>
+          <option value="engativa">Nodo Engativá</option>
+          <option value="suba">Nodo Suba</option>
+          <option value="universidad-nacional">Nodo Universidad Nacional</option>
+          <option value="ciudad-bolivar">Nodo Ciudad Bolívar</option>
+          <option value="kennedy">Nodo Kennedy</option>
+          <option value="bosa-porvenir">Nodo Bosa Porvenir</option>
+          <option value="uniminuto-soacha">Nodo Uniminuto Perdomo - Soacha</option>
+          <option value="puente-aranda">Nodo Puente Aranda</option>
+          <option value="virtual">Nodo Virtual</option>
+        </select>
+
         <button
           class="btn-primary btn-small"
-          (click)="submitCertificate(certType.value, certNumber.value)"
+          (click)="submitCertificate(certType.value, certNumber.value, certNodo.value)"
         >
           Continuar
         </button>
@@ -335,6 +352,23 @@
         </p>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ======================
+     VISTA CERTIFICADO
+====================== -->
+<div class="overlay certificate-overlay" *ngIf="showCertificateView">
+  <div class="popup-slider certificate-popup">
+    <button class="close-btn" (click)="closeCertificateView()">×</button>
+    <app-certificate 
+      [nombre]="certificateData.nombre" 
+      [documento]="certificateData.documento" 
+      [nodo]="certificateData.nodo" 
+      [tipoDocumento]="certificateData.tipoDocumento" 
+      [direccion]="certificateData.direccion" 
+      [coordinador]="certificateData.coordinador">
+    </app-certificate>
   </div>
 </div>
 
