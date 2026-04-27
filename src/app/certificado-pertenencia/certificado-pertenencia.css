@@ -1,0 +1,157 @@
+/* certificate.component.css */
+
+/* ── HOJA ── */
+.certificado {
+  width: 794px;
+  min-height: 1050px;
+  background: #f4f4f4;
+  padding: 50px 55px;
+  box-sizing: border-box;
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+}
+
+/* ── ONDA AZUL SUPERIOR ── */
+.certificado::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 85px;
+  background: #2f5fd0;
+  border-bottom-left-radius: 100% 50px;
+  border-bottom-right-radius: 100% 50px;
+}
+
+/* ── ONDA AMARILLA SUPERIOR DERECHA ── */
+.certificado::after {
+  content: "";
+  position: absolute;
+  top: 35px;
+  right: 0;
+  width: 260px;
+  height: 100px;
+  background: #f5a623;
+  border-bottom-left-radius: 150px;
+}
+
+/* ── ENCABEZADO ── */
+.cert__header {
+  position: relative;
+  z-index: 2;
+}
+
+.cert__header table {
+  width: 100%;
+}
+
+.cert__header p {
+  margin: 4px 0;
+  font-size: 13px;
+}
+
+.cert__logo {
+  width: 80px;
+}
+
+/* ── FECHA ── */
+.cert__fecha {
+  margin-top: 20px;
+  font-size: 13px;
+  text-align: right;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── TÍTULO ── */
+.cert__titulo {
+  text-align: center;
+  margin-top: 25px;
+  position: relative;
+  z-index: 2;
+}
+
+.cert__titulo h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.cert__titulo h4 {
+  margin: 5px 0 0 0;
+  font-size: 15px;
+}
+
+/* ── CONTENIDO ── */
+.cert__contenido {
+  margin-top: 25px;
+  font-size: 12.8px;
+  text-align: justify;
+  line-height: 1.75;
+  position: relative;
+  z-index: 2;
+}
+
+.cert__contenido p {
+  margin-bottom: 14px;
+}
+
+/* ── FIRMAS ── */
+.cert__firmas {
+  margin-top: 60px;
+  position: relative;
+  z-index: 2;
+}
+
+.cert__firmas table {
+  width: 100%;
+  text-align: center;
+}
+
+.cert__firma-img {
+  width: 120px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  transform: translateX(-10px); /* ajusta este valor */
+}
+
+/* Espacio en blanco donde iría la firma del coordinador de nodo */
+.cert__firma-espacio {
+  width: 120px;
+  height: 60px;
+  margin: 0 auto;
+}
+
+.cert__linea {
+  margin-top: 5px;
+  border-top: 1px solid black;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cert__firma-nombre {
+  font-weight: bold;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.cert__firma-cargo {
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+/* ── DECORACIÓN TRIÁNGULO INFERIOR DERECHA ── */
+.cert__decoracion {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 160px;
+  height: 110px;
+  background: linear-gradient(135deg, #2f5fd0 50%, #f5a623 50%);
+  clip-path: polygon(100% 0, 0 100%, 100% 100%);
+  z-index: 1;
+}

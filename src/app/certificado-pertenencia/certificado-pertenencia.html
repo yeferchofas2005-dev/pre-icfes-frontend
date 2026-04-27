@@ -1,0 +1,92 @@
+<!-- certificate.component.html -->
+<!-- Este componente se renderiza invisible y se descarga como PDF automáticamente -->
+
+<div class="certificado" id="certificate-content">
+
+  <!-- ── ENCABEZADO ── -->
+  <div class="cert__header">
+    <table>
+      <tr>
+        <td>
+          <p><strong>Correo electrónico:</strong> preicfesjovenesbogota@gmail.com</p>
+          <p><strong>Página web:</strong> www.preicfesgratuito.com</p>
+        </td>
+        <td align="right">
+          <img src="assets/icon/logo.png" alt="Logo PreICFES" class="cert__logo"/>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ── FECHA ── -->
+  <p class="cert__fecha">Bogotá D.C., {{ fecha }}</p>
+
+  <!-- ── TÍTULO ── -->
+  <div class="cert__titulo">
+    <h3>EL PREICFES JÓVENES BOGOTÁ</h3>
+    <h4>CERTIFICA QUE:</h4>
+  </div>
+
+  <!-- ── CONTENIDO ── -->
+  <div class="cert__contenido">
+
+    <p>
+      <strong>{{ nombre }}</strong>, identificado(a) con {{ tipoDocLabel }} No.
+      <strong>{{ documento }}</strong>, se encuentra inscrito(a) como beneficiario(a) del
+      <strong>PreICFES Gratuito para Jóvenes en Bogotá</strong>, una iniciativa popular y comunitaria
+      con enfoque diferencial, que acompaña el proceso de preparación académica de manera 100% gratuita
+      a jóvenes de diversas localidades de la ciudad.
+    </p>
+
+    <p>
+      Este proceso formativo aborda de manera integral los cinco módulos evaluados en la
+      <strong>Prueba Saber 11°</strong>, desarrollando competencias en Matemáticas (Precálculo, estadística,
+      geometría y razonamiento lógico), Sociales y Ciudadanas (historia mundial y de Colombia, geografía,
+      formas de gobierno y mecanismos de participación), Inglés (escritura, gramática y vocabulario),
+      Ciencias Naturales (física, química y biología) y Lectura Crítica (comprensión de textos y habilidades
+      de escritura). Además, el programa incluye acompañamiento en orientación vocacional, con el objetivo
+      de fortalecer el proyecto de vida de cada participante.
+    </p>
+
+    <p>
+      El programa se desarrolla todos los sábados, desde el <strong>11 de abril de 2026</strong>,
+      hasta el <strong>25 de julio de 2026</strong>, en el horario de <strong>8:00 a.m. a 12:30 p.m.</strong>,
+      en el <strong>{{ nodoInfo.nombreCompleto }} ({{ nodoInfo.direccion }})</strong>.
+    </p>
+
+    <p>Se expide el presente certificado a solicitud de el/la interesado(a).</p>
+
+    <p>Dada en Bogotá D.C., a los {{ dia }} días del mes de {{ mes }} de {{ anio }}.</p>
+
+    <p>Cordialmente,</p>
+
+  </div>
+
+  <!-- ── FIRMAS ── -->
+  <div class="cert__firmas">
+    <table>
+      <tr>
+        <!-- Firma coordinación general -->
+        <td>
+          <img src="assets\certificado\firmaCordinador.png" alt="Firma" class="cert__firma-img"/>
+          <div class="cert__linea"></div>
+          <div class="cert__firma-nombre">Jefferson Escobar Rivas</div>
+          <div class="cert__firma-cargo">Coordinación General</div>
+          <div class="cert__firma-cargo">PreICFES Gratuito "Jóvenes en Bogotá"</div>
+        </td>
+
+        <!-- Firma coordinador de nodo -->
+        <td>
+            <p class="">{{ nodoInfo.coordinador }}</p>
+            <div class="cert__linea"></div>
+            <div class="cert__firma-nombre">{{ nodoInfo.coordinador }}</div>
+            <div class="cert__firma-cargo">Coordinador {{ nodoInfo.nombreCompleto }}</div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ── DECORACIÓN INFERIOR ── -->
+  <div class="cert__decoracion"></div>
+
+</div>
