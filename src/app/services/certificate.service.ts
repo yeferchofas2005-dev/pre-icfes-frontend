@@ -2,105 +2,162 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+/* =============================================================================
+   MODELOS DE DATOS
+============================================================================= */
+
+/** Representa los datos de un estudiante tal como vienen del Google Sheet */
+export interface Student {
+  nombre:    string;
+  tipoDoc:   string;
+  documento: string;
+}
+
+/** Información estática de cada nodo para mostrar en el certificado */
+export interface NodoInfo {
+  nombreCompleto: string; // nombre completo del nodo, ej: "Nodo Bosa Porvenir"
+  direccion:      string;
+  coordinador:    string;
+}
+
+/* =============================================================================
+   SERVICIO
+============================================================================= */
+
+@Injectable({ providedIn: 'root' })
 export class CertificateService {
-  private apiKey = 'AIzaSyBPZ6hvV_wwCrhCqzrsPTjNBx3s4HSBYZE'; // Reemplaza con tu API key de Google
-  private spreadsheetId = '1ee9Es1yReB8-yYLBb8EW3z2WG6VshKKXmdURAEcg6fw';
 
-  constructor(private http: HttpClient) { }
+  /* ---------------------------------------------------------------------------
+     Configuración de la API de Google Sheets
+  --------------------------------------------------------------------------- */
 
-  getStudentData(sheetName: string, documentNumber: string): Observable<any> {
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${this.spreadsheetId}/values/${sheetName}!A:Z?key=${this.apiKey}`;
+  private readonly API_KEY        = 'AIzaSyAmbfU_CtpUFCZbMTAz1nmFpieM0qZDVHQ';
+  private readonly SPREADSHEET_ID = '1ee9Es1yReB8-yYLBb8EW3z2WG6VshKKXmdURAEcg6fw';
+
+  /**
+   * Estructura fija de todas las pestañas del sheet:
+   * - Las primeras 5 filas son encabezado con logo e info del nodo
+   * - Fila 6 (índice 5) = títulos de columnas
+   * - Fila 7 en adelante = datos de estudiantes
+   *
+   * Columnas:
+   *   A (índice 0) = N°
+   *   B (índice 1) = NOMBRE COMPLETO
+   *   C (índice 2) = TIPO DOC
+   *   D (índice 3) = DOCUMENTO
+   */
+  private readonly HEADER_ROW = 6; // filas a saltar antes de llegar a los datos
+  private readonly COL_NOMBRE = 1; // columna B
+  private readonly COL_TIPO   = 2; // columna C
+  private readonly COL_DOC    = 3; // columna D
+
+  /* ---------------------------------------------------------------------------
+     Información estática de cada nodo
+     La key debe coincidir EXACTAMENTE con el nombre de la pestaña en el sheet
+  --------------------------------------------------------------------------- */
+
+  private readonly NODOS: { [key: string]: NodoInfo } = {
+    'BOSA': {
+      nombreCompleto: 'Nodo Bosa Porvenir',
+      direccion:      'Cl. 52 Sur #93d-39, Bogotá',
+      coordinador:    'Juan David Santos Poblador'
+    },
+    'UNAL': {
+      nombreCompleto: 'Nodo Universidad Nacional',
+      direccion:      'Ave Cra 30 #45-3, Bogotá',
+      coordinador:    'Gerson Eduardo Pachón Huertas'
+    },
+    'CIUDAD BOLIVAR': {
+      nombreCompleto: 'Nodo Ciudad Bolívar',
+      direccion:      'Calle 68d Bis A Sur #49F-70, Bogotá',
+      coordinador:    'Jhoan Manuel Rodríguez Cerinza'
+    },
+    'UNIMINUTO PERDOMO': {
+      nombreCompleto: 'Nodo Uniminuto Perdomo',
+      direccion:      'Cra. 72 #59 Sur-98, Bogotá',
+      coordinador:    'Brayan Jorsey Mejía Castillo'
+    },
+    'ENGATIVA': {
+      nombreCompleto: 'Nodo Engativá',
+      direccion:      'Cl. 89 Bis #91-20, Engativá, Bogotá',
+      coordinador:    'César Iván'
+    },
+    'FONTIBON': {
+      nombreCompleto: 'Nodo Fontibón',
+      direccion:      'Cra. 104b #22, Bogotá',
+      coordinador:    'Ariadna Vallecilla'
+    },
+    'PUENTE ARANDA': {
+      nombreCompleto: 'Nodo Puente Aranda',
+      direccion:      'Cl. 1b #52A-02, Puente Aranda, Bogotá',
+      coordinador:    'Juan Esteban Yaso'
+    },
+    'KENNEDY': {
+      nombreCompleto: 'Nodo Kennedy',
+      direccion:      'Cl. 38c Sur #79-08, Kennedy, Bogotá',
+      coordinador:    'José Wolf'
+    }
+  };
+
+  constructor(private http: HttpClient) {}
+
+  /* ---------------------------------------------------------------------------
+     MÉTODOS PÚBLICOS
+  --------------------------------------------------------------------------- */
+
+  /**
+   * Busca un estudiante por número de documento en la pestaña del nodo indicado.
+   *
+   * Se usa `encodeURIComponent` en el nombre de la pestaña para manejar
+   * caracteres especiales como tildes (ej: FONTIBÓN → FONTIB%C3%93N).
+   *
+   * @param nombrePestaña - nombre exacto de la pestaña en el sheet (ej: 'BOSA', 'KENNEDY')
+   * @param documento     - número de documento del estudiante a buscar
+   * @returns Observable con los datos del estudiante o null si no se encontró
+   */
+  getStudent(nombrePestaña: string, documento: string): Observable<Student | null> {
+    const range = `${encodeURIComponent(nombrePestaña)}!A:D`;
+    const url   = `https://sheets.googleapis.com/v4/spreadsheets/${this.SPREADSHEET_ID}/values/${range}?key=${this.API_KEY}`;
+
     return this.http.get<any>(url).pipe(
       map(response => {
-        const rows = response.values;
-        if (!rows || rows.length < 2) return null;
+        const rows: string[][] = response.values;
 
-        // Detectar índices de columnas usando headers (primera fila)
-        const headers = rows[0].map((h: string) => String(h).toLowerCase().trim());
-        console.log('Headers detectados:', headers);
-        let docIndex = -1;
-        let nameIndex = -1;
+        // Verificar que el sheet tenga datos más allá de los encabezados
+        if (!rows || rows.length <= this.HEADER_ROW) return null;
 
-        // Buscar columnas de Documento y Nombre
-        for (let i = 0; i < headers.length; i++) {
-          if (headers[i].includes('documento') || headers[i].includes('doc')) {
-            docIndex = i;
-          }
-          if (headers[i].includes('nombre') || headers[i].includes('estudiante')) {
-            nameIndex = i;
-          }
-        }
+        // Tomar solo las filas con datos reales (desde fila 7 en adelante)
+        const dataRows = rows.slice(this.HEADER_ROW);
 
-        console.log('Índices encontrados - docIndex:', docIndex, 'nameIndex:', nameIndex);
+        // Buscar la fila cuya columna D coincida con el documento ingresado
+        const fila = dataRows.find(row =>
+          row[this.COL_DOC]?.toString().trim() === documento.trim()
+        );
 
-        // Si no encuentra con headers, buscar en toda la fila
-        for (let i = 1; i < rows.length; i++) {
-          if (!rows[i]) continue;
+        if (!fila) return null;
 
-          // Convertir todas las celdas a string y trim
-          const rowData = rows[i].map((cell: any) => String(cell).trim());
-          const docToFind = documentNumber.trim();
-
-          // Si se encontraron los índices, usar esos
-          if (docIndex !== -1 && nameIndex !== -1) {
-            if (rowData[docIndex] === docToFind) {
-              console.log('Fila encontrada con índices:', rowData);
-              console.log('Nombre en nameIndex:', rowData[nameIndex]);
-              return {
-                nombre: rowData[nameIndex] || '',
-                documento: rowData[docIndex]
-              };
-            }
-          } else {
-            // Buscar el documento en cualquier columna
-            for (let j = 0; j < rowData.length; j++) {
-              if (rowData[j] === docToFind) {
-                // Si no hay headers, asumir posiciones: nombre en j-2, documento en j
-                const nombreIndex = j - 2 >= 0 ? j - 2 : 0;
-                const nombre = rowData[nombreIndex] || '';
-                console.log('Fila encontrada sin índices:', rowData);
-                console.log('Documento en columna', j, 'Nombre en columna', nombreIndex, ':', nombre);
-                return {
-                  nombre: nombre,
-                  documento: rowData[j]
-                };
-              }
-            }
-          }
-        }
-        return null;
+        return {
+          nombre:    fila[this.COL_NOMBRE]?.toString().trim() || '',
+          tipoDoc:   fila[this.COL_TIPO]?.toString().trim()   || '',
+          documento: fila[this.COL_DOC]?.toString().trim()    || ''
+        };
       })
     );
   }
 
-  getDireccion(nodo: string): string {
-    const direcciones: { [key: string]: string } = {
-      'BOSA': 'Cl. 52 Sur #93d-39, Bogotá',
-      'UNAL': 'Ave Cra 30 #45-3, Bogotá',
-      'CIUDAD BOLIVAR': 'Calle 68d Bis A Sur #49F - 70',
-      'UNIMINUTO PERDOMO': '59 Sur98 Cra. 72',
-      'Engativá': 'Cl. 89 Bis #91-20, Engativá, Bogotá',
-      'FONTIBÓN': 'Cra. 104b #22, Bogotá',
-      'PUENTE ARANDA': 'Cl. 1b #52A-02, Puente Aranda, Bogotá',
-      'KENNEDY': 'Cl. 38c Sur #79-08, Kennedy, Bogotá'
-    };
-    return direcciones[nodo] || '';
+  /**
+   * Retorna la información estática de un nodo (dirección, coordinador, nombre completo).
+   * Retorna null si el nodo no existe en el mapa.
+   */
+  getNodoInfo(nombrePestaña: string): NodoInfo | null {
+    return this.NODOS[nombrePestaña] ?? null;
   }
 
-  getCoordinador(nodo: string): string {
-    const coordinadores: { [key: string]: string } = {
-      'BOSA': 'Juan David Santos Poblador',
-      'UNAL': 'Camilo Murillo',
-      'CIUDAD BOLIVAR': 'Jhoan Manuel Rodríguez Cerinza',
-      'UNIMINUTO PERDOMO': 'Por confirmar',
-      'Engativá': 'Por confirmar',
-      'FONTIBÓN': 'Ariadna Vallecilla',
-      'PUENTE ARANDA': 'Por confirmar',
-      'KENNEDY': 'José Wolf'
-    };
-    return coordinadores[nodo] || '';
+  /**
+   * Retorna la lista de keys de nodos disponibles en el sheet.
+   * Se usa en la landing para verificar si el nodo seleccionado ya tiene datos.
+   */
+  getNodoKeys(): string[] {
+    return Object.keys(this.NODOS);
   }
 }

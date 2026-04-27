@@ -294,82 +294,76 @@
   </div>
 </section>
 
-<!-- ======================
-     POPUP CERTIFICADO
-====================== -->
-<div class="overlay certificate-overlay" *ngIf="showCertificateModal">
-  <div class="popup-slider certificate-popup">
-    <button class="close-btn" (click)="closeCertificateModal()">×</button>
+  <!-- ======================
+      POPUP CERTIFICADO
+  ====================== -->
+  <div class="overlay certificate-overlay" *ngIf="showCertificateModal">
+    <div class="popup-slider certificate-popup">
+      <button class="close-btn" (click)="closeCertificateModal()">×</button>
 
-    <div class="popup-content">
-      <img src="assets/icon/logo.png" alt="Preicfes Logo" class="certificate-popup-logo" />
-      <h3>¿Eres estudiante?</h3>
-      <p>Elige el tipo de documento y escribe tu número para descargar tu certificado.</p>
+      <div class="popup-content">
+        <img src="assets/icon/logo.png" alt="Preicfes Logo" class="certificate-popup-logo" />
+        <h3>¿Eres estudiante?</h3>
+        <p>Elige el tipo de documento y escribe tu número para descargar tu certificado.</p>
 
-      <div class="certificate-form">
-        <label for="document-type">Tipo de documento</label>
-        <select id="document-type" #certType>
-          <option value="cc">Cédula de ciudadanía</option>
-          <option value="ti">Tarjeta de identidad</option>
-          <option value="ce">Cédula de extranjería</option>
-        </select>
+        <div class="certificate-form">
+          <label for="document-type">Tipo de certificado</label>
+          <select id="document-type" #certType>
+            <option value="CP">Certificado de pertenencia</option>
+            <option value="CA">Certificado de asistencia</option>
+          </select>
 
-        <label for="document-number">Número de documento</label>
-        <input
-          id="document-number"
-          #certNumber
-          type="text"
-          placeholder="Ej. 12345678"
-          maxlength="20"
-        />
+          <label for="document-number">Número de documento</label>
+          <input
+            id="document-number"
+            #certNumber
+            type="text"
+            placeholder="Ej. 12345678"
+            maxlength="20"
+          />
 
-        <label for="nodo">Selecciona tu nodo</label>
-        <select id="nodo" #certNodo>
-          <option value="">Elige un nodo...</option>
-          <option value="san-cristobal-sur">Nodo San Cristóbal Sur</option>
-          <option value="fontibon">Nodo Fontibón</option>
-          <option value="usme">Nodo Usme</option>
-          <option value="engativa">Nodo Engativá</option>
-          <option value="suba">Nodo Suba</option>
-          <option value="universidad-nacional">Nodo Universidad Nacional</option>
-          <option value="ciudad-bolivar">Nodo Ciudad Bolívar</option>
-          <option value="kennedy">Nodo Kennedy</option>
-          <option value="bosa-porvenir">Nodo Bosa Porvenir</option>
-          <option value="uniminuto-soacha">Nodo Uniminuto Perdomo - Soacha</option>
-          <option value="puente-aranda">Nodo Puente Aranda</option>
-          <option value="virtual">Nodo Virtual</option>
-        </select>
+          <label for="nodo">Selecciona tu nodo</label>
+          <select id="nodo" #certNodo>
+            <option value="">Elige un nodo...</option>
+            <option value="BOSA">Nodo Bosa Porvenir</option>
+            <option value="UNAL">Nodo Universidad Nacional</option>
+            <option value="CIUDAD BOLIVAR">Nodo Ciudad Bolívar</option>
+            <option value="UNIMINUTO PERDOMO">Nodo Uniminuto Perdomo - Soacha</option>
+            <option value="ENGATIVA">Nodo Engativá</option>
+            <option value="FONTIBON">Nodo Fontibón</option>
+            <option value="PUENTE ARANDA">Nodo Puente Aranda</option>
+            <option value="KENNEDY">Nodo Kennedy</option>
+            <option value="SAN CRISTOBAL SUR">Nodo San Cristóbal Sur</option>
+            <option value="USME">Nodo Usme</option>
+            <option value="SUBA">Nodo Suba</option>
+            <option value="VIRTUAL">Nodo Virtual</option>
+          </select>
 
-        <button
-          class="btn-primary btn-small"
-          (click)="submitCertificate(certType.value, certNumber.value, certNodo.value)"
-        >
-          Continuar
-        </button>
+          <button
+            class="btn-primary btn-small"
+            (click)="submitCertificate(certType.value, certNumber.value, certNodo.value)"
+          >
+            Continuar
+          </button>
 
-        <p class="certificate-status" *ngIf="certificateStatusMessage">
-          {{ certificateStatusMessage }}
-        </p>
+          <p class="certificate-status" *ngIf="certificateStatusMessage">
+            {{ certificateStatusMessage }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- ======================
-     VISTA CERTIFICADO
-====================== -->
-<div class="overlay certificate-overlay" *ngIf="showCertificateView">
-  <div class="popup-slider certificate-popup">
-    <button class="close-btn" (click)="closeCertificateView()">×</button>
-    <app-certificate 
-      [nombre]="certificateData.nombre" 
-      [documento]="certificateData.documento" 
-      [nodo]="certificateData.nodo" 
-      [tipoDocumento]="certificateData.tipoDocumento" 
-      [direccion]="certificateData.direccion" 
-      [coordinador]="certificateData.coordinador">
-    </app-certificate>
-  </div>
+<!-- Componente invisible — genera y descarga el PDF automáticamente -->
+<div style="position:fixed; top:-9999px; left:-9999px; pointer-events:none;">
+  @if(showCertificate && certificateData) {
+    <app-certificado-pertenencia
+      [nombre]="certificateData!.nombre"
+      [documento]="certificateData!.documento"
+      [tipoDoc]="certificateData!.tipoDoc"
+      [nodoInfo]="certificateData!.nodoInfo">
+    </app-certificado-pertenencia>
+  }
 </div>
 
 <!-- ======================
