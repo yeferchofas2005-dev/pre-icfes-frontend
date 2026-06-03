@@ -183,6 +183,112 @@ body {
 }
 
 /* ======================
+   REDES SOCIALES
+====================== */
+.footer-social {
+  text-align: center;
+  padding: 80px 20px 60px;
+  background: linear-gradient(
+    135deg,
+    #1f2a63 0%,
+    #2f5fd0 100%
+  );
+  color: white;
+}
+
+.footer-social h2 {
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+  color: white;
+}
+
+.footer-social p {
+  max-width: 750px;
+  margin: 0 auto 35px;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.9);
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px 24px;
+
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+
+  border-radius: 50px;
+
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  transform: translateY(-4px);
+
+  background: rgba(255,255,255,0.15);
+
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+
+.social-link img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.footer-copy {
+  margin-top: 10px;
+
+  color: rgba(255,255,255,0.75);
+
+  font-size: 0.95rem;
+
+  border-top: 1px solid rgba(255,255,255,0.15);
+
+  padding-top: 25px;
+}
+
+/* ======================
+   RESPONSIVE
+====================== */
+@media (max-width: 768px) {
+
+  .footer-social {
+    padding: 60px 20px 50px;
+  }
+
+  .footer-social h2 {
+    font-size: 1.8rem;
+  }
+
+  .social-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .social-link {
+    width: 260px;
+    justify-content: center;
+  }
+}
+
+/* ======================
    RESPONSIVE MOBILE
 ====================== */
 @media (max-width: 768px) {
