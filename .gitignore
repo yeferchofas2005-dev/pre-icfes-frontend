@@ -39,6 +39,15 @@ testem.log
 /typings
 __screenshots__/
 
+# Python / training large files
+__pycache__/
+training/data/
+training/*.safetensors
+training/**/*.safetensors
+training/**/checkpoint-*/
+training/merged_qwen_3b/
+training/finetuned_qwen_3b/
+
 # System files
 .DS_Store
 Thumbs.db

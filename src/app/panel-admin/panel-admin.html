@@ -1,0 +1,230 @@
+<div class="admin-layout">
+  <!-- BARRA LATERAL IZQUIERDA (SIDEBAR) -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand">
+      <img src="assets/icon/logo.png" alt="Logo Preicfes" class="sidebar-logo">
+      <span>Admin</span>
+    </div>
+
+    <nav class="sidebar-menu">
+      <button
+        class="menu-item"
+        [class.active]="activeMenu === 'simulacros'"
+        (click)="setActiveMenu('simulacros')"
+      >
+        📊 Simulacros
+      </button>
+      <button
+        class="menu-item"
+        [class.active]="activeMenu === 'estudiantes'"
+        (click)="setActiveMenu('estudiantes')"
+      >
+        👨‍🎓 Estudiantes
+      </button>
+      <button
+        class="menu-item"
+        [class.active]="activeMenu === 'preguntas'"
+        (click)="setActiveMenu('preguntas')"
+      >
+        📝 Grupos de preguntas
+      </button>
+      <button
+        class="menu-item"
+        [class.active]="activeMenu === 'funciones'"
+        (click)="setActiveMenu('funciones')"
+      >
+        ⚙️ Funciones admin
+      </button>
+      <button
+        class="menu-item"
+        [class.active]="activeMenu === 'resultados'"
+        (click)="setActiveMenu('resultados')"
+      >
+        ✉️ Enviar resultados
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="btn-sidebar-logout" (click)="logout()">
+        🚪 Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL (MAIN CONTENT) -->
+  <main class="admin-main">
+    <!-- SUBPANEL SIMULACROS -->
+    <div *ngIf="activeMenu === 'simulacros'" class="fade-in">
+      <!-- HEADER DEL PANEL -->
+      <header class="main-header">
+        <h1>Panel de Simulacros</h1>
+        <button class="btn-new-simulacro" (click)="agregarSimulacro()">
+          + Nuevo simulacro
+        </button>
+      </header>
+
+      <!-- TABLA DE SIMULACROS -->
+      <section class="section-card">
+        <h2 class="section-title">Simulacros realizados</h2>
+
+        <div class="table-container">
+          <table class="simulacros-table">
+            <thead>
+              <tr>
+                <th style="width: 80px;">ID</th>
+                <th>Nombre</th>
+                <th>Fecha</th>
+                <th>Promedio (Saber)</th>
+                <th>Tiempo promedio</th>
+                <th>Estado</th>
+                <th style="width: 100px; text-align: center;">Ver</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sim of simulacros">
+                <td class="cell-id">{{ sim.id }}</td>
+                <td class="cell-name">{{ sim.nombre }}</td>
+                <td>{{ sim.fecha }}</td>
+                <td class="cell-avg">{{ sim.puntaje !== null ? sim.puntaje : '—' }}</td>
+                <td>{{ sim.puntaje !== null ? '3h 10m' : '—' }}</td>
+                <td>
+                  <span
+                    class="badge"
+                    [class.badge-results]="sim.estado === 'Realizado'"
+                    [class.badge-pending]="sim.estado === 'No realizado'"
+                  >
+                    {{ sim.estado === 'Realizado' ? 'Resultados' : 'Pendiente' }}
+                  </span>
+                </td>
+                <td style="text-align: center;">
+                  <button class="btn-action-view" (click)="verResultados(sim)" title="Ver Detalles">
+                    📊
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ESTADÍSTICAS GENERALES -->
+      <section class="section-card stats-section">
+        <h2 class="section-title">Estadísticas generales</h2>
+
+        <div class="charts-row">
+          <!-- CHART 1: RADAR CHART (PROMEDIO GENERAL) -->
+          <div class="chart-box">
+            <h3 class="chart-heading">Promedio general</h3>
+            <div class="svg-container">
+              <svg viewBox="0 0 200 200" class="radar-svg">
+                <!-- Concentric reference polygons -->
+                <polygon points="100,30 150,65 131,122 69,122 50,65" class="grid-poly" />
+                <polygon points="100,45 138,71 123,114 77,114 62,71" class="grid-poly" />
+                <polygon points="100,60 125,78 115,107 85,107 75,78" class="grid-poly" />
+                <polygon points="100,75 113,84 108,99 92,99 87,84" class="grid-poly" />
+
+                <!-- Axes -->
+                <line x1="100" y1="100" x2="100" y2="30" class="grid-line" />
+                <line x1="100" y1="100" x2="150" y2="65" class="grid-line" />
+                <line x1="100" y1="100" x2="131" y2="122" class="grid-line" />
+                <line x1="100" y1="100" x2="69" y2="122" class="grid-line" />
+                <line x1="100" y1="100" x2="50" y2="65" class="grid-line" />
+
+                <!-- Data poly -->
+                <polygon points="100,48 132,71 123,114 81,113 60,71" class="data-poly-admin" />
+
+                <!-- Data labels -->
+                <text x="100" y="22" text-anchor="middle" class="label-text">Matemáticas</text>
+                <text x="156" y="65" text-anchor="start" class="label-text">Lectura</text>
+                <text x="137" y="134" text-anchor="start" class="label-text">Ciencias</text>
+                <text x="63" y="134" text-anchor="end" class="label-text">Sociales</text>
+                <text x="44" y="65" text-anchor="end" class="label-text">Inglés</text>
+              </svg>
+            </div>
+            <div class="legend-indicator">
+              <span class="legend-color blue-solid"></span>
+              <span class="legend-text">Promedio general</span>
+            </div>
+          </div>
+
+          <!-- CHART 2: PIE CHART (CON RESULTADOS VS PENDIENTES) -->
+          <div class="chart-box">
+            <h3 class="chart-heading">Estado de simulacros</h3>
+            <div class="svg-container">
+              <svg viewBox="0 0 160 160" class="pie-svg">
+                <!-- Pie Chart slices dynamically mapped to computed coordinate strings -->
+                <path *ngIf="pieSlicePathBlue" [attr.d]="pieSlicePathBlue" class="pie-slice blue-slice" />
+                <path *ngIf="pieSlicePathGrey" [attr.d]="pieSlicePathGrey" class="pie-slice grey-slice" />
+                
+                <!-- Inner circle to make it a donut chart -->
+                <circle cx="80" cy="80" r="28" fill="#ffffff" />
+                
+                <text x="80" y="85" text-anchor="middle" class="pie-center-text">ICFES</text>
+              </svg>
+            </div>
+            <div class="legend-double">
+              <div class="legend-indicator">
+                <span class="legend-color blue-solid"></span>
+                <span class="legend-text">Con resultados ({{ resultadosPorcentaje }}%)</span>
+              </div>
+              <div class="legend-indicator">
+                <span class="legend-color grey-solid"></span>
+                <span class="legend-text">Pendientes ({{ pendientesPorcentaje }}%)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CHART 3: BAR CHART (PROMEDIO POR SIMULACRO) -->
+          <div class="chart-box">
+            <h3 class="chart-heading">Promedio de Aciertos</h3>
+            <div class="svg-container">
+              <svg viewBox="0 0 180 160" class="bar-svg">
+                <!-- Axes -->
+                <line x1="30" y1="130" x2="170" y2="130" stroke="#cbd5e1" stroke-width="1.5" />
+                <line x1="30" y1="20" x2="30" y2="130" stroke="#cbd5e1" stroke-dasharray="2" stroke-width="1" />
+
+                <!-- Grid & Labels Y -->
+                <text x="22" y="24" text-anchor="end" class="grid-label">100%</text>
+                <line x1="30" y1="20" x2="170" y2="20" stroke="#f1f5f9" stroke-width="1" />
+
+                <text x="22" y="75" text-anchor="end" class="grid-label">50%</text>
+                <line x1="30" y1="75" x2="170" y2="75" stroke="#f1f5f9" stroke-width="1" />
+
+                <text x="22" y="130" text-anchor="end" class="grid-label">0%</text>
+
+                <!-- Bars dynamically sized -->
+                <!-- Bar 1 (Simulacro 1) -->
+                <rect x="42" [attr.y]="bar1Y" width="22" [attr.height]="bar1Height" rx="4" class="bar-rect bar-1" />
+                
+                <!-- Bar 2 (Simulacro 2) -->
+                <rect x="82" [attr.y]="bar2Y" width="22" [attr.height]="bar2Height" rx="4" class="bar-rect bar-2" />
+                
+                <!-- Bar 3 (Simulacro 3) -->
+                <rect x="122" [attr.y]="bar3Y" width="22" [attr.height]="bar3Height" rx="4" class="bar-rect bar-3" />
+
+                <!-- Labels X -->
+                <text x="53" y="146" text-anchor="middle" class="axis-label">Sim 1</text>
+                <text x="93" y="146" text-anchor="middle" class="axis-label">Sim 2</text>
+                <text x="133" y="146" text-anchor="middle" class="axis-label">Sim 3</text>
+              </svg>
+            </div>
+            <div class="legend-indicator">
+              <span class="legend-color dark-blue-solid"></span>
+              <span class="legend-text">Acierto (%)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- MOCK CONTENIDO PARA MENÚS ADICIONALES -->
+    <div *ngIf="activeMenu !== 'simulacros'" class="section-card fallback-card">
+      <div class="fallback-icon">🛠️</div>
+      <h2>Módulo de {{ activeMenu | titlecase }}</h2>
+      <p>Esta sección está actualmente en desarrollo y formará parte de la próxima actualización de la plataforma.</p>
+      <button class="btn-fallback-back" (click)="setActiveMenu('simulacros')">
+        Volver al Panel de Simulacros
+      </button>
+    </div>
+  </main>
+</div>

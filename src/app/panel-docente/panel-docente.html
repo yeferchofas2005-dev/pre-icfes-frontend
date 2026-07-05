@@ -1,0 +1,429 @@
+<div class="panel-layout">
+  <!-- HEADER -->
+  <header class="panel-header">
+    <div class="header-container">
+      <div class="header-info">
+        <h1>Panel del Docente</h1>
+        <p>Métricas generales y control de estudiantes</p>
+      </div>
+      <button class="btn-logout" (click)="logout()">
+        Cerrar sesión
+      </button>
+    </div>
+  </header>
+
+  <!-- PESTAÑAS DE NAVEGACIÓN -->
+  <div class="panel-tabs-bar">
+    <div class="tabs-container container">
+      <button
+        class="tab-btn"
+        [class.active]="currentTab === 'alumnos'"
+        (click)="switchTab('alumnos')"
+      >
+        👥 Estudiantes registrados
+      </button>
+      <button
+        class="tab-btn"
+        [class.active]="currentTab === 'cargar-pdf'"
+        (click)="switchTab('cargar-pdf')"
+      >
+        📤 Cargar nuevo simulacro PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="panel-content container">
+
+    <!-- PESTAÑA 1: LISTADO DE ALUMNOS Y GRÁFICOS -->
+    <div *ngIf="currentTab === 'alumnos'" class="fade-in">
+      <!-- SECCIÓN DE ESTUDIANTES REGISTRADOS -->
+      <section class="estudiantes-section">
+        <h2 class="section-title">Estudiantes registrados</h2>
+
+        <div class="table-container">
+          <table class="estudiantes-table">
+            <thead>
+              <tr>
+                <th style="width: 80px;">ID</th>
+                <th>Estudiante</th>
+                <th>Correo</th>
+                <th>Promedio</th>
+                <th>Tiempo promedio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let est of estudiantes">
+                <td class="cell-id">{{ est.id }}</td>
+                <td class="cell-name">{{ est.nombre }}</td>
+                <td class="cell-email">{{ est.correo }}</td>
+                <td class="cell-avg">
+                  <span class="avg-pill">{{ est.promedio }}%</span>
+                </td>
+                <td>{{ est.tiempoPromedio }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECCIÓN DE ESTADÍSTICAS GENERALES -->
+      <section class="stats-section">
+        <h2 class="section-title">Estadísticas generales</h2>
+
+        <div class="charts-grid">
+          <!-- GRÁFICO 1: RADAR CHART (PROMEDIO DEL GRUPO) -->
+          <div class="chart-card">
+            <h3 class="chart-title">Promedio del grupo</h3>
+            
+            <div class="chart-container">
+              <svg viewBox="0 0 300 300" class="radar-chart">
+                <!-- Pentágonos concéntricos de referencia -->
+                <polygon points="150,70 226,125 197,215 103,215 74,125" class="grid-poly" />
+                <polygon points="150,90 207,131 185,199 115,199 93,131" class="grid-poly" />
+                <polygon points="150,110 188,138 173,183 127,183 112,138" class="grid-poly" />
+                <polygon points="150,130 169,144 162,166 138,166 131,144" class="grid-poly" />
+
+                <!-- Ejes -->
+                <line x1="150" y1="150" x2="150" y2="70" class="grid-line" />
+                <line x1="150" y1="150" x2="226" y2="125" class="grid-line" />
+                <line x1="150" y1="150" x2="197" y2="215" class="grid-line" />
+                <line x1="150" y1="150" x2="103" y2="215" class="grid-line" />
+                <line x1="150" y1="150" x2="74" y2="125" class="grid-line" />
+
+                <!-- Área de datos reactiva y dinámica -->
+                <polygon [attr.points]="radarPointsString" class="data-poly" />
+
+                <!-- Marcadores de datos con hover -->
+                <!-- Puntos se vuelven interactivos visualmente en base al string de coordenadas -->
+                <circle cx="150" cy="150" r="4.5" class="data-point" style="display:none;" />
+
+                <!-- Etiquetas de texto -->
+                <text x="150" y="52" text-anchor="middle" class="label-text">Matemáticas</text>
+                <text x="236" y="125" text-anchor="start" class="label-text">Lectura</text>
+                <text x="207" y="232" text-anchor="start" class="label-text">Ciencias</text>
+                <text x="93" y="232" text-anchor="end" class="label-text">Sociales</text>
+                <text x="64" y="125" text-anchor="end" class="label-text">Inglés</text>
+
+                <!-- Leyenda central flotante en Hover -->
+                <rect x="130" y="140" width="40" height="20" rx="5" class="legend-box" />
+                <text x="150" y="154" text-anchor="middle" class="legend-text">Grupo</text>
+              </svg>
+            </div>
+            <div class="chart-legend-indicator">
+              <span class="indicator-color primary-blue-bg"></span>
+              <span class="indicator-text">Promedio del grupo (Ciencias: {{ radarData.ciencias }}%)</span>
+            </div>
+          </div>
+
+          <!-- GRÁFICO 2: LINE CHART (TIEMPO PROMEDIO) -->
+          <div class="chart-card">
+            <h3 class="chart-title">Tiempo promedio (seg)</h3>
+            
+            <div class="chart-container">
+              <svg viewBox="0 0 360 240" class="line-chart">
+                <defs>
+                  <linearGradient id="line-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="var(--accent-yellow)" stop-opacity="0.35" />
+                    <stop offset="100%" stop-color="var(--accent-yellow)" stop-opacity="0.0" />
+                  </linearGradient>
+                </defs>
+
+                <!-- Cuadrícula -->
+                <g class="grid-lines">
+                  <line x1="50" y1="40" x2="330" y2="40" />
+                  <text x="40" y="44" text-anchor="end" class="grid-label">60</text>
+
+                  <line x1="50" y1="120" x2="330" y2="120" />
+                  <text x="40" y="124" text-anchor="end" class="grid-label">52</text>
+
+                  <line x1="50" y1="200" x2="330" y2="200" />
+                  <text x="40" y="204" text-anchor="end" class="grid-label">44</text>
+                </g>
+
+                <!-- Área y línea -->
+                <path d="M 60,200 L 60,131.4 Q 100,160 140,188.6 Q 180,114 220,40 Q 260,68 300,97.2 L 300,200 Z" class="area-path" />
+                <path d="M 60,131.4 Q 100,160 140,188.6 Q 180,114 220,40 Q 260,68 300,97.2" class="line-path" />
+
+                <!-- Puntos -->
+                <g class="data-points">
+                  <circle cx="60" cy="131.4" r="5.5" class="line-point" />
+                  <circle cx="140" cy="188.6" r="5.5" class="line-point" />
+                  <circle cx="220" cy="40" r="5.5" class="line-point" />
+                  <circle cx="300" cy="97.2" r="5.5" class="line-point" />
+                </g>
+
+                <!-- Etiquetas X -->
+                <g class="x-axis-labels">
+                  <text x="60" y="222" text-anchor="middle" class="axis-label">Pregunta 1</text>
+                  <text x="140" y="222" text-anchor="middle" class="axis-label">Pregunta 2</text>
+                  <text x="220" y="222" text-anchor="middle" class="axis-label">Pregunta 3</text>
+                  <text x="300" y="222" text-anchor="middle" class="axis-label">Pregunta 4</text>
+                </g>
+              </svg>
+            </div>
+            
+            <div class="chart-legend-indicator">
+              <span class="indicator-color accent-yellow-bg"></span>
+              <span class="indicator-text">Tiempo promedio (seg)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA 2: CARGAR PDF Y EDITOR -->
+    <div *ngIf="currentTab === 'cargar-pdf'" class="fade-in">
+      <!-- 2.1 PANTALLA INICIAL DE DRAG & DROP -->
+      <div *ngIf="!isUploading && !showEditor" class="pdf-upload-container">
+        <div
+          class="drag-drop-zone"
+          [class.dragging]="isDragging"
+          (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave($event)"
+          (drop)="onDrop($event)"
+        >
+          <div class="upload-icon">📄</div>
+          <h3>Sube tu cuadernillo de preguntas PDF</h3>
+          <p class="drag-text">Arrastra el archivo PDF aquí o</p>
+          <label for="pdf-file-input" class="btn-browse-file">
+            Explorar archivos
+          </label>
+          <input
+            type="file"
+            id="pdf-file-input"
+            (change)="onFileSelected($event)"
+            accept=".pdf"
+            style="display: none;"
+          />
+          <p class="file-limits">Admite archivos .pdf con estructura de preguntas ICFES</p>
+        </div>
+
+        <div class="demo-tip-card">
+          <span class="tip-badge">RECOMENDADO</span>
+          <p>
+            Puedes subir el cuadernillo de preguntas de <strong>Pensamiento Científico (Saber Pro 2018)</strong>. El sistema extraerá automáticamente sus preguntas y reconstruirá sus diagramas científicos en vectores interactivos.
+          </p>
+        </div>
+      </div>
+
+      <!-- 2.2 PROCESANDO / CARGANDO PDF -->
+      <div *ngIf="isUploading" class="uploading-state-card">
+        <div class="loader-container">
+          <div class="loader-circle"></div>
+          <div class="loader-percentage">{{ uploadProgress }}%</div>
+        </div>
+        <h3 class="uploading-title">Procesando archivo PDF</h3>
+        <p class="upload-filename">{{ fileName }}</p>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" [style.width.%]="uploadProgress"></div>
+        </div>
+        <p class="progress-status-text">{{ uploadStatusText }}</p>
+      </div>
+
+      <!-- 2.3 EDITOR DE PREGUNTAS EXTRAÍDAS -->
+      <div *ngIf="showEditor" class="editor-container fade-in">
+        <header class="editor-header">
+          <div class="editor-header-info">
+            <h2>Editor de Simulacro Extraído</h2>
+            <p>Verifica y edita la estructura de las preguntas detectadas por la IA</p>
+          </div>
+          <div class="editor-meta-input">
+            <label for="simulacro-title">Título del Simulacro</label>
+            <input
+              type="text"
+              id="simulacro-title"
+              [(ngModel)]="simulacroTitulo"
+              placeholder="Título del examen"
+            />
+          </div>
+        </header>
+
+        <div class="editor-workspace-grid">
+          <!-- COLUMNA IZQUIERDA: FORMULARIO Y PREGUNTAS (70%) -->
+          <div class="editor-form-col">
+            <div class="alert-info-banner">
+              <span>ℹ️</span>
+              <p>
+                Hemos detectado <strong>{{ preguntasExtraidas.length }} preguntas</strong> con sus respectivas opciones múltiples y <strong>1 diagrama experimental</strong>. Revisa los textos o pídele ajustes al Asistente de IA.
+              </p>
+            </div>
+
+            <!-- LISTADO DE PREGUNTAS -->
+            <div class="questions-list">
+              <div class="question-card-edit" *ngFor="let q of preguntasExtraidas; let idx = index">
+                <div class="q-card-header">
+                  <span class="q-badge">Pregunta {{ idx + 1 }}</span>
+                  <div class="q-category-select">
+                    <label>Categoría:</label>
+                    <input type="text" [(ngModel)]="q.categoria" (ngModelChange)="actualizarMemoria()" />
+                  </div>
+                </div>
+
+                <!-- Texto de la pregunta -->
+                <div class="form-group-edit">
+                  <label>Texto de la Pregunta:</label>
+                  <textarea [(ngModel)]="q.texto" (ngModelChange)="actualizarMemoria()" rows="6"></textarea>
+                </div>
+
+                <!-- Gráfico SVG Reconstruido (para Pregunta 1) -->
+                <div class="extracted-diagram-box" *ngIf="q.tieneImagen">
+                  <div class="diagram-label">Diagrama experimental extraído (Fluorescencia / Longitud de onda):</div>
+                  
+                  <!-- DIAGRAMA SVG DE ALTA FIDELIDAD (DINÁMICO) -->
+                  <div class="fluorescence-diagram">
+                    <svg viewBox="0 0 540 250" class="fluorescence-svg">
+                      <!-- GRAPH 1: CANDIDATO 1 -->
+                      <g transform="translate(20, 10)">
+                        <text x="110" y="15" text-anchor="middle" font-weight="700" font-size="12" fill="#1f2a63">Candidato 1</text>
+                        <line x1="30" y1="30" x2="30" y2="160" stroke="#1f2a63" stroke-width="1.5" />
+                        <polygon points="30,24 26,30 34,30" fill="#1f2a63" />
+                        <text x="15" y="95" text-anchor="middle" transform="rotate(-90 15 95)" font-size="8.5" font-weight="600" fill="#64748b">Fluorescencia</text>
+
+                        <line x1="30" y1="160" x2="200" y2="160" stroke="#1f2a63" stroke-width="1.5" />
+                        <polygon points="206,160 200,156 200,164" fill="#1f2a63" />
+                        <text x="115" y="176" text-anchor="middle" font-size="8.5" font-weight="600" fill="#64748b">Longitud de onda</text>
+
+                        <!-- Dotted: Aislado (Reactivo) -->
+                        <path [attr.d]="candidato1DottedPath" stroke="#1f2a63" stroke-width="2" stroke-dasharray="3" fill="none" />
+                        <!-- Solid: Presencia X (Reactivo) -->
+                        <path [attr.d]="candidato1SolidPath" stroke="#718096" stroke-width="2" fill="none" />
+                      </g>
+
+                      <!-- GRAPH 2: CANDIDATO 2 -->
+                      <g transform="translate(260, 10)">
+                        <text x="110" y="15" text-anchor="middle" font-weight="700" font-size="12" fill="#1f2a63">Candidato 2</text>
+                        <line x1="30" y1="30" x2="30" y2="160" stroke="#1f2a63" stroke-width="1.5" />
+                        <polygon points="30,24 26,30 34,30" fill="#1f2a63" />
+                        <text x="15" y="95" text-anchor="middle" transform="rotate(-90 15 95)" font-size="8.5" font-weight="600" fill="#64748b">Fluorescencia</text>
+
+                        <line x1="30" y1="160" x2="200" y2="160" stroke="#1f2a63" stroke-width="1.5" />
+                        <polygon points="206,160 200,156 200,164" fill="#1f2a63" />
+                        <text x="115" y="176" text-anchor="middle" font-size="8.5" font-weight="600" fill="#64748b">Longitud de onda</text>
+
+                        <!-- Dotted: Aislado -->
+                        <path d="M 50,160 Q 115,20 180,160" stroke="#1f2a63" stroke-width="2" stroke-dasharray="3" fill="none" />
+                        <!-- Solid: Presencia X -->
+                        <path d="M 50,160 Q 115,60 180,160" stroke="#718096" stroke-width="2" fill="none" />
+                      </g>
+
+                      <!-- LEYENDA -->
+                      <g transform="translate(100, 210)">
+                        <line x1="0" y1="10" x2="30" y2="10" stroke="#1f2a63" stroke-width="2" stroke-dasharray="3" />
+                        <text x="36" y="13" font-size="9" font-weight="600" fill="#4a5568">Candidato aislado</text>
+
+                        <line x1="180" y1="10" x2="210" y2="10" stroke="#718096" stroke-width="2" />
+                        <text x="216" y="13" font-size="9" font-weight="600" fill="#4a5568">Candidato en presencia de X</text>
+                      </g>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Opciones A, B, C, D -->
+                <div class="options-edit-grid">
+                  <div class="option-field" *ngFor="let opt of q.opciones; let optIdx = index">
+                    <span class="option-letter">{{ opt.substring(0, 2) }}</span>
+                    <input
+                      type="text"
+                      [ngModel]="q.opciones[optIdx].substring(3)"
+                      (ngModelChange)="q.opciones[optIdx] = opt.substring(0, 3) + $event; actualizarMemoria()"
+                    />
+                  </div>
+                </div>
+
+                <!-- Clave de respuesta -->
+                <div class="answer-key-selector">
+                  <span class="key-label">Respuesta Correcta:</span>
+                  <div class="key-buttons">
+                    <button
+                      type="button"
+                      *ngFor="let key of ['A', 'B', 'C', 'D']"
+                      class="btn-key-choice"
+                      [class.active]="q.respuestaCorrecta === key"
+                      (click)="q.respuestaCorrecta = key; actualizarMemoria()"
+                    >
+                      {{ key }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUMNA DERECHA: CHAT DE ASISTENTE DE IA (30%) -->
+          <div class="editor-chat-col">
+            <div class="ai-assistant-chat-card">
+              <div class="chat-card-header">
+                <span class="ia-status-dot"></span>
+                <h4>Asistente de IA (OCR / Refinar)</h4>
+              </div>
+              
+              <!-- Chat Log Box -->
+              <div class="chat-log-box" id="chat-log-box">
+                <div class="chat-message" *ngFor="let msg of chatHistory" [class.msg-user]="msg.sender === 'docente'" [class.msg-ia]="msg.sender === 'ia'">
+                  <div class="msg-avatar">{{ msg.sender === 'ia' ? '🤖' : '👨‍🏫' }}</div>
+                  <div class="msg-bubble">
+                    <p [innerHTML]="msg.text"></p>
+                  </div>
+                </div>
+                
+                <!-- Indicador de escritura de la IA -->
+                <div class="chat-message msg-ia typing-bubble" *ngIf="isChatResponding">
+                  <div class="msg-avatar">🤖</div>
+                  <div class="msg-bubble">
+                    <span class="dot-typing"></span>
+                    <span class="dot-typing"></span>
+                    <span class="dot-typing"></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Chat Input Form -->
+              <form class="chat-input-form" (submit)="sendChatInstruction(); $event.preventDefault()">
+                <input
+                  type="text"
+                  [(ngModel)]="chatInputText"
+                  name="chatInputText"
+                  placeholder="Instrucción (ej: agrega pregunta 3)..."
+                  [disabled]="isChatResponding"
+                  autocomplete="off"
+                />
+                <button type="submit" class="btn-send-chat" [disabled]="isChatResponding">
+                  ➔
+                </button>
+              </form>
+            </div>
+
+            <!-- WIDGET DE MEMORIA DE APRENDIZAJE PERSISTENTE -->
+            <div class="ai-memory-widget">
+              <div class="memory-header">
+                <span class="memory-icon">🧠</span>
+                <span class="memory-title">Memoria de Aprendizaje</span>
+                <span class="memory-status-badge" [class.active]="tieneAprendizajeGuardado()">
+                  {{ tieneAprendizajeGuardado() ? 'Activo' : 'Vacío' }}
+                </span>
+              </div>
+              <p class="memory-desc">
+                {{ tieneAprendizajeGuardado() ? 'La IA recordará tus correcciones de texto y gráficos la próxima vez que cargues el PDF.' : 'Edita los campos o chatea con la IA para enseñarle correcciones persistentes.' }}
+              </p>
+              <button *ngIf="tieneAprendizajeGuardado()" type="button" class="btn-reset-memory" (click)="resetearMemoriaManual()">
+                🗑️ Restablecer Memoria
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="editor-footer">
+          <button class="btn-cancel-editor" (click)="switchTab('alumnos')">
+            Cancelar Carga
+          </button>
+          <button class="btn-publish-simulacro" (click)="publicarSimulacro()">
+            🚀 Publicar en la Plataforma
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>

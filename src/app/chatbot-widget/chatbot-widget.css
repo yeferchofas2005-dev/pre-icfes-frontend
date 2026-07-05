@@ -1,0 +1,127 @@
+/* ═══════════════════════════════════════════════════════════
+   WIDGET FLOTANTE (Angular)
+═══════════════════════════════════════════════════════════ */
+:host {
+  /* Variables locales para no chocar con el resto de la app */
+  --widget-bg-primary: hsl(230, 25%, 7%);
+  --widget-bg-secondary: hsl(230, 22%, 11%);
+  --widget-text-primary: hsl(220, 20%, 94%);
+  --widget-text-muted: hsl(220, 12%, 45%);
+  --widget-border-color: hsla(230, 30%, 50%, 0.15);
+  --widget-shadow-btn: 0 4px 20px hsla(262, 83%, 68%, 0.4);
+  --widget-shadow-card: 0 8px 32px hsla(230, 50%, 5%, 0.5);
+  --widget-gradient: linear-gradient(135deg, hsl(262, 83%, 68%), hsl(231, 77%, 64%), hsl(191, 95%, 56%));
+}
+
+.chatbot-bubble {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--widget-gradient);
+  border: none;
+  box-shadow: var(--widget-shadow-btn);
+  cursor: pointer;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 250ms ease;
+}
+
+.chatbot-bubble:hover {
+  transform: scale(1.05) translateY(-3px);
+  box-shadow: 0 8px 30px hsla(262, 83%, 68%, 0.5);
+}
+
+.bubble-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.widget-window {
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
+  width: 380px;
+  height: 650px;
+  max-height: calc(100vh - 120px);
+  background: var(--widget-bg-primary);
+  border-radius: 20px;
+  box-shadow: var(--widget-shadow-card);
+  border: 1px solid var(--widget-border-color);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: bottom right;
+}
+
+.widget-window.widget-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.9) translateY(20px);
+}
+
+.widget-header {
+  background: var(--widget-bg-secondary);
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--widget-border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.widget-brand {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--widget-text-primary);
+}
+
+.widget-close {
+  background: transparent;
+  border: none;
+  color: var(--widget-text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 150ms ease;
+}
+
+.widget-close:hover {
+  color: var(--widget-text-primary);
+}
+
+.widget-body {
+  flex: 1;
+  position: relative;
+  background: #fff;
+}
+
+.widget-body iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+@media (max-width: 480px) {
+  .widget-window {
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    bottom: 0;
+    right: 0;
+    border-radius: 0;
+  }
+  
+  .chatbot-bubble {
+    display: none;
+  }
+  
+  .widget-window.widget-hidden {
+    display: none;
+  }
+}
