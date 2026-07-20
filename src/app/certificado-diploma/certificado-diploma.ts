@@ -16,32 +16,23 @@ interface DirectorNodoInfo {
 }
 
 @Component({
-  selector: 'app-certificado-pertenencia',
+  selector: 'app-certificado-diploma',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './certificado-pertenencia.html',
-  styleUrl: './certificado-pertenencia.css',
+  templateUrl: './certificado-diploma.html',
+  styleUrl: './certificado-diploma.css',
 })
-export class CertificadoPertenencia implements OnInit {
+export class CertificadoDiploma implements OnInit {
 
   /* =========================================================================
      INPUTS
   ========================================================================= */
 
   @Input() nombre: string = '';
-  @Input() documento: string = '';
-  @Input() tipoDoc: string = '';
+
   @Input() nodoInfo!: NodoInfo;
 
-  /* =========================================================================
-     FECHA
-  ========================================================================= */
-
-  tipoDocLabel: string = '';
-  fecha: string = '';
-  dia: string = '';
-  mes: string = '';
-  anio: string = '';
+  @Input() documento: string = '';
 
   /* =========================================================================
      INFORMACIÓN DE FIRMAS
@@ -52,8 +43,8 @@ export class CertificadoPertenencia implements OnInit {
   directorNodo: DirectorNodoInfo | null = null;
 
   /**
-   * Indica si existe físicamente la imagen
-   * de la firma del Director del Nodo.
+   * Indica si la firma del Director del Nodo
+   * existe físicamente.
    */
   mostrarFirmaNodo = false;
 
@@ -67,33 +58,42 @@ export class CertificadoPertenencia implements OnInit {
   ) {}
 
   /* =========================================================================
+     PROPIEDADES CALCULADAS
+  ========================================================================= */
+
+  get nombreFontSize(): string {
+
+    const longitud = this.nombre.trim().length;
+
+    if (longitud <= 18) {
+      return '76px';
+    }
+
+    if (longitud <= 25) {
+      return '68px';
+    }
+
+    if (longitud <= 32) {
+      return '60px';
+    }
+
+    if (longitud <= 40) {
+      return '54px';
+    }
+
+    if (longitud <= 48) {
+      return '48px';
+    }
+
+    return '42px';
+
+  }
+
+  /* =========================================================================
      CICLO DE VIDA
   ========================================================================= */
 
   async ngOnInit(): Promise<void> {
-
-    /* ----------------------------------------------------------
-       Fecha
-    ---------------------------------------------------------- */
-
-    const now = new Date();
-
-    this.dia = now.getDate().toString();
-
-    this.mes = now.toLocaleDateString('es-ES', {
-      month: 'long'
-    });
-
-    this.anio = now.getFullYear().toString();
-
-    this.fecha = `${this.dia} de ${this.mes} de ${this.anio}`;
-
-    /* ----------------------------------------------------------
-       Tipo de documento
-    ---------------------------------------------------------- */
-
-    this.tipoDocLabel =
-      this.getTipoDocLabel(this.tipoDoc);
 
     /* ----------------------------------------------------------
        Director General
@@ -112,7 +112,7 @@ export class CertificadoPertenencia implements OnInit {
       );
 
     /* ----------------------------------------------------------
-       Verificar si existe la imagen de la firma
+       Verificar existencia de la firma
     ---------------------------------------------------------- */
 
     if (this.directorNodo) {
@@ -125,63 +125,16 @@ export class CertificadoPertenencia implements OnInit {
     }
 
     /* ----------------------------------------------------------
-       Esperar a que Angular actualice la vista
+       Esperar actualización del DOM
     ---------------------------------------------------------- */
 
     await new Promise(resolve => setTimeout(resolve, 50));
 
     /* ----------------------------------------------------------
-       Descargar PDF
+       Generar PDF
     ---------------------------------------------------------- */
 
     await this.descargarPDF();
-
-  }
-
-  /* =========================================================================
-     MÉTODOS AUXILIARES
-  ========================================================================= */
-
-  /**
-   * Convierte el tipo de documento
-   * al nombre completo.
-   */
-  private getTipoDocLabel(tipo: string): string {
-
-    if (!tipo) {
-      return 'Documento de Identidad';
-    }
-
-    const normalizado = tipo
-      .toUpperCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\./g, '')
-      .replace(/\s+/g, ' ')
-      .trim();
-
-    if (
-      normalizado.includes('CEDULA') ||
-      normalizado === 'CC'
-    ) {
-      return 'Cédula de Ciudadanía';
-    }
-
-    if (
-      normalizado.includes('TARJETA') ||
-      normalizado === 'TI'
-    ) {
-      return 'Tarjeta de Identidad';
-    }
-
-    if (
-      normalizado.includes('PPT') ||
-      normalizado.includes('PROTECCION')
-    ) {
-      return 'Permiso por Protección Temporal';
-    }
-
-    return 'Documento de Identidad';
 
   }
 
@@ -218,13 +171,13 @@ export class CertificadoPertenencia implements OnInit {
 
     const elemento =
       this.el.nativeElement.querySelector(
-        '#certificate-content'
+        '#diploma-content'
       );
 
     if (!elemento) {
 
       console.error(
-        'CertificadoPertenencia: no se encontró #certificate-content.'
+        'CertificadoDiploma: no se encontró #diploma-content.'
       );
 
       return;
@@ -236,14 +189,14 @@ export class CertificadoPertenencia implements OnInit {
       const canvas = await html2canvas(elemento, {
         scale: 3,
         useCORS: true,
-        backgroundColor: '#f4f4f4',
+        backgroundColor: '#ffffff',
         logging: false
       });
 
       const imgData = canvas.toDataURL('image/png');
 
       const pdf = new jsPDF({
-        orientation: 'portrait',
+        orientation: 'landscape',
         unit: 'mm',
         format: 'a4'
       });
@@ -254,17 +207,7 @@ export class CertificadoPertenencia implements OnInit {
       const imgH =
         pageW * (canvas.height / canvas.width);
 
-      /* ----------------------------------------------------------
-         Tolerancia para evitar una segunda página en blanco
-         causada por diferencias mínimas de redondeo entre el
-         canvas capturado y las medidas exactas de una hoja A4.
-      ---------------------------------------------------------- */
-
-      const TOLERANCIA_MM = 3;
-
-      if (imgH <= pageH + TOLERANCIA_MM) {
-
-        const imgHFinal = Math.min(imgH, pageH);
+      if (imgH <= pageH) {
 
         pdf.addImage(
           imgData,
@@ -272,7 +215,7 @@ export class CertificadoPertenencia implements OnInit {
           0,
           0,
           pageW,
-          imgHFinal
+          imgH
         );
 
       } else {
@@ -300,12 +243,14 @@ export class CertificadoPertenencia implements OnInit {
 
       }
 
-      pdf.save(`certificado_${this.documento}.pdf`);
+      pdf.save(
+        `diploma_${this.documento || this.nombre}.pdf`
+      );
 
     } catch (error) {
 
       console.error(
-        'CertificadoPertenencia: error al generar PDF:',
+        'CertificadoDiploma: error al generar el PDF:',
         error
       );
 
