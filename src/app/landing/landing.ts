@@ -33,10 +33,6 @@ export class Landing implements OnInit, OnDestroy {
   countdownSeconds: string = '00';
   private countdownInterval: any;
 
-  ngOnInit() {
-    this.startCountdown();
-  }
-
   ngAfterViewInit() {
     // Es mejor inicializar AOS aquí porque los elementos HTML ya se han renderizado
     setTimeout(() => {
@@ -97,6 +93,9 @@ export class Landing implements OnInit, OnDestroy {
   showIntroPopup = false;
 
   ngOnInit() {
+      // Iniciar el contador
+    this.startCountdown();
+    
     // Comprobar si ya se mostró el splash en esta sesión de navegación
     const hasShownSplash = sessionStorage.getItem('preicfes_splash_shown');
 
