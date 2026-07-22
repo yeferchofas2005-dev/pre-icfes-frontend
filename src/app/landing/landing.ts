@@ -1,4 +1,5 @@
 import { Component, HostListener, NgZone, ChangeDetectorRef, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CertificateService, NodoInfo } from '../services/certificate.service';
@@ -12,6 +13,7 @@ import * as AOS from 'aos';
   templateUrl: './landing.html',
   styleUrl: './landing.css',
 })
+
 export class Landing implements OnInit, OnDestroy {
 
   constructor(
@@ -88,10 +90,35 @@ export class Landing implements OnInit, OnDestroy {
   }
 
   /* =========================================================================
-     POPUP / SLIDER DE ANUNCIOS
+     POPUP / SLIDER DE ANUNCIOS & SPLASH SCREEN
   ========================================================================= */
 
-  showIntroPopup = true;
+  showSplash = false;
+  showIntroPopup = false;
+
+  ngOnInit() {
+    // Comprobar si ya se mostró el splash en esta sesión de navegación
+    const hasShownSplash = sessionStorage.getItem('preicfes_splash_shown');
+
+    if (!hasShownSplash) {
+      this.showSplash = true;
+      sessionStorage.setItem('preicfes_splash_shown', 'true');
+
+      // Después de 4.2 segundos (duración de la animación), ocultar el splash
+      // y opcionalmente mostrar el popup introductorio
+      setTimeout(() => {
+        this.ngZone.run(() => {
+          this.showSplash = false;
+          // Mostrar el popup de anuncios después del splash
+          this.showIntroPopup = true;
+          this.cdr.detectChanges();
+        });
+      }, 4200);
+    } else {
+      // Si ya se mostró, mostrar directamente el popup de anuncios si es necesario
+      this.showIntroPopup = true;
+    }
+  }
 
   slides = [
     {

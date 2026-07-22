@@ -1272,201 +1272,324 @@ body {
     font-size: 1rem;
   }
 }
+/* =========================================================================
+   SPLASH SCREEN HUD / CYBER ANIMATIONS
+========================================================================= */
 
-/* ======================
-   ABOUT BENTO SECTION
-====================== */
-.about-bento-section {
-  background-color: #050814;
-  color: #ffffff;
-  padding: 160px 6% 100px;
-  font-family: 'Poppins', sans-serif;
-}
-
-.about-container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.about-header {
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto 60px;
-}
-.footer-social {
-  text-align: center;
-  padding: 80px 20px 60px;
-  background: linear-gradient(
-    135deg,
-    #1f2a63 0%,
-    #2f5fd0 100%
-  );
-  color: white;
-}
-
-.footer-social h2 {
-  font-size: 2.2rem;
-  margin-bottom: 16px;
-  color: white;
-}
-
-.footer-social p {
-  max-width: 750px;
-  margin: 0 auto 35px;
-  font-size: 1.1rem;
-  line-height: 1.7;
-  color: rgba(255,255,255,0.9);
-}
-
-.social-links {
+/* =========================================================================
+   SPLASH SCREEN HUD / CYBER ANIMATIONS
+   (viene de develop — se conserva tal cual, no chocaba con nada)
+========================================================================= */
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  background-color: #0c0f20;
   display: flex;
   justify-content: center;
-  gap: 24px;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
-}
-
-.social-link {
-  display: flex;
   align-items: center;
-  gap: 12px;
-
-  padding: 14px 24px;
-
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-
-  border-radius: 50px;
-
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-
-  transition: all 0.3s ease;
+  z-index: 5000;
+  overflow: hidden;
+  animation: splashFadeOut 0.8s cubic-bezier(0.85, 0, 0.15, 1) 4.07s forwards;
 }
 
-.social-link:hover {
-  transform: translateY(-4px);
-
-  background: rgba(255,255,255,0.15);
-
-  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+/* Fondo de cuadrícula Cyberpunk */
+.hud-grid-background {
+  position: absolute;
+  inset: 0;
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(48, 37, 129, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(48, 37, 129, 0.07) 1px, transparent 1px);
+  opacity: 0;
+  animation: gridFadeIn 1s ease forwards 0.2s;
 }
 
-.social-link img {
-  width: 36px;
-  height: 36px;
-  object-fit: contain;
+/* Paneles de Datos HUD Laterales */
+.hud-data-panel {
+  position: absolute;
+  font-family: monospace;
+  font-size: 11px;
+  color: #4a5c8c;
+  background: rgba(12, 15, 32, 0.85);
+  border: 1px solid rgba(48, 37, 129, 0.25);
+  padding: 10px 14px;
+  border-radius: 4px;
+  opacity: 0;
 }
 
-.footer-copy {
-  margin-top: 10px;
-
-  color: rgba(255,255,255,0.75);
-
-  font-size: 0.95rem;
-
-  border-top: 1px solid rgba(255,255,255,0.15);
-
-  padding-top: 25px;
+.hud-data-panel.left {
+  left: 4%;
+  top: 50%;
+  transform: translateY(-50%) translateX(-20px);
+  border-left: 3px solid #302581;
+  animation: dataPanelInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.8s;
 }
 
-/* ======================
-   RESPONSIVE
-====================== */
-@media (max-width: 768px) {
+.hud-data-panel.right {
+  right: 4%;
+  top: 50%;
+  transform: translateY(-50%) translateX(20px);
+  border-right: 3px solid #34598d;
+  animation: dataPanelInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.8s;
+}
 
-  .footer-social {
-    padding: 60px 20px 50px;
-  }
+.hud-data-row {
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+.hud-data-row:last-child {
+  margin-bottom: 0;
+}
 
-  .footer-social h2 {
-    font-size: 1.8rem;
-  }
+/* Círculos Concéntricos del Escáner HUD */
+.hud-circle-outer {
+  position: absolute;
+  width: 580px;
+  height: 580px;
+  border: 1px dashed rgba(48, 37, 129, 0.15);
+  border-radius: 50%;
+  animation: rotateClockwise 25s linear infinite;
+  opacity: 0;
+  animation-delay: 0.4s;
+  animation-fill-mode: forwards;
+}
 
-  .social-links {
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-  }
+.hud-circle-inner {
+  position: absolute;
+  width: 440px;
+  height: 440px;
+  border: 1px double rgba(52, 89, 141, 0.2);
+  border-radius: 50%;
+  animation: rotateCounterClockwise 15s linear infinite;
+  opacity: 0;
+  animation-delay: 0.6s;
+  animation-fill-mode: forwards;
+}
 
-  .social-link {
-    width: 260px;
-    justify-content: center;
+/* Línea de Barrido / Escáner Laser */
+.hud-scanner-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to bottom, transparent, #34598d, transparent);
+  box-shadow: 0 0 15px rgba(52, 89, 141, 0.5);
+  opacity: 0.6;
+  z-index: 5005;
+  animation: scanVertical 3s ease-in-out infinite;
+}
+
+/* Contenedor del Logo SVG */
+.splash-logo-container {
+  width: min(340px, 80vw);
+  height: auto;
+  position: relative;
+  z-index: 5010;
+  filter: drop-shadow(0 0 20px rgba(48, 37, 129, 0.4));
+  animation: logoGlowEffect 2.8s ease-in-out infinite alternate;
+}
+
+.splash-logo-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.struct {
+  fill-opacity: 0;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  vector-effect: non-scaling-stroke;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+.struct-1 {
+  stroke: #7A8EF4;
+  filter: drop-shadow(0 0 4px #7A8EF4);
+  animation-name: neonDraw, neonFill;
+  animation-duration: 0.6s, 0.35s;
+  animation-delay: 0.0s, 0.6s;
+}
+
+.struct-2 {
+  stroke: #E0E9FC;
+  filter: drop-shadow(0 0 4px #E0E9FC);
+  animation-name: neonDraw, neonFill;
+  animation-duration: 0.6s, 0.35s;
+  animation-delay: 0.24s, 0.84s;
+}
+
+.struct-3 {
+  stroke: #E7EEFD;
+  filter: drop-shadow(0 0 4px #E7EEFD);
+  animation-name: neonDraw, neonFill;
+  animation-duration: 0.6s, 0.35s;
+  animation-delay: 0.48s, 1.08s;
+}
+
+.struct-4 {
+  stroke: #7A95F4;
+  filter: drop-shadow(0 0 4px #7A95F4);
+  animation-name: neonDraw, neonFill;
+  animation-duration: 0.6s, 0.35s;
+  animation-delay: 0.72s, 1.32s;
+}
+
+.struct-5 {
+  stroke: #7AA8F4;
+  filter: drop-shadow(0 0 4px #7AA8F4);
+  animation-name: neonDraw, neonFill;
+  animation-duration: 0.6s, 0.35s;
+  animation-delay: 0.96s, 1.56s;
+}
+
+.struct-6 {
+  stroke: #F4D97A;
+  filter: drop-shadow(0 0 4px #F4D97A);
+  animation-name: neonDraw, neonFill;
+  animation-duration: 0.6s, 0.35s;
+  animation-delay: 1.2s, 1.8s;
+}
+
+.struct-7 {
+  stroke: #F48E7A;
+  filter: drop-shadow(0 0 4px #F48E7A);
+  animation-name: neonDraw, neonFill;
+  animation-duration: 0.6s, 0.35s;
+  animation-delay: 1.44s, 2.04s;
+}
+
+.struct-8 {
+  stroke: #F4A67A;
+  filter: drop-shadow(0 0 4px #F4A67A);
+  animation-name: neonDraw, neonFill;
+  animation-duration: 0.6s, 0.35s;
+  animation-delay: 1.68s, 2.28s;
+}
+
+.struct-9 {
+  stroke: #F4DD7A;
+  filter: drop-shadow(0 0 4px #F4DD7A);
+  animation-name: neonDraw, neonFill;
+  animation-duration: 0.6s, 0.35s;
+  animation-delay: 1.92s, 2.52s;
+}
+
+@keyframes neonDraw {
+  to {
+    stroke-dashoffset: 0;
   }
 }
 
-/* ======================
-   ANIMACIONES
-====================== */
-@keyframes popupFade {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* ======================
-   RESPONSIVE
-====================== */
-@media (max-width: 768px) {
-
-  .popup-slider {
-    width: 96vw;
-    height: 92vh;
-    padding: 24px 18px;
-  }
-
-  .popup-image {
-    max-width: 260px;
-  }
-
-  .popup-content h3 {
-    font-size: 1.5rem;
-  }
-
-  .section h2 {
-    font-size: 1.9rem;
-  }
-
-  .causa-card {
-    padding: 32px 24px;
-  }
-
-    .section-text {
-    font-size: 1.1rem;
-    line-height: 1.7;
-  }
-
-  .causa-card p {
-    font-size: 1.05rem;
-  }
-
-  .popup-content p {
-    font-size: 1.05rem;
+@keyframes neonFill {
+  to {
+    fill-opacity: 1;
+    stroke-width: 0;
   }
 }
 
-/* ======================
-   RESPONSIVE – MOBILE - LOCALIDADES
-====================== */
-@media (max-width: 768px) {
+.logo-text-layer {
+  opacity: 0;
+  animation: textFadeIn 0.7s ease-out forwards 2.67s;
+}
 
-  .localidades-slider {
-    padding: 20px 6%;
-    gap: 18px;
-  }
-
-  .localidad-card {
-    flex: 0 0 85%;
-  }
-
-  .localidad-info h3 {
-    font-size: 1.3rem;
-  }
-
-  .localidad-info .descripcion {
-    font-size: 1rem;
+@keyframes textFadeIn {
+  to {
+    opacity: 1;
   }
 }
+
+@keyframes splashFadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px);
+    pointer-events: none;
+    visibility: hidden;
+  }
+}
+
+@keyframes gridFadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dataPanelInLeft {
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+@keyframes dataPanelInRight {
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+@keyframes rotateClockwise {
+  0% {
+    transform: rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 0.3;
+  }
+}
+
+@keyframes rotateCounterClockwise {
+  0% {
+    transform: rotate(360deg);
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: rotate(0deg);
+    opacity: 0.4;
+  }
+}
+
+@keyframes scanVertical {
+  0%, 100% {
+    top: 5%;
+  }
+  50% {
+    top: 95%;
+  }
+}
+
+@keyframes logoGlowEffect {
+  0% {
+    filter: drop-shadow(0 0 10px rgba(48, 37, 129, 0.3));
+  }
+  100% {
+    filter: drop-shadow(0 0 25px rgba(52, 89, 141, 0.75));
+  }
+}
+
+/* =========================================================================
+   A PARTIR DE AQUÍ: contenido de fix-estetica-branch
+   (se descartó la primera versión oscura de .about-bento-section
+   y el bloque duplicado de footer-social/animaciones/media-queries
+   que ya existía más arriba en el archivo)
+========================================================================= */
 
 /* ======================
    ABOUT BENTO SECTION
@@ -2205,7 +2328,7 @@ body {
 
 .ayudar-features {
   list-style: none;
-  margin-bottom: auto; /* push button down */
+  margin-bottom: auto;
   padding-bottom: 30px;
 }
 
@@ -2260,7 +2383,7 @@ body {
 .ayudar-donar {
   background: #ffd95a;
   color: #11152a;
-  transform: scale(1.05); /* Highlight middle card */
+  transform: scale(1.05);
   z-index: 10;
   box-shadow: 0 25px 50px rgba(0,0,0,0.15);
 }
@@ -2765,7 +2888,6 @@ body {
    MOBILE RESPONSIVE (max-width: 768px)
 ====================== */
 @media (max-width: 768px) {
-  /* Navbar */
   .nav-container {
     flex-direction: column;
     gap: 16px;
@@ -2786,9 +2908,8 @@ body {
     flex-wrap: wrap;
   }
 
-  /* Hero */
   .hero {
-    padding: 240px 16px 30px !important; /* Huge top padding because the navbar is tall on mobile */
+    padding: 240px 16px 30px !important;
   }
   .hero-inner {
     grid-template-columns: 1fr !important;
@@ -2807,8 +2928,7 @@ body {
   .hero h1 {
     font-size: 2.2rem;
   }
-  
-  /* Hero Media fixes */
+
   .hero-media-main {
     position: relative !important;
     height: auto !important;
@@ -2820,11 +2940,11 @@ body {
     border-radius: 1.5rem;
   }
   .hero-media-secondary {
-    display: none !important; /* Hide secondary image on mobile to avoid ugly stacking */
+    display: none !important;
   }
-  
+
   .hero-chip {
-    display: none; /* Hide floating chips on mobile to save space */
+    display: none;
   }
   .hero-stats {
     flex-wrap: wrap;
@@ -2837,7 +2957,6 @@ body {
     text-align: center;
   }
 
-  /* Countdown */
   .countdown-boxes {
     gap: 8px;
     flex-wrap: wrap;
@@ -2848,7 +2967,6 @@ body {
     padding: 8px;
   }
 
-  /* Grids & Bento */
   .bento-grid, .causa-grid, .ayudar-grid {
     grid-template-columns: 1fr !important;
     gap: 24px;
@@ -2860,8 +2978,7 @@ body {
     flex-direction: column;
     gap: 24px;
   }
-  
-  /* Sections */
+
   .about-title, .ayudar-title, .causa-title, section h2 {
     font-size: 2rem !important;
   }
@@ -2869,7 +2986,6 @@ body {
     padding: 40px 16px !important;
   }
 
-  /* Popups */
   .popup-slider, .certificate-popup {
     padding: 24px !important;
     width: 95vw !important;
@@ -2885,8 +3001,7 @@ body {
   }
   .slider-btn.left { left: 8px; }
   .slider-btn.right { right: 8px; }
-  
-  /* Localidades Slider */
+
   .localidades-slider {
     display: flex;
     flex-direction: column;
@@ -2896,7 +3011,6 @@ body {
     width: 100%;
   }
 
-  /* Footer */
   .footer-copyright {
     flex-direction: column;
     text-align: center;
