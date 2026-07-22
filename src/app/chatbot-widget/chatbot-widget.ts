@@ -14,7 +14,7 @@ export class ChatbotWidget {
   chatbotUrl: SafeResourceUrl;
 
   constructor(private sanitizer: DomSanitizer) {
-    // Apunta a la ruta específica del chatbot en el servidor de Next.js
+    // Apunta a la ruta específica del chatbot (/chatbot) en el servidor de Next.js
     this.chatbotUrl = this.sanitizer.bypassSecurityTrustResourceUrl('http://localhost:3000/chatbot');
   }
 
