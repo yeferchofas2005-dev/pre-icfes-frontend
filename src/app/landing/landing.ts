@@ -1,9 +1,10 @@
-import { Component, HostListener, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, HostListener, NgZone, ChangeDetectorRef, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CertificateService, NodoInfo } from '../services/certificate.service';
 import { CertificadoPertenencia } from '../certificado-pertenencia/certificado-pertenencia';
 import { firstValueFrom } from 'rxjs';
+import * as AOS from 'aos';
 
 @Component({
   selector: 'app-landing',
@@ -11,13 +12,80 @@ import { firstValueFrom } from 'rxjs';
   templateUrl: './landing.html',
   styleUrl: './landing.css',
 })
-export class Landing {
+export class Landing implements OnInit, OnDestroy {
 
   constructor(
     private certificateService: CertificateService,
     private ngZone: NgZone,       // Permite forzar la detección de cambios desde fuera de la zona de Angular
     private cdr: ChangeDetectorRef // Permite actualizar la UI manualmente después de operaciones async
-  ) {}
+  ) { }
+
+  countdownDays: string = '00';
+  countdownHours: string = '00';
+  countdownMinutes: string = '00';
+  selectedDonation: string = '$60k';
+
+  selectDonation(amount: string) {
+    this.selectedDonation = amount;
+  }
+  countdownSeconds: string = '00';
+  private countdownInterval: any;
+
+  ngOnInit() {
+    this.startCountdown();
+  }
+
+  ngAfterViewInit() {
+    // Es mejor inicializar AOS aquí porque los elementos HTML ya se han renderizado
+    setTimeout(() => {
+      AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100
+      });
+      AOS.refresh();
+    }, 100);
+  }
+
+  ngOnDestroy() {
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+    }
+  }
+
+  private startCountdown() {
+    // Fecha objetivo: 26 de julio de 2026, hora de Colombia (UTC-5)
+    // Se puede especificar el timezone en el string, o usar getTime() y ajustar si es necesario.
+    // '2026-07-26T00:00:00-05:00' asume media noche, o si es a otra hora, podemos poner '2026-07-26T07:00:00-05:00' (ej. 7am)
+    // El prompt solo dice "para el dia 26 de julio 2026"
+    const targetDate = new Date('2026-07-26T00:00:00-05:00').getTime();
+
+    this.countdownInterval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        clearInterval(this.countdownInterval);
+        this.countdownDays = '00';
+        this.countdownHours = '00';
+        this.countdownMinutes = '00';
+        this.countdownSeconds = '00';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      this.countdownDays = days.toString().padStart(2, '0');
+      this.countdownHours = hours.toString().padStart(2, '0');
+      this.countdownMinutes = minutes.toString().padStart(2, '0');
+      this.countdownSeconds = seconds.toString().padStart(2, '0');
+
+      this.cdr.detectChanges();
+    }, 1000);
+  }
 
   /* =========================================================================
      POPUP / SLIDER DE ANUNCIOS
@@ -93,10 +161,10 @@ export class Landing {
 
   // Datos del estudiante y su nodo que se pasan al componente CertificadoPertenencia
   certificateData: {
-    nombre:    string;
+    nombre: string;
     documento: string;
-    tipoDoc:   string;
-    nodoInfo:  NodoInfo;
+    tipoDoc: string;
+    nodoInfo: NodoInfo;
   } | null = null;
 
   openCertificateModal() {
@@ -159,10 +227,10 @@ export class Landing {
 
       // Preparar los datos que se inyectarán en el certificado
       this.certificateData = {
-        nombre:    estudiante.nombre,
+        nombre: estudiante.nombre,
         documento: estudiante.documento,
-        tipoDoc:   estudiante.tipoDoc,
-        nodoInfo:  nodoInfo
+        tipoDoc: estudiante.tipoDoc,
+        nodoInfo: nodoInfo
       };
 
       // Cerrar el modal y limpiar el mensaje de estado
