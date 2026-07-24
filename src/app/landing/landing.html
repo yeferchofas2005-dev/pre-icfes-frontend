@@ -720,6 +720,16 @@
       [nodoInfo]="certificateData!.nodoInfo">
     </app-certificado-pertenencia>
   }
+    <!-- Diploma / Certificado de Asistencia -->
+  @if(showDiploma && certificateData) {
+
+    <app-certificado-diploma
+      [nombre]="certificateData!.nombre"
+      [documento]="certificateData!.documento"
+      [nodoInfo]="certificateData!.nodoInfo">
+    </app-certificado-diploma>
+
+  }
 </div>
 
 <!-- ======================
