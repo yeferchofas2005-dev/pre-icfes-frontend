@@ -1,29 +1,134 @@
-import { Component, HostListener, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, HostListener, NgZone, ChangeDetectorRef, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CertificateService, NodoInfo } from '../services/certificate.service';
 import { CertificadoPertenencia } from '../certificado-pertenencia/certificado-pertenencia';
+import { CertificadoDiploma } from '../certificado-diploma/certificado-diploma';
 import { firstValueFrom } from 'rxjs';
+import * as AOS from 'aos';
 
 @Component({
   selector: 'app-landing',
-  imports: [NgIf, RouterLink, CertificadoPertenencia],
+  imports: [
+    NgIf,
+    RouterLink,
+    CertificadoPertenencia,
+    CertificadoDiploma
+  ],
   templateUrl: './landing.html',
   styleUrl: './landing.css',
 })
-export class Landing {
+
+export class Landing implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private certificateService: CertificateService,
     private ngZone: NgZone,       // Permite forzar la detección de cambios desde fuera de la zona de Angular
     private cdr: ChangeDetectorRef // Permite actualizar la UI manualmente después de operaciones async
-  ) {}
+  ) { }
+
+  countdownDays: string = '00';
+  countdownHours: string = '00';
+  countdownMinutes: string = '00';
+  selectedDonation: string = '$60k';
+
+  selectDonation(amount: string) {
+    this.selectedDonation = amount;
+  }
+  countdownSeconds: string = '00';
+  private countdownInterval: any;
+
+  ngAfterViewInit() {
+    // Es mejor inicializar AOS aquí porque los elementos HTML ya se han renderizado
+    setTimeout(() => {
+      AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100
+      });
+      AOS.refresh();
+    }, 100);
+  }
+
+  ngOnDestroy() {
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+    }
+  }
+
+  private startCountdown() {
+    // Fecha objetivo: 26 de julio de 2026, hora de Colombia (UTC-5)
+    // Se puede especificar el timezone en el string, o usar getTime() y ajustar si es necesario.
+    // '2026-07-26T00:00:00-05:00' asume media noche, o si es a otra hora, podemos poner '2026-07-26T07:00:00-05:00' (ej. 7am)
+    // El prompt solo dice "para el dia 26 de julio 2026"
+    const targetDate = new Date('2026-07-26T00:00:00-05:00').getTime();
+
+    this.countdownInterval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        clearInterval(this.countdownInterval);
+        this.countdownDays = '00';
+        this.countdownHours = '00';
+        this.countdownMinutes = '00';
+        this.countdownSeconds = '00';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      this.countdownDays = days.toString().padStart(2, '0');
+      this.countdownHours = hours.toString().padStart(2, '0');
+      this.countdownMinutes = minutes.toString().padStart(2, '0');
+      this.countdownSeconds = seconds.toString().padStart(2, '0');
+
+      this.cdr.detectChanges();
+    }, 1000);
+  }
 
   /* =========================================================================
-     POPUP / SLIDER DE ANUNCIOS
+     POPUP / SLIDER DE ANUNCIOS & SPLASH SCREEN
   ========================================================================= */
 
-  showIntroPopup = true;
+  showSplash = false;
+  showIntroPopup = false;
+
+  ngOnInit() {
+    // Iniciar el contador
+    this.startCountdown();
+
+    // Comprobar si ya se mostró el splash en esta sesión de navegación
+    const hasShownSplash = sessionStorage.getItem('preicfes_splash_shown');
+
+    if (!hasShownSplash) {
+
+      this.showSplash = true;
+      sessionStorage.setItem('preicfes_splash_shown', 'true');
+
+      setTimeout(() => {
+
+        this.ngZone.run(() => {
+
+          this.showSplash = false;
+          this.showIntroPopup = true;
+          this.cdr.detectChanges();
+
+        });
+
+      }, 4200);
+
+    } else {
+
+      this.showIntroPopup = true;
+
+    }
+
+  }
 
   slides = [
     {
@@ -64,129 +169,203 @@ export class Landing {
 
   /* =========================================================================
      MANEJO DE TECLADO
-     Cierra popups activos al presionar Escape
   ========================================================================= */
 
   @HostListener('document:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
+
     if (event.key === 'Escape') {
+
       if (this.showIntroPopup) {
+
         this.closeIntroPopup();
+
       } else if (this.showCertificateModal) {
+
         this.closeCertificateModal();
+
       }
+
     }
+
   }
 
   /* =========================================================================
-     CERTIFICADO DE PERTENENCIA
+     CERTIFICADOS
   ========================================================================= */
 
-  // Controla la visibilidad del modal donde el usuario ingresa sus datos
+  // Controla la visibilidad del modal
   showCertificateModal = false;
 
-  // Mensaje de estado mostrado al usuario durante el proceso (errores, carga, etc.)
+  // Mensaje mostrado al usuario
   certificateStatusMessage = '';
 
-  // Bandera que activa el componente invisible encargado de generar y descargar el PDF
+  // Bandera para Certificado de Pertenencia
   showCertificate = false;
 
-  // Datos del estudiante y su nodo que se pasan al componente CertificadoPertenencia
+  // Bandera para Diploma
+  showDiploma = false;
+
+  // Datos compartidos entre ambos certificados
   certificateData: {
-    nombre:    string;
+    nombre: string;
     documento: string;
-    tipoDoc:   string;
-    nodoInfo:  NodoInfo;
+    tipoDoc: string;
+    nodoInfo: NodoInfo;
   } | null = null;
 
   openCertificateModal() {
+
     this.certificateStatusMessage = '';
     this.showCertificateModal = true;
+
   }
 
   closeCertificateModal() {
+
     this.showCertificateModal = false;
+
   }
 
   /**
-   * Método principal del flujo de descarga del certificado.
-   * 1. Valida los campos del formulario
-   * 2. Verifica que el nodo esté disponible
-   * 3. Busca al estudiante en Google Sheets
-   * 4. Si lo encuentra, activa el componente que genera y descarga el PDF
+   * Flujo principal de generación de certificados.
+   *
+   * CP = Certificado de Pertenencia
+   * CA = Certificado de Asistencia (Diploma)
    */
-  async submitCertificate(tipoDocumento: string, documento: string, nodo: string) {
+  async submitCertificate(
+    tipoDocumento: string,
+    documento: string,
+    nodo: string
+  ) {
 
-    // Validar que todos los campos estén llenos
+    // Validar campos
+
     if (!documento || !nodo) {
+
       this.certificateStatusMessage = 'Por favor completa todos los campos.';
       this.cdr.detectChanges();
       return;
+
     }
 
-    // Verificar que el nodo seleccionado ya tenga datos en el sheet
+    // Validar nodo
+
     const nodosDisponibles = this.certificateService.getNodoKeys();
+
     if (!nodosDisponibles.includes(nodo)) {
-      this.certificateStatusMessage = `El nodo "${nodo}" aún no está disponible. Por favor verifica el nombre o inténtalo más tarde.`;
+
+      this.certificateStatusMessage =
+        `El nodo "${nodo}" aún no está disponible. Por favor verifica el nombre o inténtalo más tarde.`;
+
       this.cdr.detectChanges();
       return;
+
     }
 
-    // Mostrar mensaje de carga antes de la petición HTTP
+    // Mensaje de carga
+
     this.certificateStatusMessage = 'Buscando tu certificado...';
     this.cdr.detectChanges();
 
     try {
-      // Buscar al estudiante en la pestaña correspondiente del Google Sheet
+
       const estudiante = await firstValueFrom(
-        this.certificateService.getStudent(nodo, documento.trim())
+        this.certificateService.getStudent(
+          nodo,
+          documento.trim()
+        )
       );
 
-      // Si no se encontró el documento en el nodo seleccionado
+      // Documento no encontrado
+
       if (!estudiante) {
-        this.certificateStatusMessage = 'No se encontró un certificado para el número de documento y nodo proporcionados. Por favor verifica tus datos e inténtalo nuevamente.';
+
+        this.certificateStatusMessage =
+          'No se encontró un certificado para el número de documento y nodo proporcionados. Por favor verifica tus datos e inténtalo nuevamente.';
+
         this.cdr.detectChanges();
         return;
+
       }
 
-      // Obtener la información del nodo (dirección, coordinador, nombre completo)
+      // Obtener información del nodo
+
       const nodoInfo = this.certificateService.getNodoInfo(nodo);
+
       if (!nodoInfo) {
-        this.certificateStatusMessage = 'Ocurrió un error al obtener la información del nodo. Por favor inténtalo nuevamente más tarde.';
+
+        this.certificateStatusMessage =
+          'Ocurrió un error al obtener la información del nodo. Por favor inténtalo nuevamente más tarde.';
+
         this.cdr.detectChanges();
         return;
+
       }
 
-      // Preparar los datos que se inyectarán en el certificado
+      // Datos que recibirán ambos componentes
+
       this.certificateData = {
-        nombre:    estudiante.nombre,
+        nombre: estudiante.nombre,
         documento: estudiante.documento,
-        tipoDoc:   estudiante.tipoDoc,
-        nodoInfo:  nodoInfo
+        tipoDoc: estudiante.tipoDoc,
+        nodoInfo: nodoInfo
       };
 
-      // Cerrar el modal y limpiar el mensaje de estado
+      // Cerrar modal
+
       this.closeCertificateModal();
       this.certificateStatusMessage = '';
 
-      // Activar el componente invisible CertificadoPertenencia dentro de la zona de Angular
-      // para que el *ngIf se evalúe correctamente y el componente se instancie
+      // Activar el componente correspondiente
+
       this.ngZone.run(() => {
-        this.showCertificate = true;
+
+        // Limpiar ambos estados por seguridad
+
+        this.showCertificate = false;
+        this.showDiploma = false;
+
+        if (tipoDocumento === 'CP') {
+
+          this.showCertificate = true;
+
+        } else if (tipoDocumento === 'CA') {
+
+          this.showDiploma = true;
+
+        }
+
         this.cdr.detectChanges();
 
-        // Desactivar el componente después de que el PDF se haya descargado
+        // Después de la descarga desmontar el componente
+
         setTimeout(() => {
+
           this.ngZone.run(() => {
+
             this.showCertificate = false;
+            this.showDiploma = false;
+
+            this.cdr.detectChanges();
+
           });
+
         }, 4000);
+
       });
 
-    } catch (error) {
-      // Error de red o de la API de Google Sheets
-      this.certificateStatusMessage = 'Ocurrió un error al buscar tu certificado. Por favor inténtalo nuevamente más tarde.';
-      this.cdr.detectChanges();
     }
+
+    catch (error) {
+
+      this.certificateStatusMessage =
+        'Ocurrió un error al buscar tu certificado. Por favor inténtalo nuevamente más tarde.';
+
+      this.cdr.detectChanges();
+
+    }
+
   }
+
 }

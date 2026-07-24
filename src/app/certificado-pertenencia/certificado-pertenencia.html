@@ -1,92 +1,167 @@
-<!-- certificate.component.html -->
-<!-- Este componente se renderiza invisible y se descarga como PDF automáticamente -->
+<!-- ==========================================================
+     CERTIFICADO DE PERTENENCIA
+========================================================== -->
 
 <div class="certificado" id="certificate-content">
 
-  <!-- ── ENCABEZADO ── -->
-  <div class="cert__header">
-    <table>
-      <tr>
-        <td>
-          <p><strong>Correo electrónico:</strong> preicfesjovenesbogota@gmail.com</p>
-          <p><strong>Página web:</strong> www.preicfesgratuito.com</p>
-        </td>
-        <td align="right">
-          <img src="assets/icon/logo.png" alt="Logo PreICFES" class="cert__logo"/>
-        </td>
-      </tr>
-    </table>
-  </div>
+  <!-- MARCOS -->
+  <div class="certificado__frame certificado__frame--outer"></div>
+  <div class="certificado__frame certificado__frame--inner"></div>
 
-  <!-- ── FECHA ── -->
-  <p class="cert__fecha">Bogotá D.C., {{ fecha }}</p>
+  <!-- MARCA DE AGUA -->
+  <div class="certificado__watermark"></div>
 
-  <!-- ── TÍTULO ── -->
-  <div class="cert__titulo">
-    <h3>EL PREICFES JÓVENES BOGOTÁ</h3>
-    <h4>CERTIFICA QUE:</h4>
-  </div>
+  <!-- CONTENIDO -->
+  <div class="certificado__content">
 
-  <!-- ── CONTENIDO ── -->
-  <div class="cert__contenido">
+    <!-- ENCABEZADO -->
+    <header class="certificado__header">
 
-    <p>
-      <strong>{{ nombre }}</strong>, identificado(a) con {{ tipoDocLabel }} No.
-      <strong>{{ documento }}</strong>, se encuentra inscrito(a) como beneficiario(a) del
-      <strong>PreICFES Gratuito para Jóvenes en Bogotá</strong>, una iniciativa popular y comunitaria
-      con enfoque diferencial, que acompaña el proceso de preparación académica de manera 100% gratuita
-      a jóvenes de diversas localidades de la ciudad.
+      <img
+        src="assets/icon/logo.png"
+        alt="Logo PreICFES"
+        class="certificado__logo">
+
+      <div class="certificado__institucion">
+        <h1>PREICFES GRATUITO</h1>
+        <p class="certificado__institucion-sub">Programa Social de Formación Académica</p>
+      </div>
+
+    </header>
+
+    <!-- LÍNEA -->
+    <div class="certificado__divider"></div>
+
+    <!-- FECHA -->
+    <div class="certificado__fecha">
+      Bogotá D.C., {{ fecha }}
+    </div>
+
+    <!-- TÍTULO -->
+    <section class="certificado__titulo">
+      <span>CERTIFICADO DE</span>
+      <h2>PERTENENCIA</h2>
+    </section>
+
+    <!-- INTRODUCCIÓN -->
+    <p class="certificado__introduccion">
+      El programa <strong>PreICFES Gratuito</strong> certifica que:
     </p>
 
-    <p>
-      Este proceso formativo aborda de manera integral los cinco módulos evaluados en la
-      <strong>Prueba Saber 11°</strong>, desarrollando competencias en Matemáticas (Precálculo, estadística,
-      geometría y razonamiento lógico), Sociales y Ciudadanas (historia mundial y de Colombia, geografía,
-      formas de gobierno y mecanismos de participación), Inglés (escritura, gramática y vocabulario),
-      Ciencias Naturales (física, química y biología) y Lectura Crítica (comprensión de textos y habilidades
-      de escritura). Además, el programa incluye acompañamiento en orientación vocacional, con el objetivo
-      de fortalecer el proyecto de vida de cada participante.
-    </p>
+    <!-- NOMBRE -->
+    <div class="certificado__nombre">
+      {{ nombre }}
+    </div>
 
-    <p>
-      El programa se desarrolla todos los sábados, desde el <strong>11 de abril de 2026</strong>,
-      hasta el <strong>25 de julio de 2026</strong>, en el horario de <strong>8:00 a.m. a 12:30 p.m.</strong>,
-      en el <strong>{{ nodoInfo.nombreCompleto }} ({{ nodoInfo.direccion }})</strong>.
-    </p>
+    <div class="certificado__linea-nombre"></div>
 
-    <p>Se expide el presente certificado a solicitud de el/la interesado(a).</p>
+    <div class="certificado__identificacion">
+      {{ tipoDocLabel }} No. <strong>{{ documento }}</strong>
+    </div>
 
-    <p>Dada en Bogotá D.C., a los {{ dia }} días del mes de {{ mes }} de {{ anio }}.</p>
+    <!-- CUERPO DEL DOCUMENTO -->
+    <section class="certificado__texto">
 
-    <p>Cordialmente,</p>
+      <p>
+        Se encuentra oficialmente inscrito(a) como beneficiario(a) del programa
+        <strong>PreICFES Gratuito para Jóvenes en Bogotá</strong>, iniciativa
+        comunitaria orientada al fortalecimiento de las competencias académicas
+        de estudiantes de educación media, brindando formación completamente
+        gratuita para la preparación de la Prueba Saber 11.
+      </p>
+
+      <p>
+        Durante su proceso formativo desarrollará competencias en las áreas de
+        Matemáticas, Lectura Crítica, Ciencias Naturales, Sociales y Ciudadanas
+        e Inglés, además de participar en espacios de orientación vocacional y
+        fortalecimiento de su proyecto de vida.
+      </p>
+
+      <p>
+        El estudiante se encuentra vinculado al nodo
+        <strong>{{ nodoInfo.nombreCompleto }}</strong> ubicado en
+        <strong>{{ nodoInfo.direccion }}</strong>, donde asiste todos los
+        sábados entre el <strong>11 de abril de 2026</strong> y el
+        <strong>25 de julio de 2026</strong>, en horario de
+        <strong>8:00 a.m. a 12:30 p.m.</strong>
+      </p>
+
+      <p>
+        El presente certificado se expide a solicitud del interesado, como
+        constancia oficial de vinculación al programa.
+      </p>
+
+      <p class="certificado__texto-fecha">
+        Dado en Bogotá D.C., a los <strong>{{ dia }}</strong> días del mes de
+        <strong>{{ mes }}</strong> de <strong>{{ anio }}</strong>.
+      </p>
+
+    </section>
+
+    <!-- FIRMAS -->
+    <section class="certificado__firmas">
+
+      <!-- DIRECTOR GENERAL -->
+      <div class="firma">
+
+        <img
+          *ngIf="directorGeneral.firma"
+          [src]="directorGeneral.firma"
+          class="firma__imagen"
+          alt="Firma Director General">
+
+        <div
+          *ngIf="!directorGeneral.firma"
+          class="firma__firmaTexto">
+          {{ directorGeneral.nombre }}
+        </div>
+
+        <div class="firma__linea"></div>
+        <div class="firma__nombre">{{ directorGeneral.nombre }}</div>
+        <div class="firma__cargo">{{ directorGeneral.cargo }}</div>
+        <div class="firma__institucion">PREICFES GRATUITO</div>
+
+      </div>
+
+      <!-- DIRECTOR DEL NODO -->
+      <div class="firma" *ngIf="directorNodo">
+
+        <img
+          *ngIf="mostrarFirmaNodo"
+          [src]="directorNodo.firma"
+          class="firma__imagen"
+          alt="Firma Director Nodo">
+
+        <div
+          *ngIf="!mostrarFirmaNodo"
+          class="firma__firmaTexto">
+          {{ directorNodo.nombre }}
+        </div>
+
+        <div class="firma__linea"></div>
+        <div class="firma__nombre">{{ directorNodo.nombre }}</div>
+        <div class="firma__cargo">{{ directorNodo.cargo }}</div>
+        <div class="firma__institucion">{{ nodoInfo.nombreCompleto }}</div>
+
+      </div>
+
+    </section>
+
+    <!-- PIE DEL DOCUMENTO -->
+    <footer class="certificado__footer">
+
+      <div class="certificado__footer-line"></div>
+
+      <p>
+        Este certificado es expedido por el programa
+        <strong>PreICFES Gratuito</strong> como constancia oficial de la
+        vinculación del estudiante al proceso formativo.
+      </p>
+
+      <span>PREICFES GRATUITO · Bogotá D.C. · Educación con propósito</span>
+
+    </footer>
 
   </div>
-
-  <!-- ── FIRMAS ── -->
-  <div class="cert__firmas">
-    <table>
-      <tr>
-        <!-- Firma coordinación general -->
-        <td>
-          <img src="assets\certificado\firmaCordinador.png" alt="Firma" class="cert__firma-img"/>
-          <div class="cert__linea"></div>
-          <div class="cert__firma-nombre">Jefferson Escobar Rivas</div>
-          <div class="cert__firma-cargo">Coordinación General</div>
-          <div class="cert__firma-cargo">PreICFES Gratuito "Jóvenes en Bogotá"</div>
-        </td>
-
-        <!-- Firma coordinador de nodo -->
-        <td>
-            <p class="">{{ nodoInfo.coordinador }}</p>
-            <div class="cert__linea"></div>
-            <div class="cert__firma-nombre">{{ nodoInfo.coordinador }}</div>
-            <div class="cert__firma-cargo">Coordinador {{ nodoInfo.nombreCompleto }}</div>
-        </td>
-      </tr>
-    </table>
-  </div>
-
-  <!-- ── DECORACIÓN INFERIOR ── -->
-  <div class="cert__decoracion"></div>
 
 </div>

@@ -1,0 +1,10 @@
+<div class="chatbot-widget-container" [class.open]="isOpen()">
+  <div class="chatbot-panel" *ngIf="isOpen()">
+    <iframe [src]="chatbotUrl" frameborder="0" class="chatbot-iframe" title="Chatbot Vocacional"></iframe>
+  </div>
+  
+  <button class="chatbot-toggle-btn" (click)="toggleChat()" [attr.aria-label]="isOpen() ? 'Cerrar chat' : 'Abrir chat'">
+    <img src="assets/chatbot-icon.png" alt="Chatbot" class="chatbot-icon-img" *ngIf="!isOpen()" />
+    <span class="icon close-icon" *ngIf="isOpen()">✕</span>
+  </button>
+</div>

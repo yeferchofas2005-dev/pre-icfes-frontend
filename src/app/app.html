@@ -1,1 +1,4 @@
-<router-outlet></router-outlet>
+<main [@routeAnimations]="getRouteAnimationData(outlet)">
+  <router-outlet #outlet="outlet"></router-outlet>
+</main>
+<app-chatbot-widget></app-chatbot-widget>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orientación Vocacional Adaptativa | Descubre tu Carrera</title>
+  <meta name="description" content="Chatbot de orientación vocacional con inteligencia artificial adaptativa. Descubre tu carrera ideal en 5-10 minutos respondiendo preguntas personalizadas." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PANTALLA 1: BIENVENIDA
+═══════════════════════════════════════════════════════════ -->
+<div id="screen-welcome" class="screen active">
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="welcome-container">
+    <div class="brand">
+      <div class="brand-icon">🎓</div>
+      <div class="brand-text">
+        <h1>VocaPath IA</h1>
+        <p class="brand-subtitle">Orientación Vocacional Adaptativa</p>
+      </div>
+    </div>
+
+    <div class="welcome-card glass-card">
+      <h2>Descubre tu carrera ideal</h2>
+      <p class="welcome-desc">
+        Nuestro sistema de IA analiza tu perfil de competencias y aptitudes 
+        para orientarte hacia la carrera universitaria que más se alinea contigo.
+        <strong>Solo toma 5-10 minutos.</strong>
+      </p>
+
+      <div class="stats-row">
+        <div class="stat-item">
+          <span class="stat-num">15</span>
+          <span class="stat-lbl">Carreras</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">400+</span>
+          <span class="stat-lbl">Preguntas</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">8</span>
+          <span class="stat-lbl">Dimensiones</span>
+        </div>
+      </div>
+
+      <form id="form-welcome" novalidate>
+        <div class="form-group">
+          <label for="input-nombre">¿Cómo te llamas? <span class="optional">(opcional)</span></label>
+          <input type="text" id="input-nombre" placeholder="Tu nombre..." maxlength="50" autocomplete="given-name" />
+        </div>
+
+        <div class="form-group">
+          <label for="input-edad">¿Cuántos años tienes? <span class="optional">(opcional)</span></label>
+          <input type="number" id="input-edad" placeholder="Ej: 17" min="10" max="70" />
+        </div>
+
+        <div class="form-group">
+          <label>¿Cuál es tu situación actual?</label>
+          <div class="contexto-options" role="group" aria-label="Situación actual">
+            <button type="button" class="contexto-btn active" data-value="estudiante" id="ctx-estudiante">
+              📚 Estudiante
+            </button>
+            <button type="button" class="contexto-btn" data-value="profesional" id="ctx-profesional">
+              💼 Profesional
+            </button>
+            <button type="button" class="contexto-btn" data-value="general" id="ctx-general">
+              🌐 Otro
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="btn-iniciar">
+          <span class="btn-text">Comenzar mi orientación</span>
+          <span class="btn-arrow">→</span>
+        </button>
+      </form>
+    </div>
+
+    <p class="privacy-note">
+      🔒 Tus datos son confidenciales y solo se usan para mejorar las predicciones.
+    </p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PANTALLA 2: CHAT / PREGUNTAS
+═══════════════════════════════════════════════════════════ -->
+<div id="screen-chat" class="screen">
+  <div class="chat-layout">
+
+    <!-- Sidebar de estado -->
+    <aside class="sidebar glass-card">
+      <div class="sidebar-header">
+        <span class="sidebar-icon">🎯</span>
+        <div>
+          <div class="sidebar-title">Tu Perfil</div>
+          <div class="sidebar-session" id="sidebar-nombre">Analizando...</div>
+        </div>
+      </div>
+
+      <!-- Barra de confianza global -->
+      <div class="confidence-section">
+        <div class="confidence-header">
+          <span>Confianza Global</span>
+          <span class="confidence-pct" id="global-pct">0%</span>
+        </div>
+        <div class="confidence-bar-track">
+          <div class="confidence-bar-fill" id="confidence-bar" style="width:0%"></div>
+        </div>
+        <div class="confidence-hint" id="confidence-hint">Responde las primeras preguntas para empezar</div>
+      </div>
+
+      <!-- Pregunta número -->
+      <div class="question-counter">
+        Pregunta <span id="q-num">1</span> <span class="q-sep">de</span> ~12
+      </div>
+
+      <!-- Badges de competencias -->
+      <div class="fields-section">
+        <div class="fields-title">Competencias</div>
+        <div class="fields-grid" id="fields-grid">
+          <!-- Generado por JS -->
+        </div>
+      </div>
+
+      <!-- Botón predecir (aparece cuando hay confianza) -->
+      <button class="btn-predict hidden" id="btn-predict-sidebar" onclick="triggerPrediction()">
+        ⚡ Ver mi resultado
+      </button>
+    </aside>
+
+    <!-- Área principal del chat -->
+    <main class="chat-main">
+      <div class="chat-messages" id="chat-messages">
+        <div class="chat-message system fade-in" id="msg-intro">
+          <div class="msg-avatar">🤖</div>
+          <div class="msg-bubble">
+            ¡Hola! Voy a hacerte algunas preguntas para conocer mejor tus aptitudes e intereses.
+            <strong>No hay respuestas correctas o incorrectas</strong>, solo sé honesto contigo mismo.
+          </div>
+        </div>
+      </div>
+
+      <!-- Pregunta activa -->
+      <div class="question-card glass-card fade-in hidden" id="question-card">
+        <div class="question-meta">
+          <span class="q-competencia" id="q-competencia-badge">—</span>
+          <span class="q-nivel" id="q-nivel-badge">—</span>
+        </div>
+        <p class="question-text" id="question-text">Cargando pregunta...</p>
+        <p class="question-reason" id="question-reason"></p>
+
+        <!-- Opciones Likert -->
+        <div class="likert-options" id="likert-options" role="radiogroup" aria-label="Opciones de respuesta">
+          <!-- Generado por JS -->
+        </div>
+      </div>
+
+      <!-- Spinner de carga -->
+      <div class="loading-question hidden" id="loading-question">
+        <div class="spinner"></div>
+        <span>Preparando siguiente pregunta...</span>
+      </div>
+    </main>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PANTALLA 3: CARGANDO PREDICCIÓN
+═══════════════════════════════════════════════════════════ -->
+<div id="screen-loading" class="screen">
+  <div class="loading-container">
+    <div class="loading-animation">
+      <div class="brain-pulse">🧠</div>
+      <div class="loading-rings">
+        <div class="ring ring-1"></div>
+        <div class="ring ring-2"></div>
+        <div class="ring ring-3"></div>
+      </div>
+    </div>
+    <h2 id="loading-title">Analizando tu perfil...</h2>
+    <p id="loading-subtitle">Procesando tus respuestas con nuestro modelo de IA</p>
+    <div class="loading-steps" id="loading-steps">
+      <div class="loading-step active" data-step="1">
+        <span class="step-icon">📊</span>
+        <span>Vectorizando competencias</span>
+      </div>
+      <div class="loading-step" data-step="2">
+        <span class="step-icon">🔗</span>
+        <span>Correlacionando datos</span>
+      </div>
+      <div class="loading-step" data-step="3">
+        <span class="step-icon">🎯</span>
+        <span>Generando predicción</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PANTALLA 4: RESULTADO
+═══════════════════════════════════════════════════════════ -->
+<div id="screen-result" class="screen">
+  <div class="result-container">
+    <div class="bg-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+    </div>
+
+    <div class="result-header fade-in">
+      <div class="result-emoji">🎉</div>
+      <h2>¡Tu perfil vocacional está listo!</h2>
+      <p class="result-subtitle" id="result-subtitle">
+        Basado en tus respuestas, aquí están tus carreras más afines:
+      </p>
+    </div>
+
+    <!-- Top 3 carreras -->
+    <div class="careers-grid" id="careers-grid">
+      <!-- Generado por JS -->
+    </div>
+
+    <!-- Perfil de competencias -->
+    <div class="competencias-profile glass-card fade-in" id="competencias-profile">
+      <h3>Tu perfil de competencias</h3>
+      <div class="competencias-bars" id="competencias-bars">
+        <!-- Generado por JS -->
+      </div>
+    </div>
+
+    <!-- Feedback -->
+    <div class="feedback-section glass-card fade-in" id="feedback-section">
+      <h3>¿Fue acertada la predicción?</h3>
+      <p>Tu opinión mejora el sistema para futuros usuarios.</p>
+      <div class="feedback-buttons">
+        <button class="btn-feedback btn-yes" id="btn-feedback-si" onclick="sendFeedback(true)">
+          👍 Sí, es acertada
+        </button>
+        <button class="btn-feedback btn-no" id="btn-feedback-no" onclick="sendFeedback(false)">
+          👎 No del todo
+        </button>
+      </div>
+      <div class="feedback-input hidden" id="feedback-extra">
+        <label for="carrera-real">¿Cuál crees que es tu carrera ideal?</label>
+        <input type="text" id="carrera-real" placeholder="Escribe tu carrera..." />
+        <button class="btn-secondary" onclick="submitFeedback()">Enviar feedback</button>
+      </div>
+      <div class="feedback-thanks hidden" id="feedback-thanks">
+        ✅ ¡Gracias! Tu feedback ayuda a mejorar el sistema.
+      </div>
+    </div>
+
+    <!-- Botón reiniciar -->
+    <button class="btn-secondary restart-btn" id="btn-restart" onclick="restartApp()">
+      🔄 Hacer otra orientación
+    </button>
+  </div>
+</div>
+
+<script src="./app.js"></script>
+</body>
+</html>

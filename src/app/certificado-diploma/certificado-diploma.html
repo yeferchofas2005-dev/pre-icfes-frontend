@@ -1,0 +1,247 @@
+<!-- ==========================================================
+     CERTIFICADO DE RECONOCIMIENTO
+========================================================== -->
+
+<div class="certificado" id="diploma-content">
+
+  <!-- =======================================================
+       MARCOS DECORATIVOS
+  ======================================================== -->
+
+  <div class="frame frame-outer"></div>
+  <div class="frame frame-inner"></div>
+
+  <!-- Ornamentación de esquinas -->
+
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <!-- =======================================================
+       CONTENIDO
+  ======================================================== -->
+
+  <div class="certificado__contenido">
+
+    <!-- ===================================================
+         ENCABEZADO
+    ==================================================== -->
+
+    <div class="certificado__header">
+
+      <img
+        src="assets/icon/logo.png"
+        alt="Logo PreICFES Gratuito"
+        class="certificado__logo">
+
+      <div class="certificado__institucion">
+
+        <h3>PREICFES GRATUITO</h3>
+
+        <p>
+
+          Programa Social de Formación Académica
+
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- Línea decorativa -->
+
+    <div class="certificado__divider"></div>
+
+    <!-- ===================================================
+         TITULO
+    ==================================================== -->
+
+    <div class="certificado__titulo">
+
+      <span class="certificado__subtitulo">
+
+        CERTIFICADO DE
+
+      </span>
+
+      <h1>
+
+        RECONOCIMIENTO
+
+      </h1>
+
+    </div>
+
+    <!-- ===================================================
+         OTORGADO
+    ==================================================== -->
+
+    <p class="certificado__otorgado">
+
+      Se otorga el presente reconocimiento a
+
+    </p>
+
+    <!-- ===================================================
+         NOMBRE
+    ==================================================== -->
+
+    <div class="certificado__nombre-wrapper">
+
+      <h2
+        class="certificado__nombre"
+        [style.font-size]="nombreFontSize">
+
+        {{ nombre }}
+
+      </h2>
+
+    </div>
+
+    <!-- Línea -->
+
+    <div class="certificado__linea"></div>
+
+    <!-- ===================================================
+         TEXTO PRINCIPAL
+    ==================================================== -->
+
+    <div class="certificado__texto">
+
+    <p>
+
+      En reconocimiento por haber culminado satisfactoriamente el curso de
+      <strong>PreICFES Gratuito</strong>, con una intensidad académica de
+      <strong>120 horas de formación</strong>, demostrando compromiso,
+      disciplina y excelencia durante su preparación para la Prueba Saber 11
+      y su ingreso a la educación superior.
+
+    </p>
+
+      <p>
+
+        Como constancia de este logro, se expide el presente certificado.
+
+      </p>
+
+    </div>
+
+    <!-- ===================================================
+        FIRMAS
+    ==================================================== -->
+
+    <div class="certificado__firmas">
+
+      <!-- ==========================================
+          DIRECTOR GENERAL
+      =========================================== -->
+
+      <div class="firma">
+
+        <!-- Firma en imagen -->
+
+        <img
+          *ngIf="directorGeneral.firma"
+          [src]="directorGeneral.firma"
+          class="firma__imagen"
+          alt="Firma Director General">
+
+        <!-- Firma en texto (si no existe imagen) -->
+
+        <div
+          *ngIf="!directorGeneral.firma"
+          class="firma__espacio">
+
+          {{ directorGeneral.nombre }}
+
+        </div>
+
+        <!-- Línea -->
+
+        <div class="firma__linea"></div>
+
+        <!-- Nombre -->
+
+        <h4 class="firma__nombre">
+
+          {{ directorGeneral.nombre }}
+
+        </h4>
+
+        <!-- Cargo -->
+
+        <p class="firma__cargo">
+
+          {{ directorGeneral.cargo }}
+
+        </p>
+
+      </div>
+
+      <!-- ==========================================
+          DIRECTOR DEL NODO
+      =========================================== -->
+
+      <div
+        class="firma"
+        *ngIf="directorNodo">
+
+        <!-- Firma en imagen -->
+
+        <img
+          *ngIf="mostrarFirmaNodo"
+          [src]="directorNodo.firma"
+          class="firma__imagen"
+          alt="Firma Director del Nodo">
+
+        <!-- Firma en texto -->
+
+        <div
+          *ngIf="!mostrarFirmaNodo"
+          class="firma__espacio">
+
+          {{ directorNodo.nombre }}
+
+        </div>
+
+        <!-- Línea -->
+
+        <div class="firma__linea"></div>
+
+        <!-- Nombre -->
+
+        <h4 class="firma__nombre">
+
+          {{ directorNodo.nombre }}
+
+        </h4>
+
+        <!-- Cargo -->
+
+        <p class="firma__cargo">
+
+          {{ directorNodo.cargo }}
+
+        </p>
+
+      </div>
+
+    </div>
+    <!-- ===================================================
+         PIE
+    ==================================================== -->
+
+    <div class="certificado__footer">
+
+      <span>
+
+        PREICFES GRATUITO • Educación con propósito • Formación para transformar vidas
+
+      </span>
+
+    </div>
+
+  </div>
+
+</div>
