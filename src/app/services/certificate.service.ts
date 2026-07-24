@@ -122,7 +122,7 @@ export class CertificateService {
     'FONTIBON': {
       nombreCompleto: 'Nodo Fontibón',
       direccion: 'Cra. 101 #23-42, Fontibón, Bogotá',
-      coordinador: 'Ariadna Vallecilla, Karol Lizeth Cifuentes',
+      coordinador: 'Ariadna Vallecilla',
       firmaKey: 'fontibon'
     },
 

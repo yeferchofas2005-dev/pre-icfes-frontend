@@ -712,24 +712,20 @@
 
 <!-- Componente invisible — genera y descarga el PDF automáticamente -->
 <div style="position:fixed; top:-9999px; left:-9999px; pointer-events:none;">
-  @if(showCertificate && certificateData) {
-    <app-certificado-pertenencia
-      [nombre]="certificateData!.nombre"
-      [documento]="certificateData!.documento"
-      [tipoDoc]="certificateData!.tipoDoc"
-      [nodoInfo]="certificateData!.nodoInfo">
-    </app-certificado-pertenencia>
-  }
-    <!-- Diploma / Certificado de Asistencia -->
-  @if(showDiploma && certificateData) {
+  <app-certificado-pertenencia
+    *ngIf="showCertificate && certificateData"
+    [nombre]="certificateData.nombre"
+    [documento]="certificateData.documento"
+    [tipoDoc]="certificateData.tipoDoc"
+    [nodoInfo]="certificateData.nodoInfo">
+  </app-certificado-pertenencia>
 
-    <app-certificado-diploma
-      [nombre]="certificateData!.nombre"
-      [documento]="certificateData!.documento"
-      [nodoInfo]="certificateData!.nodoInfo">
-    </app-certificado-diploma>
-
-  }
+  <app-certificado-diploma
+    *ngIf="showDiploma && certificateData"
+    [nombre]="certificateData.nombre"
+    [documento]="certificateData.documento"
+    [nodoInfo]="certificateData.nodoInfo">
+  </app-certificado-diploma>
 </div>
 
 <!-- ======================

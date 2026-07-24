@@ -125,10 +125,11 @@ export class CertificadoPertenencia implements OnInit {
     }
 
     /* ----------------------------------------------------------
-       Esperar a que Angular actualice la vista
+       Esperar a que Angular actualice el DOM y las imágenes
+       terminen de cargar antes de generar el PDF
     ---------------------------------------------------------- */
 
-    await new Promise(resolve => setTimeout(resolve, 50));
+    await this.esperarImagenesDOM();
 
     /* ----------------------------------------------------------
        Descargar PDF
@@ -186,6 +187,55 @@ export class CertificadoPertenencia implements OnInit {
   }
 
   /* =========================================================================
+     ESPERAR IMÁGENES DEL DOM
+  ========================================================================= */
+
+  /**
+   * Espera a que todas las imágenes visibles en el componente
+   * terminen de cargar (o fallen) antes de continuar.
+   * Incluye un mínimo de 200ms para que Angular procese los *ngIf.
+   */
+  private esperarImagenesDOM(): Promise<void> {
+
+    return new Promise(resolve => {
+
+      setTimeout(() => {
+
+        const imgs: HTMLImageElement[] = Array.from(
+          this.el.nativeElement.querySelectorAll('img')
+        );
+
+        if (imgs.length === 0) {
+          resolve();
+          return;
+        }
+
+        let pendientes = imgs.filter(img => !img.complete).length;
+
+        if (pendientes === 0) {
+          resolve();
+          return;
+        }
+
+        const onDone = () => {
+          pendientes--;
+          if (pendientes <= 0) resolve();
+        };
+
+        imgs
+          .filter(img => !img.complete)
+          .forEach(img => {
+            img.addEventListener('load', onDone, { once: true });
+            img.addEventListener('error', onDone, { once: true });
+          });
+
+      }, 200);
+
+    });
+
+  }
+
+  /* =========================================================================
      VERIFICAR SI EXISTE LA FIRMA
   ========================================================================= */
 
@@ -204,7 +254,9 @@ export class CertificadoPertenencia implements OnInit {
 
       img.onerror = () => resolve(false);
 
-      img.src = ruta;
+      // Usar ruta absoluta para evitar fallos cuando la URL
+      // del navegador no está en la raíz de la aplicación
+      img.src = `${window.location.origin}/${ruta}`;
 
     });
 

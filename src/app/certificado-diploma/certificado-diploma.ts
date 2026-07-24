@@ -125,16 +125,66 @@ export class CertificadoDiploma implements OnInit {
     }
 
     /* ----------------------------------------------------------
-       Esperar actualización del DOM
+       Esperar a que Angular actualice el DOM y las imágenes
+       terminen de cargar antes de generar el PDF
     ---------------------------------------------------------- */
 
-    await new Promise(resolve => setTimeout(resolve, 50));
+    await this.esperarImagenesDOM();
 
     /* ----------------------------------------------------------
        Generar PDF
     ---------------------------------------------------------- */
 
     await this.descargarPDF();
+
+  }
+
+  /* =========================================================================
+     ESPERAR IMÁGENES DEL DOM
+  ========================================================================= */
+
+  /**
+   * Espera a que todas las imágenes visibles en el componente
+   * terminen de cargar (o fallen) antes de continuar.
+   * Incluye un mínimo de 200ms para que Angular procese los *ngIf.
+   */
+  private esperarImagenesDOM(): Promise<void> {
+
+    return new Promise(resolve => {
+
+      setTimeout(() => {
+
+        const imgs: HTMLImageElement[] = Array.from(
+          this.el.nativeElement.querySelectorAll('img')
+        );
+
+        if (imgs.length === 0) {
+          resolve();
+          return;
+        }
+
+        let pendientes = imgs.filter(img => !img.complete).length;
+
+        if (pendientes === 0) {
+          resolve();
+          return;
+        }
+
+        const onDone = () => {
+          pendientes--;
+          if (pendientes <= 0) resolve();
+        };
+
+        imgs
+          .filter(img => !img.complete)
+          .forEach(img => {
+            img.addEventListener('load', onDone, { once: true });
+            img.addEventListener('error', onDone, { once: true });
+          });
+
+      }, 200);
+
+    });
 
   }
 
@@ -157,7 +207,9 @@ export class CertificadoDiploma implements OnInit {
 
       img.onerror = () => resolve(false);
 
-      img.src = ruta;
+      // Usar ruta absoluta para evitar fallos cuando la URL
+      // del navegador no está en la raíz de la aplicación
+      img.src = `${window.location.origin}/${ruta}`;
 
     });
 
