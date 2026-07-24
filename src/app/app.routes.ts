@@ -7,10 +7,10 @@ import { Login } from './login/login';
 import { CertificadoPertenencia } from './certificado-pertenencia/certificado-pertenencia';
 
 export const routes: Routes = [
-  {path: '', component: Landing},
-  {path: 'inscripcion', component: Inscripcion},
-  {path: 'inscripcion-docente', component: InscripcionDocente},
-  {path: 'login', component: Login},
-  {path: 'directivos', component: Directivos},
-  {path: 'certificado-pertenencia', component: CertificadoPertenencia}
+  {path: '', component: Landing, data: { animation: 'LandingPage' }},
+  {path: 'inscripcion', component: Inscripcion, data: { animation: 'InscripcionPage' }},
+  {path: 'inscripcion-docente', component: InscripcionDocente, data: { animation: 'InscripcionDocentePage' }},
+  {path: 'login', component: Login, data: { animation: 'LoginPage' }},
+  {path: 'directivos', component: Directivos, data: { animation: 'DirectivosPage' }},
+  {path: 'certificado-pertenencia', component: CertificadoPertenencia, data: { animation: 'CertificadoPage' }}
 ];

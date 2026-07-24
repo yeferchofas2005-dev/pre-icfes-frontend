@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'aos/dist/aos.css';
+
 /* ==========================
    RESET GLOBAL
 ========================== */
@@ -11,11 +13,14 @@
   box-sizing: border-box;
 }
 
-/* Evita scroll horizontal feo */
+/* Evita scroll horizontal feo y mejora la navegación con anclas */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
 html,
 body {
   width: 100%;
-  height: 100%;
   overflow-x: hidden;
 }
 
