@@ -205,16 +205,29 @@
 ====================== -->
 <nav class="navbar">
   <div class="nav-container">
-    <img
-      src="assets/icon/logo.png"
-      alt="Preicfes Gratuito"
-      class="nav-logo"
-    />
+    <a href="#" class="nav-logo-text">
+      <img src="assets/icon/logo.png" alt="Logo Preicfes" class="nav-logo" />
+      <div class="logo-text-wrapper">
+        <span class="logo-white">PREICFES</span> <span class="logo-yellow">GRATUITO</span>
+      </div>
+    </a>
+
+    <div class="nav-links">
+      <a href="#">INICIO</a>
+      <a href="#nosotros">NOSOTROS</a>
+      <a href="#ayudar">SIMULACROS</a>
+      <a href="#redes">CONTENIDO</a>
+      <a href="#ayudar">CONTACTO</a>
+    </div>
 
     <div class="nav-buttons">
-      <a class="btn-login" routerLink="/login">Iniciar sesión</a>
-      <!-- <a class="btn-inscribete" routerLink="/inscripcion">Inscribete</a> -->
-      <a class="btn-inscribete" href="https://docs.google.com/forms/d/e/1FAIpQLScdw5BdO9yilAQvyFCqexUdwy9fVdBSsW0KD7DzzvfP7g--yw/viewform">Inscribete</a>
+      <a class="btn-nav-login" routerLink="/login">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+          <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+        </svg>
+        Iniciar sesión
+      </a>
+      <a class="btn-nav-inscribete" href="https://docs.google.com/forms/d/e/1FAIpQLScdw5BdO9yilAQvyFCqexUdwy9fVdBSsW0KD7DzzvfP7g--yw/viewform">Inscribete</a>
     </div>
   </div>
 </nav>
@@ -227,7 +240,10 @@
     <div class="hero-copy">
       <div class="hero-badge">Inscripciones abiertas · Bogotá D.C.</div>
 
-      <h1>Preicfes gratuito para jóvenes</h1>
+      <h1>
+        Preicfes gratuito para<br>
+        <span class="highlight-yellow">jóvenes</span>
+      </h1>
 
       <p class="subtitle">
         Creemos en el poder transformador del conocimiento.
@@ -236,12 +252,14 @@
       <div class="hero-actions">
         <a
           href="https://docs.google.com/forms/d/e/1FAIpQLScdw5BdO9yilAQvyFCqexUdwy9fVdBSsW0KD7DzzvfP7g--yw/viewform"
-          class="btn-primary btn-hero"
+          class="btn-primary btn-hero btn-inscribete-new"
         >
-          Inscríbete ahora
+          Inscríbete gratis
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="#" class="btn-outline btn-hero">
-          Conoce el programa
+        <a href="#" class="btn-outline btn-hero btn-conoce-new">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#FFD95A"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          Ver cómo funciona
         </a>
       </div>
 
@@ -249,6 +267,42 @@
         <span>Sin costo</span>
         <span>Sin requisitos</span>
         <span>Profesores voluntarios</span>
+      </div>
+
+      <!-- TIMER COMPONENT -->
+      <div class="countdown-container">
+        <div class="countdown-header">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFD95A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          <span>PRÓXIMO ICFES SABER 11</span>
+        </div>
+        
+        <div class="countdown-boxes">
+          <div class="time-box">
+            <span class="time-number">{{ countdownDays }}</span>
+            <span class="time-label">DÍAS</span>
+          </div>
+          <div class="time-box">
+            <span class="time-number">{{ countdownHours }}</span>
+            <span class="time-label">HRS</span>
+          </div>
+          <div class="time-box">
+            <span class="time-number">{{ countdownMinutes }}</span>
+            <span class="time-label">MIN</span>
+          </div>
+          <div class="time-box">
+            <span class="time-number">{{ countdownSeconds }}</span>
+            <span class="time-label">SEG</span>
+          </div>
+        </div>
+
+        <div class="countdown-footer">
+          <div class="avatars-group">
+            <div class="avatar bg-yellow"></div>
+            <div class="avatar bg-blue"></div>
+            <div class="avatar bg-orange"></div>
+          </div>
+          <span class="active-students">+312 estudiantes activos ahora</span>
+        </div>
       </div>
     </div>
 
@@ -276,13 +330,6 @@
         <strong>Lectura crítica</strong>
         <span>Módulo desbloqueado</span>
       </div>
-
-      <div class="instagram-link">
-        <a href="https://www.instagram.com/preicfesjovenesbogota/" target="_blank">
-          <img src="assets/instagram/Instagram_icon.png" alt="Instagram" class="instagram-logo" />
-          <span>Síguenos</span>
-        </a>
-      </div>
     </div>
   </div>
 
@@ -307,90 +354,291 @@
 </header>
 
 <!-- ======================
-     QUIÉNES SOMOS
+     QUIÉNES SOMOS BENTO
 ====================== -->
-<section class="section">
-  <h2>¿Quiénes somos?</h2>
-  <p class="section-text">
-    Somos una iniciativa social que prepara jóvenes para las pruebas Saber 11,
-    brindando acceso gratuito a educación de calidad.
-  </p>
+<section id="nosotros" class="about-bento-section" data-aos="fade-up">
+  <div class="about-container">
+    <div class="about-header">
+      <span class="about-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c-7.22 0-9-1.78-9-9 0 7.22-1.78 9-9 9 7.22 0 9 1.78 9 9 0-7.22 1.78-9 9-9z"></path></svg>
+        NUESTRA INICIATIVA SOCIAL
+      </span>
+      <h2 class="about-title">Educación de<br>calidad <span class="highlight-yellow">para todos.</span></h2>
+      <p class="about-subtitle">
+        Somos una comunidad de voluntarios rompiendo las barreras del acceso a la educación superior en Colombia a través de tecnología y compromiso social.
+      </p>
+    </div>
+
+    <div class="bento-grid">
+      
+      <!-- Fila 1 -->
+      <div class="bento-card bento-quienes">
+        <div class="bento-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#11152a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="6"></circle>
+            <circle cx="12" cy="12" r="2"></circle>
+          </svg>
+        </div>
+        <h3>¿Quiénes somos?</h3>
+        <p>Nacimos de la necesidad de igualar las oportunidades. Somos una plataforma liderada por profesionales y estudiantes destacados que donan su tiempo para que ningún joven colombiano se quede sin estudiar por falta de recursos.</p>
+        <div class="bento-chips">
+          <span>100% gratuito</span>
+          <span>Sin requisitos</span>
+          <span>Voluntariado</span>
+        </div>
+      </div>
+
+      <div class="bento-col-right">
+        <div class="bento-card bento-impacto-estudiantes">
+          <span class="bento-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            ESTUDIANTES PREPARADOS
+          </span>
+          <div class="bento-stat">+4.500</div>
+        </div>
+        <div class="bento-card bento-profesores">
+          <span class="bento-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffd95a" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            PROFESORES VOLUNTARIOS
+          </span>
+          <div class="bento-stat">120+</div>
+        </div>
+      </div>
+
+      <!-- Fila 2 -->
+      <div class="bento-card bento-impacto-real">
+        <div class="bento-icon-box bento-icon-outline">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffd95a" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        </div>
+        <div class="bento-impacto-content">
+          <div class="bento-impacto-number">85%</div>
+          <h4>Nuestro impacto real</h4>
+          <p>De nuestros estudiantes mejora su puntaje global en más de 60 puntos tras completar el programa.</p>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bento-card bento-metodologia">
+        <div class="bento-circle-loader"></div>
+        <h4>Metodología</h4>
+        <p>Simulacros reales y clases en vivo cada semana.</p>
+      </div>
+
+      <div class="bento-card bento-voluntario">
+        <div class="bento-icon-box-small">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffd95a" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        </div>
+        <h4>Únete al cambio</h4>
+        <p>Sé parte de la comunidad que transforma Colombia.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfkT4qZ2ElWbVPHE0FEDJjlvqdPuYyYK-xzxyfPR2taw_2ZRw/viewform" class="btn-bento-voluntario">Ser voluntario &rarr;</a>
+      </div>
+      
+    </div>
+  </div>
 </section>
 
 <!-- ======================
-     INSTAGRAM
-====================== -->
-<section class="section alt instagram-section">
-  <h2>Síguenos en Instagram</h2>
+     EQUIPO DETRAS (INSTAGRAM CAROUSEL)
+================================================== -->
+<section id="redes" class="instagram-section" data-aos="fade-up">
+  <div class="insta-header-container">
+    <div class="insta-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFD95A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+      <span>NUESTRAS REDES</span>
+    </div>
+    <h2 class="insta-title">Personas reales<br>moviendo <em>una causa real.</em></h2>
+  </div>
 
-  <div class="instagram-grid">
-    <a
-      href="https://www.instagram.com/preicfesjovenesbogota/"
-      target="_blank"
-      class="instagram-item"
-    >
-      <img src="assets/instagram/insta1.png" alt="Instagram post 1" />
+  <div class="insta-profile-bar">
+    <div class="insta-handle">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+      <strong>@preicfesjovenesbogota</strong> · lo último
+    </div>
+    <a href="https://www.instagram.com/preicfesjovenesbogota/" target="_blank" class="insta-link">
+      Ver perfil ↗
     </a>
+  </div>
 
-    <a
-      href="https://www.instagram.com/preicfesjovenesbogota/"
-      target="_blank"
-      class="instagram-item"
-    >
-      <img src="assets/instagram/insta2.png" alt="Instagram post 2" />
-    </a>
+  <div class="insta-carousel-container">
+    <div class="insta-track">
+      <!-- Cards (Images) - Set 1 -->
+      <a href="https://www.instagram.com/p/DXVKHmdAAsa/?img_index=1" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta1.png');"></a>
+      <a href="https://www.instagram.com/p/DWoxTeyEcAZ/?img_index=3" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta2.png');"></a>
+      <a href="https://www.instagram.com/p/DWoxTeyEcAZ/?img_index=10" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta3.png');"></a>
+      <a href="https://www.instagram.com/p/DWoxTeyEcAZ/?img_index=13" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta4.png');"></a>
+      <a href="https://www.instagram.com/p/DXVKHmdAAsa/?img_index=1" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta5.jpg');"></a>
+      <a href="https://www.instagram.com/p/DWoxTeyEcAZ/?img_index=3" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta6.jpg');"></a>
+      <a href="https://www.instagram.com/p/DWoxTeyEcAZ/?img_index=10" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta7.jpg');"></a>
+      <a href="https://www.instagram.com/p/DWoxTeyEcAZ/?img_index=13" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta8.jpg');"></a>
+      <a href="https://www.instagram.com/p/DKVu8XauM58/?img_index=1" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta9.jpg');"></a>
+      <a href="https://www.instagram.com/p/DB-BH6vPRGe/?img_index=10" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta10.jpg');"></a>
+      <a href="https://www.instagram.com/p/C9-zyE8v_Bl/?img_index=4" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta11.jpg');"></a>
+      <a href="https://www.instagram.com/p/C9-B_mlOLxg/?img_index=9" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta12.jpg');"></a>
+      <a href="https://www.instagram.com/p/C0oH0rQuRZk/?img_index=4" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta13.jpg');"></a>
 
-    <a
-      href="https://www.instagram.com/preicfesjovenesbogota/"
-      target="_blank"
-      class="instagram-item"
-    >
-      <img src="assets/instagram/insta3.png" alt="Instagram post 3" />
-    </a>
-
-    <a
-      href="https://www.instagram.com/preicfesjovenesbogota/"
-      target="_blank"
-      class="instagram-item"
-    >
-      <img src="assets/instagram/insta4.png" alt="Instagram post 3" />
-    </a>
+      <!-- Duplicate for infinite scroll - Set 2 -->
+      <a href="https://www.instagram.com/p/DXVKHmdAAsa/?img_index=1" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta1.png');"></a>
+      <a href="https://www.instagram.com/p/DWoxTeyEcAZ/?img_index=3" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta2.png');"></a>
+      <a href="https://www.instagram.com/p/DWoxTeyEcAZ/?img_index=10" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta3.png');"></a>
+      <a href="https://www.instagram.com/p/DWoxTeyEcAZ/?img_index=13" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta4.png');"></a>
+      <a href="https://www.instagram.com/p/DXVKHmdAAsa/?img_index=1" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta5.jpg');"></a>
+      <a href="https://www.instagram.com/p/DWoxTeyEcAZ/?img_index=3" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta6.jpg');"></a>
+      <a href="https://www.instagram.com/p/DWoxTeyEcAZ/?img_index=10" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta7.jpg');"></a>
+      <a href="https://www.instagram.com/p/DWoxTeyEcAZ/?img_index=13" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta8.jpg');"></a>
+      <a href="https://www.instagram.com/p/DKVu8XauM58/?img_index=1" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta9.jpg');"></a>
+      <a href="https://www.instagram.com/p/DB-BH6vPRGe/?img_index=10" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta10.jpg');"></a>
+      <a href="https://www.instagram.com/p/C9-zyE8v_Bl/?img_index=4" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta11.jpg');"></a>
+      <a href="https://www.instagram.com/p/C9-B_mlOLxg/?img_index=9" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta12.jpg');"></a>
+      <a href="https://www.instagram.com/p/C0oH0rQuRZk/?img_index=4" target="_blank" class="insta-card image-card" style="background-image: url('assets/instagram/insta13.jpg');"></a>
+    </div>
   </div>
 </section>
 
 <!-- ======================
      MI CAUSA ES
 ====================== -->
-<section class="section alt">
-  <h2 class="section-title">#MiCausaEs</h2>
+<section class="section alt causa-section" data-aos="fade-up">
+  <div class="causa-header">
+    <span class="causa-hashtag">#MICAUSAES</span>
+    <h2 class="causa-title">Cada historia tiene un rostro.</h2>
+  </div>
 
-  <div class="cards causa-cards">
+  <div class="causa-grid">
 
-    <div class="card causa-card">
-      <h3>Educación</h3>
-      <img src="assets/micausaes/micausaes1.png" alt="Icono de educación" class="causa-icon" />
-      <p>Creamos que la educación es la base para transformar realidades.</p>
+    <div class="causa-flip-card">
+      <div class="causa-flip-inner">
+        <div class="causa-flip-front">
+          <p>"Creemos que la educación es la base para transformar realidades."</p>
+        </div>
+        <div class="causa-flip-back" style="background-image: url('assets/micausaes/micausaes1.png');"></div>
+      </div>
     </div>
 
-    <div class="card causa-card">
-      <h3>Equidad</h3>
-      <img src="assets/micausaes/micausaes2.png" alt="Icono de equidad" class="causa-icon" />
-      <p>Todos los jóvenes merecen las mismas oportunidades.</p>
+    <div class="causa-flip-card">
+      <div class="causa-flip-inner">
+        <div class="causa-flip-front">
+          <p>"Todos los jóvenes merecen las mismas oportunidades."</p>
+        </div>
+        <div class="causa-flip-back" style="background-image: url('assets/micausaes/micausaes2.png');"></div>
+      </div>
     </div>
 
-    <div class="card causa-card">
-      <h3>Compromiso social</h3>
-      <img src="assets/micausaes/micausaes3.png" alt="Icono de compromiso social" class="causa-icon" />
-      <p>Trabajamos por una Bogotá con más acceso al conocimiento.</p>
+    <div class="causa-flip-card">
+      <div class="causa-flip-inner">
+        <div class="causa-flip-front">
+          <p>"Trabajamos por una Bogotá con más acceso al conocimiento."</p>
+        </div>
+        <div class="causa-flip-back" style="background-image: url('assets/micausaes/micausaes3.png');"></div>
+      </div>
     </div>
 
+    <div class="causa-flip-card">
+      <div class="causa-flip-inner">
+        <div class="causa-flip-front">
+          <p>"Porque nadie debería quedarse sin educación por plata."</p>
+        </div>
+        <div class="causa-flip-back" style="background-image: url('assets/anuncios/2Pre.jpg');"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ======================
+     AYUDAR (UNIFICADO)
+====================== -->
+<section id="ayudar" class="ayudar-section" data-aos="fade-up">
+  <div class="ayudar-container">
+    
+    <div class="ayudar-header">
+      <span class="ayudar-badge">TU TURNO</span>
+      <h2 class="ayudar-title">¿Cómo puedes <span class="highlight-yellow">ayudar?</span></h2>
+      <p class="ayudar-subtitle">Tres formas concretas. Elige la que va contigo — cualquiera cambia una vida.</p>
+    </div>
+
+    <div class="ayudar-grid">
+      
+      <!-- Card 1: Sé voluntario -->
+      <div class="ayudar-card ayudar-voluntario">
+        <div class="ayudar-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffd95a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2-.9 2-2v-2c0-1.1-.9-2-2-2h-2"/><path d="M13.2 4.4a3.3 3.3 0 0 0-4.6 0 3.3 3.3 0 0 0 0 4.6L11 11.4l2.4-2.4a3.3 3.3 0 0 0 0-4.6Z"/>
+          </svg>
+        </div>
+        <h3>Sé voluntario</h3>
+        <p>4 horas a la semana. Enseña, mentoriza y deja huella en jóvenes que están un paso de la universidad.</p>
+        <ul class="ayudar-features">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffd95a" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Clases 100% online
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffd95a" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Certificado avalado
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffd95a" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Comunidad de +120 voluntarios
+          </li>
+        </ul>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfkT4qZ2ElWbVPHE0FEDJjlvqdPuYyYK-xzxyfPR2taw_2ZRw/viewform" target="_blank" class="btn-ayudar-outline">Postúlate &rarr;</a>
+      </div>
+
+      <!-- Card 2: Dona una beca -->
+      <div class="ayudar-card ayudar-donar">
+        <span class="ayudar-card-badge">MÁS IMPACTO</span>
+        <div class="ayudar-icon dark">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffd95a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08v0c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"/><path d="m18 15-2-2"/><path d="m15 18-2-2"/>
+          </svg>
+        </div>
+        <h3 class="dark-text">Dona una beca</h3>
+        <p class="dark-text">Tu apoyo puede cambiar la vida de un joven y acercarlo a su sueño profesional. Lo más mínimo puede ayudarlos, anímate a aportar.</p>
+        
+        <div class="ayudar-chips">
+          <span [class.active]="selectedDonation === '$30k'" (click)="selectDonation('$30k')">$30k</span>
+          <span [class.active]="selectedDonation === '$60k'" (click)="selectDonation('$60k')">$60k</span>
+          <span [class.active]="selectedDonation === 'Libre'" (click)="selectDonation('Libre')">Libre</span>
+        </div>
+
+        <a href="https://tu-link-de-donaciones.com" target="_blank" class="btn-ayudar-primary">Donar ahora &rarr;</a>
+        
+        <div class="ayudar-footer-tags">
+          <span>PSE</span><span>Nequi</span><span>Daviplata</span><span>Bancolombia</span><span>Tarjeta</span>
+        </div>
+      </div>
+
+      <!-- Card 3: Descarga tu certificado -->
+      <div class="ayudar-card ayudar-certificado">
+        <div class="ayudar-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffd95a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/>
+          </svg>
+        </div>
+        <h3>Descarga tu certificado</h3>
+        <p>¿Ya eres voluntario o estudiante? Genera tu certificado y verifica tu participación en el programa.</p>
+        
+        <div class="ayudar-preview-box">
+          <span class="preview-label">VISTA PREVIA</span>
+          <h4>Certificado de contribución</h4>
+          <p>Firmado digitalmente • PDF</p>
+        </div>
+
+        <button class="btn-ayudar-outline-yellow" (click)="openCertificateModal()">Generar PDF <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg></button>
+      </div>
+
+    </div>
   </div>
 </section>
 
 <!-- ======================
      DIRECTIVOS
 ====================== -->
-<section class="section alt">
+<section class="section alt" data-aos="fade-up">
   <h2>Nuestros directivos</h2>
 
   <p class="section-text">
@@ -400,61 +648,6 @@
   <a href="/directivos" class="btn-section">
     Ver nuestros directivos
   </a>
-</section>
-
-<!-- ======================
-     POSTULACIONES PROFESORES
-====================== -->
-<section class="section">
-  <h2>Conviértete en uno de nuestros profesores</h2>
-
-  <p class="section-text">
-    Buscamos voluntarios comprometidos con la educación y el cambio social.
-  </p>
-
-  <!-- <a routerLink="/inscripcion-docente" class="btn-section">
-    Quiero ser profesor voluntario
-  </a> -->
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfkT4qZ2ElWbVPHE0FEDJjlvqdPuYyYK-xzxyfPR2taw_2ZRw/viewform" class="btn-section">
-    Quiero ser profesor voluntario!
-  </a>
-</section>
-
-<!-- ======================
-     DONACIONES
-====================== -->
-<section class="section alt">
-  <h2>Apoya a un futuro graduado</h2>
-
-  <p class="section-text">
-    Tu apoyo puede cambiar la vida de un joven y acercarlo a su sueño profesional.
-  </p>
-
-  <a
-    href="https://tu-link-de-donaciones.com"
-    target="_blank"
-    class="btn-section secondary"
-  >
-    Apoyar con una donación
-  </a>
-</section>
-
-<!-- ======================
-     CERTIFICADOS
-====================== -->
-<section class="section certificate-section">
-  <div class="certificate-card">
-    <div>
-      <img src="assets/icon/logo.png" alt="Preicfes Logo" class="certificate-logo" />
-      <h2>¿Eres estudiante?</h2>
-      <p class="section-text">
-        Descarga tu certificado y verifica tu participación en el programa.
-      </p>
-    </div>
-    <button class="btn-section btn-cert-download" (click)="openCertificateModal()">
-      Descarga tu certificado
-    </button>
-  </div>
 </section>
 
   <!-- ======================
@@ -542,7 +735,7 @@
 <!-- ======================
      UBICACIÓN
 ====================== -->
-<section class="section localidades-section">
+<section class="section localidades-section" data-aos="fade-up">
 <h2>¿Dónde nos ubicamos?</h2>
 
 <div class="localidades-slider">
@@ -795,58 +988,154 @@
 </div>
 </section>
 <!-- ======================
-     REDES SOCIALES
+     FOOTER / SUSCRIBIRSE
 ====================== -->
-<footer class="footer-social">
-
-  <h2>Síguenos en nuestras redes sociales</h2>
-
-  <p>
-    Mantente informado sobre inscripciones, actividades, convocatorias y novedades del Preicfes Gratuito.
-  </p>
-
-  <div class="social-links">
-
-    <a
-      href="https://www.instagram.com/preicfesjovenesbogota/"
-      target="_blank"
-      class="social-link"
-    >
-      <img
-        src="assets/social/instagram.png"
-        alt="Instagram"
-      />
-      <span>Instagram</span>
-    </a>
-
-    <a
-      href="https://www.facebook.com/profile.php?id=100085044704018"
-      target="_blank"
-      class="social-link"
-    >
-      <img
-        src="assets/social/facebook.png"
-        alt="Facebook"
-      />
-      <span>Facebook</span>
-    </a>
-
-    <a
-      href="https://www.tiktok.com/@preicfesjovenesbogota"
-      target="_blank"
-      class="social-link"
-    >
-      <img
-        src="assets/social/tiktok.png"
-        alt="TikTok"
-      />
-      <span>TikTok</span>
-    </a>
-
+<footer class="footer-modern">
+  <!-- Marquee -->
+  <div class="footer-marquee">
+    <div class="marquee-content">
+      <span>🎓 PREICFES 100% GRATUITO · 💛 HECHO POR Y PARA JÓVENES DE BOGOTÁ · </span>
+      <span>🎓 PREICFES 100% GRATUITO · 💛 HECHO POR Y PARA JÓVENES DE BOGOTÁ · </span>
+      <span>🎓 PREICFES 100% GRATUITO · 💛 HECHO POR Y PARA JÓVENES DE BOGOTÁ · </span>
+      <span>🎓 PREICFES 100% GRATUITO · 💛 HECHO POR Y PARA JÓVENES DE BOGOTÁ · </span>
+      <!-- duplicated for smooth scrolling -->
+    </div>
   </div>
 
-  <p class="footer-copy">
-    © 2026 Preicfes Gratuito para Jóvenes · Bogotá D.C.
-  </p>
+  <div class="footer-container">
+    <div class="footer-top">
+      <div class="footer-subscribe">
+        <div class="subscribe-badge">
+          <span class="dot"></span> COMUNIDAD VIVA
+        </div>
+        <h2>Sé parte de la comunidad <em class="highlight-yellow">que está cambiando el ICFES en Bogotá.</em></h2>
+        <p>Recibe convocatorias, simulacros gratis y consejos de nuestros tutores. Cero spam, solo lo importante.</p>
+        
+        <form class="subscribe-form">
+          <div class="input-group">
+            <svg class="mail-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <input type="email" placeholder="tu-correo@ejemplo.com" required>
+          </div>
+          <button type="submit" class="btn-subscribe">
+            Suscribirme
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          </button>
+        </form>
+      </div>
 
+      <div class="footer-social-cards">
+        <span class="social-cards-label">SÍGUENOS</span>
+        
+        <a href="https://www.instagram.com/preicfesjovenesbogota/" target="_blank" class="social-card">
+          <div class="social-card-left">
+            <div class="social-icon-wrapper insta-gradient">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            </div>
+            <div class="social-card-info">
+              <strong>Instagram</strong>
+              <span>@preicfesgratuito</span>
+            </div>
+          </div>
+          <div class="social-card-right">
+            <div class="social-card-stats">
+              <strong>12.4K</strong>
+              <span>SEGUIDORES</span>
+            </div>
+            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </div>
+        </a>
+
+        <a href="https://www.facebook.com/profile.php?id=100085044704018" target="_blank" class="social-card">
+          <div class="social-card-left">
+            <div class="social-icon-wrapper fb-blue">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </div>
+            <div class="social-card-info">
+              <strong>Facebook</strong>
+              <span>/preicfesgratuito</span>
+            </div>
+          </div>
+          <div class="social-card-right">
+            <div class="social-card-stats">
+              <strong>8.2K</strong>
+              <span>SEGUIDORES</span>
+            </div>
+            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </div>
+        </a>
+
+        <a href="https://www.tiktok.com/@preicfesjovenesbogota" target="_blank" class="social-card">
+          <div class="social-card-left">
+            <div class="social-icon-wrapper tiktok-dark">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+            </div>
+            <div class="social-card-info">
+              <strong>TikTok</strong>
+              <span>@preicfesgratuito</span>
+            </div>
+          </div>
+          <div class="social-card-right">
+            <div class="social-card-stats">
+              <strong>24.7K</strong>
+              <span>SEGUIDORES</span>
+            </div>
+            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <hr class="footer-divider" />
+
+    <div class="footer-bottom">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="logo-circle">P</div>
+          <div class="logo-text">
+            <strong>Preicfes</strong>
+            <strong class="highlight-yellow">Gratuito</strong>
+          </div>
+        </div>
+        <p>Preparación ICFES 100% gratuita para jóvenes de Bogotá. Presencial y virtual, con tutores voluntarios de las mejores universidades.</p>
+        <ul class="footer-contact">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffd95a" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Bogotá D.C., Colombia</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffd95a" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> hola&#64;preicfesgratuito.co</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffd95a" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> +57 300 000 0000</li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
+        <div class="link-group">
+          <h4>PROGRAMA</h4>
+          <a href="#">Quiénes somos</a>
+          <a href="#">Metodología</a>
+          <a href="#">Nodos en Bogotá</a>
+          <a href="#">Directivos</a>
+        </div>
+        <div class="link-group">
+          <h4>ESTUDIANTES</h4>
+          <a href="#">Inscripciones</a>
+          <a href="#">Simulacros</a>
+          <a href="#">Testimonios</a>
+          <a href="#">Preguntas frecuentes</a>
+        </div>
+        <div class="link-group">
+          <h4>INVOLÚCRATE</h4>
+          <a href="#">Ser voluntario</a>
+          <a href="#">Donar</a>
+          <a href="#">Certificado empresarial</a>
+          <a href="#">Alianzas</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-copyright">
+      <span>© 2026 Preicfes Gratuito para Jóvenes · Bogotá D.C.</span>
+      <div class="footer-legal">
+        <span>Hecho con <svg width="14" height="14" viewBox="0 0 24 24" fill="#ffd95a" stroke="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> por voluntarios</span>
+        <a href="#">Privacidad</a>
+        <a href="#">Términos</a>
+      </div>
+    </div>
+  </div>
 </footer>
