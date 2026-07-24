@@ -2101,7 +2101,7 @@ body {
   display: flex;
   gap: 16px;
   width: max-content;
-  animation: scrollInsta 30s linear infinite;
+  animation: scrollInsta 60s linear infinite;
 }
 
 @keyframes scrollInsta {

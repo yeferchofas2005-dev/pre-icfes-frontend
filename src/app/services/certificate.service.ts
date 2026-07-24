@@ -65,27 +65,27 @@ export class CertificateService {
     'UNAL': {
       nombreCompleto: 'Nodo Universidad Nacional',
       direccion:      'Ave Cra 30 #45-3, Bogotá',
-      coordinador:    'Gerson Eduardo Pachón Huertas'
+      coordinador:    'Gerson Pachon'
     },
     'CIUDAD BOLIVAR': {
       nombreCompleto: 'Nodo Ciudad Bolívar',
       direccion:      'Calle 68d Bis A Sur #49F-70, Bogotá',
-      coordinador:    'Jhoan Manuel Rodríguez Cerinza'
+      coordinador:    'Brayan Jorsey Mejía'
     },
     'UNIMINUTO PERDOMO': {
-      nombreCompleto: 'Nodo Uniminuto Perdomo',
+      nombreCompleto: 'Nodo Uniminuto Perdomo - Soacha',
       direccion:      'Cra. 72 #59 Sur-98, Bogotá',
-      coordinador:    'Brayan Jorsey Mejía Castillo'
+      coordinador:    'Duvan Fernando Caleño'
     },
     'ENGATIVA': {
       nombreCompleto: 'Nodo Engativá',
       direccion:      'Cl. 89 Bis #91-20, Engativá, Bogotá',
-      coordinador:    'César Iván'
+      coordinador:    'Andrea Catalina García León'
     },
     'FONTIBON': {
       nombreCompleto: 'Nodo Fontibón',
-      direccion:      'Cra. 104b #22, Bogotá',
-      coordinador:    'Ariadna Vallecilla'
+      direccion:      'Cra. 101 #23-42, Fontibón, Bogotá',
+      coordinador:    'Ariadna Vallecilla, Karol Lizeth Cifuentes'
     },
     'PUENTE ARANDA': {
       nombreCompleto: 'Nodo Puente Aranda',
@@ -96,6 +96,26 @@ export class CertificateService {
       nombreCompleto: 'Nodo Kennedy',
       direccion:      'Cl. 38c Sur #79-08, Kennedy, Bogotá',
       coordinador:    'José Wolf'
+    },
+    'SAN CRISTOBAL SUR': {
+      nombreCompleto: 'Nodo San Cristóbal Sur',
+      direccion:      '76 Sur, Cl. 25 Sur #9, Bogotá',
+      coordinador:    'Heidy Tatiana Simbaqueva'
+    },
+    'USME': {
+      nombreCompleto: 'Nodo Usme - Rafael Uribe Uribe',
+      direccion:      'Calle 40 #24-55, Bogotá',
+      coordinador:    'Karol Andrade'
+    },
+    'SUBA': {
+      nombreCompleto: 'Nodo Suba',
+      direccion:      'Cl. 130 Bis, Bogotá',
+      coordinador:    'Cesar Iván Hernández'
+    },
+    'VIRTUAL': {
+      nombreCompleto: 'Nodo Virtual',
+      direccion:      'Plataforma Microsoft Teams',
+      coordinador:    'Jefferson Escobar Rivas'
     }
   };
 
