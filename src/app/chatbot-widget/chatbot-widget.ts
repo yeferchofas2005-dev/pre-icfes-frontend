@@ -15,7 +15,7 @@ export class ChatbotWidget {
 
   constructor(private sanitizer: DomSanitizer) {
     // Apunta a la ruta específica del chatbot (/chatbot) en el servidor de Next.js
-    this.chatbotUrl = this.sanitizer.bypassSecurityTrustResourceUrl('http://localhost:3000/chatbot');
+    this.chatbotUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://chat-bot-preicfes.vercel.app/chatbot');
   }
 
   toggleChat() {
