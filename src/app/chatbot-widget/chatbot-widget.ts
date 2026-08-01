@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-chatbot-widget',
@@ -14,8 +15,8 @@ export class ChatbotWidget {
   chatbotUrl: SafeResourceUrl;
 
   constructor(private sanitizer: DomSanitizer) {
-    // Apunta a la ruta específica del chatbot (/chatbot) en el servidor de Next.js
-    this.chatbotUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://chat-bot-preicfes.vercel.app/chatbot');
+    // Apunta a la ruta específica del chatbot (/chatbot) definida en el entorno
+    this.chatbotUrl = this.sanitizer.bypassSecurityTrustResourceUrl(environment.chatbotUrl);
   }
 
   toggleChat() {

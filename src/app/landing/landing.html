@@ -1007,16 +1007,20 @@
         <h2>Sé parte de la comunidad <em class="highlight-yellow">que está cambiando el ICFES en Bogotá.</em></h2>
         <p>Recibe convocatorias, simulacros gratis y consejos de nuestros tutores. Cero spam, solo lo importante.</p>
         
-        <form class="subscribe-form">
+        <form class="subscribe-form" (ngSubmit)="onSubscribeEmail($event)">
           <div class="input-group">
             <svg class="mail-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            <input type="email" placeholder="tu-correo@ejemplo.com" required>
+            <input type="email" name="subscribeEmailInput" [(ngModel)]="subscribeEmail" placeholder="tu-correo@ejemplo.com" [disabled]="isSubmittingEmail" required>
           </div>
-          <button type="submit" class="btn-subscribe">
-            Suscribirme
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          <button type="submit" class="btn-subscribe" [disabled]="isSubmittingEmail">
+            <span *ngIf="!isSubmittingEmail">Suscribirme</span>
+            <span *ngIf="isSubmittingEmail">Enviando...</span>
+            <svg *ngIf="!isSubmittingEmail" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
           </button>
         </form>
+        <p *ngIf="subscribeStatusMessage" class="subscribe-feedback" [class.success]="subscribeStatusType === 'success'" [class.error]="subscribeStatusType === 'error'">
+          {{ subscribeStatusMessage }}
+        </p>
       </div>
 
       <div class="footer-social-cards">
@@ -1095,7 +1099,7 @@
         <p>Preparación ICFES 100% gratuita para jóvenes de Bogotá. Presencial y virtual, con tutores voluntarios de las mejores universidades.</p>
         <ul class="footer-contact">
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffd95a" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Bogotá D.C., Colombia</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffd95a" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> hola&#64;preicfesgratuito.co</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffd95a" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> preicfesjovenesbogota&#64;gmail.com</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffd95a" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> +57 300 000 0000</li>
         </ul>
       </div>

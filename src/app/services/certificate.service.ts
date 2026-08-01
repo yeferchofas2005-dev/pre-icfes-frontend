@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 /* =============================================================================
    MODELOS DE DATOS
@@ -52,11 +53,8 @@ export class CertificateService {
      Configuración Google Sheets
   --------------------------------------------------------------------------- */
 
-  private readonly API_KEY =
-    'AIzaSyAmbfU_CtpUFCZbMTAz1nmFpieM0qZDVHQ';
-
-  private readonly SPREADSHEET_ID =
-    '1ee9Es1yReB8-yYLBb8EW3z2WG6VshKKXmdURAEcg6fw';
+  private readonly API_KEY = environment.googleApiKey;
+  private readonly SPREADSHEET_ID = environment.googleSpreadsheetId;
 
   /**
    * Las primeras 6 filas del Sheet contienen encabezados.
