@@ -2952,9 +2952,32 @@ body {
     justify-content: center;
     margin-top: 32px;
   }
+  .hero-stats {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    margin-top: 24px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px !important;
+    padding: 8px !important;
+  }
   .hero-stat {
-    width: 45%;
-    text-align: center;
+    width: 100% !important;
+    text-align: center !important;
+    padding: 14px 8px !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border-radius: 12px !important;
+    box-sizing: border-box !important;
+  }
+  .hero-stat strong {
+    font-size: 1.35rem !important;
+    margin-bottom: 4px !important;
+    word-break: break-word !important;
+  }
+  .hero-stat span {
+    font-size: 0.7rem !important;
+    letter-spacing: 0.05em !important;
+    word-break: break-word !important;
   }
 
   .countdown-boxes {
@@ -2979,28 +3002,53 @@ body {
     gap: 24px;
   }
 
+  .causa-flip-card {
+    min-height: 280px !important;
+    width: 100% !important;
+  }
+
   .about-title, .ayudar-title, .causa-title, section h2 {
-    font-size: 2rem !important;
+    font-size: 1.8rem !important;
   }
   .section, .about-bento-section, .instagram-section, .causa-section, .ayudar-section, .localidades-section {
     padding: 40px 16px !important;
   }
 
-  .popup-slider, .certificate-popup {
-    padding: 24px !important;
-    width: 95vw !important;
-    height: 95vh !important;
+  .popup-slider {
+    padding: 36px 16px 20px 16px !important;
+    width: 94vw !important;
+    height: auto !important;
+    max-height: 90vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+  .popup-image {
+    max-height: 38vh !important;
+    width: auto !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    margin: 0 auto 14px !important;
   }
   .popup-content h3 {
-    font-size: 1.5rem;
+    font-size: 1.3rem !important;
+    margin-bottom: 8px !important;
+  }
+  .popup-content p {
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
   }
   .slider-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 1.1rem !important;
+    top: auto !important;
+    bottom: 12px !important;
+    transform: none !important;
+    z-index: 2010 !important;
   }
-  .slider-btn.left { left: 8px; }
-  .slider-btn.right { right: 8px; }
+  .slider-btn.left { left: 16px !important; }
+  .slider-btn.right { right: 16px !important; }
 
   .localidades-slider {
     display: flex;
@@ -3019,4 +3067,35 @@ body {
     justify-content: center;
     flex-wrap: wrap;
   }
+
+  /* Splash HUD Responsive */
+  .hud-data-panel {
+    display: none !important;
+  }
+  .hud-circle-outer {
+    width: 320px !important;
+    height: 320px !important;
+  }
+  .hud-circle-inner {
+    width: 240px !important;
+    height: 240px !important;
+  }
+  .splash-logo-container {
+    width: min(260px, 75vw) !important;
+  }
+}
+
+.subscribe-feedback {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.subscribe-feedback.success {
+  color: #4cd94c;
+}
+
+.subscribe-feedback.error {
+  color: #ff6b6b;
 }

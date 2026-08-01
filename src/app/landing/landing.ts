@@ -1,8 +1,10 @@
 import { Component, HostListener, NgZone, ChangeDetectorRef, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 
 import { NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CertificateService, NodoInfo } from '../services/certificate.service';
+import { EmailService } from '../services/email.service';
 import { CertificadoPertenencia } from '../certificado-pertenencia/certificado-pertenencia';
 import { CertificadoDiploma } from '../certificado-diploma/certificado-diploma';
 import { firstValueFrom } from 'rxjs';
@@ -13,6 +15,7 @@ import * as AOS from 'aos';
   imports: [
     NgIf,
     RouterLink,
+    FormsModule,
     CertificadoPertenencia,
     CertificadoDiploma
   ],
@@ -24,6 +27,7 @@ export class Landing implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private certificateService: CertificateService,
+    private emailService: EmailService,
     private ngZone: NgZone,       // Permite forzar la detección de cambios desde fuera de la zona de Angular
     private cdr: ChangeDetectorRef // Permite actualizar la UI manualmente después de operaciones async
   ) { }
@@ -362,10 +366,50 @@ export class Landing implements OnInit, OnDestroy, AfterViewInit {
       this.certificateStatusMessage =
         'Ocurrió un error al buscar tu certificado. Por favor inténtalo nuevamente más tarde.';
 
-      this.cdr.detectChanges();
-
     }
 
+  }
+
+  /* =========================================================================
+     ENVÍO DE CORREO DE SUSCRIPCIÓN (EMAILJS)
+  ========================================================================= */
+
+  subscribeEmail: string = '';
+  isSubmittingEmail: boolean = false;
+  subscribeStatusMessage: string = '';
+  subscribeStatusType: 'success' | 'error' | '' = '';
+
+  async onSubscribeEmail(event: Event) {
+    event.preventDefault();
+
+    const email = this.subscribeEmail.trim();
+
+    if (!email || !email.includes('@')) {
+      this.subscribeStatusMessage = 'Por favor ingresa un correo electrónico válido.';
+      this.subscribeStatusType = 'error';
+      this.cdr.detectChanges();
+      return;
+    }
+
+    this.isSubmittingEmail = true;
+    this.subscribeStatusMessage = 'Enviando información a tu correo...';
+    this.subscribeStatusType = '';
+    this.cdr.detectChanges();
+
+    try {
+      await this.emailService.sendSubscriptionEmail(email);
+
+      this.subscribeStatusMessage = '¡Te has suscrito con éxito! Revisa tu bandeja de entrada.';
+      this.subscribeStatusType = 'success';
+      this.subscribeEmail = '';
+    } catch (error) {
+      console.error('Error al enviar correo con EmailJS:', error);
+      this.subscribeStatusMessage = 'Ocurrió un error al enviar el correo. Por favor inténtalo más tarde.';
+      this.subscribeStatusType = 'error';
+    } finally {
+      this.isSubmittingEmail = false;
+      this.cdr.detectChanges();
+    }
   }
 
 }
