@@ -127,6 +127,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 48px;
+  justify-items: center;
   max-width: 1300px;
   margin: 0 auto;
   padding: 0 10px;
@@ -147,8 +148,13 @@ body {
   border-radius: 28px;
   box-shadow: 0 14px 35px rgba(0,0,0,0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
   max-width: 360px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .directivo-card:hover {
