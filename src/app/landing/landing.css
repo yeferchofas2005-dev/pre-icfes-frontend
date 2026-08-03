@@ -2890,22 +2890,34 @@ body {
 @media (max-width: 768px) {
   .nav-container {
     flex-direction: column;
-    gap: 16px;
-    padding: 16px;
+    gap: 12px;
+    padding: 14px 16px;
+    align-items: stretch;
+  }
+  .nav-logo-text {
+    justify-content: center;
   }
   .nav-links {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 12px;
+    gap: 8px 10px;
   }
   .nav-links a {
-    font-size: 0.8rem;
+    font-size: 0.72rem;
+    padding: 4px 0;
   }
   .nav-buttons {
     width: 100%;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 8px;
+  }
+  .btn-nav-login,
+  .btn-nav-inscribete {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
   }
 
   .hero {
